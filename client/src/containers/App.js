@@ -9,13 +9,12 @@ import RouterContainer from "./RouterContainer"
 
 const App = (props) => {
     const { isAuthenticated, authInfo } = props
-    let accessToken = authInfo.token
+    const accessToken = authInfo.token
 
     useEffect(() => {
         if(!accessToken){
             props.onTryAutoSignIn()
-        }
-            
+        } 
     }, [accessToken])
 
     useEffect(() => {

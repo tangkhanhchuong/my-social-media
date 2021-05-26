@@ -11,7 +11,7 @@ export default styled.button`
   font-size: ${(props) => (props.sm ? "0.8rem" : "1rem")};
   letter-spacing: 1px;
   cursor: pointer;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem;
   width: ${(props) => (props.xl ? "100%" : "none")};
 
   ${(props) =>
@@ -40,5 +40,10 @@ export default styled.button`
         position: relative;
         left: 17%;
       `}
+  }
+
+  &:hover{ 
+    background-color: ${props => props.theme.accentColor};
+    color: #FFF;
   }
 `;

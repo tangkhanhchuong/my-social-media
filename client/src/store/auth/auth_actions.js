@@ -52,7 +52,7 @@ export const authCheckState = () => {
     return dispatch => {
         const authInfo = JSON.parse(localStorage.getItem('authInfo'))
         if (!authInfo) {
-            // dispatch(logout())
+            dispatch(logout())
         } else {
             const expirationDate = new Date(authInfo.expirationDate)
             if (expirationDate <= new Date()) {

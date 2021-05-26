@@ -2,9 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { Link, NavLink } from "react-router-dom"
 import { connect } from 'react-redux'
-import { FaHome, FaEnvelope, FaBell, FaUser, FaBookmark, FaAsterisk, FaTwitter } from 'react-icons/fa'
-
-import Button from "styles/Button";
+import { FaHome, FaEnvelope, FaBell, FaUser, FaBookmark, FaAsterisk, FaTwitter , FaSignOutAlt } from 'react-icons/fa'
+import { v4 } from 'uuid'
 
 const iconSize = 30
 
@@ -120,74 +119,96 @@ const NavTabLabel = styled.label`
   cursor: pointer
 `
 
-const TweetButton = styled.button`
+const Logo = styled.div`
+  border-radius: 40px;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
 
+  &:hover{
+    background-color: ${(props) => props.theme.hover};
+  }
 `
 
+const navItems = [
+  {
+    label: 'Home',
+    exact: true,
+    NavIcon: FaHome,
+    to: '/'
+  },
+  {
+    label: 'Explore',
+    exact: false,
+    NavIcon: FaAsterisk,
+    to: '/explore'
+  },
+  {
+    label: 'Messages',
+    exact: false,
+    NavIcon: FaEnvelope,
+    to: '/messages'
+  },
+  {
+    label: 'Notifications',
+    exact: false,
+    NavIcon: FaBell,
+    to: '/notifications'
+  },
+  {
+    label: 'Bookmarks',
+    exact: false,
+    NavIcon: FaBookmark,
+    to: '/bookmarks'
+  },
+  {
+    label: 'Profile',
+    exact: false,
+    NavIcon: FaUser,
+    to: '/profile'
+  },
+  {
+    label: 'Logout',
+    exact: false,
+    NavIcon: FaSignOutAlt,
+    to: '/logout'
+  }
+]
+
+const NavItem = ({item}) => {
+  const { to, exact, label, NavIcon } = item
+  return (
+    <li>
+      <NavLink exact={exact} activeClassName="selected" to={to}>
+        <NavTab>
+          <NavIcon size={iconSize} />
+          <NavTabLabel>{label}</NavTabLabel>
+        </NavTab>
+      </NavLink>
+    </li>
+  )
+}
+
 const NavBar = (props) => {
+  const onLogout = () => {
+    alert('Logout')
+    localStorage.removeItem('authInfo')
+  }
+
   return (
     <Wrapper>
       <NavContainer>
         <NavTabList>
           <Link to="/">
             <div className="logo selected">
-              <FaTwitter size={iconSize} />
-              <b>{props.authInfo.username}</b>
+              <Logo>
+                <FaTwitter size={iconSize} />
+              </Logo>  
             </div>
           </Link>
-          <li>
-            <NavLink exact activeClassName="selected" to="/">
-              <NavTab>
-                <FaHome size={iconSize} />
-                <NavTabLabel>Home</NavTabLabel>
-              </NavTab>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="selected" to="/explore">
-              <NavTab>
-                <FaAsterisk size={iconSize} />
-                <NavTabLabel>Explore</NavTabLabel>
-              </NavTab>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="selected " to="/messages">
-              <NavTab>
-                <FaEnvelope size={iconSize} />
-                <NavTabLabel>Messages</NavTabLabel>
-              </NavTab>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="selected " to="/notifications">
-              <NavTab>
-                <FaBell size={iconSize} />
-                <NavTabLabel>Notifications</NavTabLabel>
-              </NavTab>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="selected" to="/bookmarks">
-              <NavTab>
-                <FaBookmark size={iconSize} />
-                <NavTabLabel>Bookmarks</NavTabLabel>
-              </NavTab>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="selected" to={`/profile`}>
-              <NavTab>
-                <FaUser size={iconSize} />
-                <NavTabLabel>Profile</NavTabLabel>
-              </NavTab>
-            </NavLink>
-          </li>
-          <li style={{marginTop: "20px"}}>
-            <Button xl disabled={false}>
-              Tweet
-            </Button>
-          </li>
+          {
+            navItems.map(item => <NavItem key={v4()} item={item} /> )
+          }
         </NavTabList>
       </NavContainer>
     </Wrapper>

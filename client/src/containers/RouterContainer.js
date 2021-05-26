@@ -7,7 +7,6 @@ import {
 } from "react-router-dom"
 import styled from 'styled-components'
 
-import Layout from "styles/Layout"
 import Nav from "components/layout/Nav"
 import MasterTweet from "components/Tweet/MasterTweet"
 import EditProfile from "components/Profile/EditProfile"
@@ -18,6 +17,7 @@ import Notifications from "pages/Notifications"
 import Explore from "pages/Explore"
 
 import Messages from "features/messages"
+import { SignOut } from "features/auth/SignOutPage"
 
 const MainPageContainer = styled.div`
   margin-left: 26%;
@@ -31,18 +31,21 @@ const RouterContainer = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/explore" component={Explore} />
+          <Route exact path="/logout" component={SignOut} />
           <Route path="/messages/:id" component={Messages} />
           <Route path="/messages" component={Messages} />
           <Route exact path="/notifications" component={Notifications} />
           <Route exact path="/bookmarks" component={Bookmarks} />
-          <Route
+          {/* <Route
             exact
             path={`/:handle/status/:tweetId`}
             component={MasterTweet}
           />
-          <Route exact path={`/settings/profile`} component={EditProfile} />
-          <Route exact path={`/:handle`} component={Profile} />
-          <Redirect from="*" to="/" />
+          <Route exact path={`/settings/profile`} component={EditProfile} /> */}
+          {/* <Route exact path={`/:handle`} component={Profile} /> */}
+          <Route path="/">
+            <Redirect to="/" />
+          </Route>
         </Switch>
       </MainPageContainer>
     </Router>
