@@ -1,25 +1,30 @@
 import React, { useState } from "react"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom"
 
 import { SignInPage } from "features/auth/SignInPage"
 import { SignUpPage } from "features/auth/SignUpPage"
 
-const AuthState = {
-  LOGIN: 0, SIGNUP: 1
-}
-
 const AuthContainer = () => {
-  const [authAction, setAuthAction] = useState(AuthState.LOGIN)
-  const changeToLogin = () => setAuthAction(AuthState.LOGIN)
-  const changeToSignup = () => setAuthAction(AuthState.SIGNUP)
+
+  
+  const SignIn = () => <SignInPage />
+  const SignUp = () => <SignUpPage />
 
   return (
-    <>
-      {authAction === AuthState.LOGIN? (
-        <SignInPage changeToSignup={changeToSignup} />
-      ) : (
-        <SignUpPage changeToLogin={changeToLogin} />
-      )}
-    </>
+    <Router>
+        <Switch>
+          <Route exact path="/login" component={SignIn} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route path="/">
+            <Redirect to="/login" />
+          </Route>
+        </Switch>
+    </Router>
   )
 }
 

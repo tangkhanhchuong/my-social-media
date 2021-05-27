@@ -1,18 +1,20 @@
 import React from 'react'
 import { toast } from "react-toastify"
 import { useMutation } from 'react-query'
+import { useHistory } from 'react-router-dom'
 
 import { displayError } from "utils"
 import authRequests from 'http/auth_requests'
  
 const delayTimeSignUp = 2000
 
-const useSignUp = (changeToLogin) => {
+const useSignUp = () => {
+    const history = useHistory()
 
     const onRegisterSuccessfully = (data) => {
-            toast.success(`Your account are created!`)
-            setTimeout(() => {
-            changeToLogin()
+        toast.success(`Your account are created!`)
+        setTimeout(() => {
+            history.push('/login')
         }, delayTimeSignUp)
     }
     

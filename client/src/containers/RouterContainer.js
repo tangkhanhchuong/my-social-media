@@ -36,13 +36,6 @@ const RouterContainer = () => {
           <Route path="/messages" component={Messages} />
           <Route exact path="/notifications" component={Notifications} />
           <Route exact path="/bookmarks" component={Bookmarks} />
-          {/* <Route
-            exact
-            path={`/:handle/status/:tweetId`}
-            component={MasterTweet}
-          />
-          <Route exact path={`/settings/profile`} component={EditProfile} /> */}
-          {/* <Route exact path={`/:handle`} component={Profile} /> */}
           <Route path="/">
             <Redirect to="/" />
           </Route>

@@ -2,12 +2,13 @@ import React from "react"
 import { FastField, Formik, Form } from 'formik'
 
 import Button from "styles/Button"
+import LinkButton from "styles/LinkButton"
 import FormContainer from "styles/Form"
 
 import Input from "components/Input"
 import useSignUp from "./useSignUp"
 
-const SignUpPage = ({ changeToLogin }) => {
+const SignUpPage = () => {
   const initialValues = {
     email: '',
     username: '',
@@ -15,7 +16,7 @@ const SignUpPage = ({ changeToLogin }) => {
     confirm: ''
   }
 
-  const { isLoading, onSignUp } = useSignUp(changeToLogin)
+  const { isLoading, onSignUp } = useSignUp()
 
   return (
     <FormContainer center>
@@ -24,7 +25,6 @@ const SignUpPage = ({ changeToLogin }) => {
         onSubmit={onSignUp}
       >
           {formikProps => {
-            // const { values, errors, touched, isSubmitting } = formikProps
             return ( 
             <Form>
               <h1><b>SIGN UP</b></h1>
@@ -52,9 +52,9 @@ const SignUpPage = ({ changeToLogin }) => {
               {isLoading ? "Signing Up" : "Sign Up"}
             </Button>
             <span>or</span>
-            <Button xl type="button" onClick={changeToLogin}>
+            <LinkButton xl type="button" to='/login'>
               Sign In
-            </Button>
+            </LinkButton>
           </Form>
           )
           }}

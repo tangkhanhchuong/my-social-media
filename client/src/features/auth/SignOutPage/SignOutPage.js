@@ -11,12 +11,15 @@ const CenterContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh
+    height: 100vh;
+    background-color: lightgray
 `
 
 const PopUp = styled.div`
     border-radius: 10px;
     box-shadow: 1px 2px 10px black;
+    
+    background-color: #fff;
 
     word-wrap: break-word;
     display: flex;
