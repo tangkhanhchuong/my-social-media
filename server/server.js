@@ -24,7 +24,7 @@ const initServer = async () => {
     
     await connectSocket(server)
     server.listen(PORT, () => {
-        console.log(`Listen at port ${PORT}`);
+        console.log(`Listen at port ${PORT}`)
     })
 }
 initServer()

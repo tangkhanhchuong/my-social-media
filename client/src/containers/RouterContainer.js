@@ -35,6 +35,7 @@ const RouterContainer = () => {
           <Route path="/messages/:id" component={Messages} />
           <Route path="/messages" component={Messages} />
           <Route exact path="/notifications" component={Notifications} />
+          <Route exact path="/profile" component={Profile} />
           <Route exact path="/bookmarks" component={Bookmarks} />
           <Route path="/">
             <Redirect to="/" />

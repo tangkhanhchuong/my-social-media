@@ -20,7 +20,7 @@ const Wrapper = styled.nav`
     height: 28px;
     margin-right: 0.5rem;
     position: relative;
-    color: ${(props) => props.theme.accentColor};
+    color: ${(props) => props.theme.accentColor} !important;
     top: 7px
   }
 
@@ -43,8 +43,8 @@ const Wrapper = styled.nav`
 
   .selected,
   .selected svg {
-    color: ${(props) => props.theme.accentColor};
-    fill: ${(props) => props.theme.accentColor}
+    color: ${(props) => props.theme.accentColor} !important;
+    fill: ${(props) => props.theme.accentColor} !important;
   }
 
   @media screen and (max-width: 1100px) {
@@ -106,7 +106,7 @@ const NavTab = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 15px;
+  padding: 6px 18px !important;
   border-radius: 40px;
 
   &:hover{
@@ -119,6 +119,14 @@ const NavTabLabel = styled.label`
   cursor: pointer
 `
 
+const StyledNavLink = styled(NavLink)`
+  text-decoration: none !important;
+
+  &:hover{
+    color: ${(props) => props.theme.accentColor} !important;
+  }
+`
+
 const Logo = styled.div`
   border-radius: 40px;
   width: 50px;
@@ -126,7 +134,7 @@ const Logo = styled.div`
   padding: 10px;
 
   &:hover{
-    background-color: ${(props) => props.theme.hover};
+    background-color: ${(props) => props.theme.hover} !important;
   }
 `
 
@@ -179,33 +187,28 @@ const NavItem = ({item}) => {
   const { to, exact, label, NavIcon } = item
   return (
     <li>
-      <NavLink exact={exact} activeClassName="selected" to={to}>
+      <StyledNavLink exact={exact} activeClassName="selected" to={to}>
         <NavTab>
-          <NavIcon size={iconSize} />
+          <NavIcon size={iconSize}/>
           <NavTabLabel>{label}</NavTabLabel>
         </NavTab>
-      </NavLink>
+      </StyledNavLink>
     </li>
   )
 }
 
-const NavBar = (props) => {
-  const onLogout = () => {
-    alert('Logout')
-    localStorage.removeItem('authInfo')
-  }
-
+const NavBar = () => {
   return (
     <Wrapper>
       <NavContainer>
         <NavTabList>
-          <Link to="/">
+          <NavLink to="/">
             <div className="logo selected">
               <Logo>
                 <FaTwitter size={iconSize} />
               </Logo>  
             </div>
-          </Link>
+          </NavLink>
           {
             navItems.map(item => <NavItem key={v4()} item={item} /> )
           }
