@@ -5,10 +5,16 @@ export default {
         endpoint: `/chats`,
         requireToken: true
     }),
-    getMessages: (chatId) => {
-        return httpRequest({
-            endpoint: `/chats/${chatId}/messages`,
-            requireToken: true
-        })
-    }
+    getMessages: (chatId) => httpRequest({
+        endpoint: `/chats/${chatId}/messages`,
+        requireToken: true
+    }),
+    add: (chat) => httpRequest({
+        endpoint: `/chats`,
+        method: 'post',
+        bodyParameters: {
+            users: chat
+        },
+        requireToken: true
+    })
 }

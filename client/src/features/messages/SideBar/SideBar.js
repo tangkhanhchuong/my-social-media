@@ -56,7 +56,7 @@ const ChatLink = styled(Link)`
 
 
 const Chat = ({ chat }) => {
-    const { isGroupChat, _id } = chat
+    const { chatName, _id } = chat
 
     const MAX_LEN_LAST_MSG = 30
 
@@ -70,8 +70,8 @@ const Chat = ({ chat }) => {
                 <StyledAvatarContainer>
                     <Avatar size="50px" src={`https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`} alt="avatar" />
                     <StyledNameAndLatedMsg>
-                        <b>{_id}</b>
-                        <StyledLastMsg>{generateLastMsg(isGroupChat.toString())}</StyledLastMsg>
+                        <b>{chatName}</b>
+                        {/* <StyledLastMsg>{generateLastMsg(isGroupChat.toString())}</StyledLastMsg> */}
                     </StyledNameAndLatedMsg>
                 </StyledAvatarContainer>
             </ChatLink>

@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useMutation } from 'react-query'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 import { FaPlus } from 'react-icons/fa'
 import { toast } from "react-toastify"
 
 import Button from 'styles/Button'
 import Avatar from "styles/Avatar"
+import chatRequests from 'http/chat_requests'
+
 import SearchBar from './SearchBar'
 
 const avatarSrc = `https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`
@@ -23,7 +26,7 @@ const StyledNewConvBtn = styled.button`
 
 
   &: hover {
-      background-color: ${(props) => props.theme.hover};
+    background-color: ${(props) => props.theme.hover};
   }
 `
 
@@ -95,18 +98,35 @@ const NewConversation = (props) => {
   const [selectedUsers, setSelectedUsers] = useState([])
   const [addFinish, setAddFinish] = useState(false)
 
+  const onAddSuccess = (data) => {
+    toast.success(`Conversation was created`)
+    onCloseModal()
+  }
+
+  const { mutate } = useMutation(chatRequests.add, {
+    mutationKey: 'add_chat',
+    onSuccess: onAddSuccess
+  })
+
   const toggle = () => setModal(!modal)
 
-  const onCreateConversation = () => {
+  const onCloseModal = () => {
+    setRecommendedUsers([])
+    setSelectedUsers([])
+    setAddFinish(false)
     toggle()
-    return toast.success(`Conversation are created!`)
+  }
+
+  const onCreateConversation = () => {
+    mutate(selectedUsers)
+    onCloseModal()
   }
 
   return (
     <StyledNewConvBtn onClick={toggle}>
         <FaPlus />  
-        <Modal isOpen={modal} toggle={toggle} style={{height: "300px !important"}}>
-            <ModalHeader toggle={toggle}>New Conversation</ModalHeader>
+        <Modal onClose={onCloseModal} isOpen={modal} toggle={onCloseModal} style={{height: "300px !important"}}>
+            <ModalHeader toggle={onCloseModal}>New Conversation</ModalHeader>
             <ModalBody>
               <SearchBar 
                 setRecommendedUsers={setRecommendedUsers} 
