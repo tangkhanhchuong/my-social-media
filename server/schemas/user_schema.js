@@ -1,20 +1,27 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const Schema = mongoose.Schema
+const findOrCreate = require('mongoose-findorcreate')
 
 const UserSchema = new Schema({
     username: { type: String, require, trim: true },
-    email: { type: String, require, trim: true, unique: true },
-    password: { type: String, require },
+    email: { type: String, trim: true, unique: true },
+    password: { type: String },
     avatar: {type: String, default: ''},
-    profilePicture: {type: String, default: ''}
+    profilePicture: { type: String, default: '' },
+    authMethod: { type: String, default: 'JWT' },
+    fbId: { type: String }
 }, { timestamps: true })
+
+UserSchema.plugin(findOrCreate)
 
 UserSchema.pre(
     'save',
     async function(next){
-        console.log(this.password)
-        const hash = await bcrypt.hash(this.password, 10)
+        const { authMethod, password } = this
+        if( authMethod !== 'JWT')   next()
+
+        const hash = await bcrypt.hash(password, 10)
         this.password = hash
         next()
     }
@@ -22,8 +29,8 @@ UserSchema.pre(
 
 UserSchema.methods.isValidPassword = async function(password) {
     const user = this
+    if(user.authMethod !== 'JWT')   return true
     const compare = await bcrypt.compare(password, user.password)
-    console.log(compare)
     return compare
   }
 

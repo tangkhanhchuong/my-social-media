@@ -107,11 +107,17 @@ const logout = (req, res) => {
     res.sendStatus(204)
 }
 
+const fbLoginSuccess = (req, res) => {
+    const { fbId, username } = req.user
+    const accessToken = jwt.sign({ fbId, username }, ACCESS_TOKEN_SECRET, accessTokenOptions)
+    res.status(200).json({ accessToken })
+}
+
+const fbLoginFailed = (req, res) => {
+    res.status(400).json("Authenticate Failed")
+}
+
 module.exports = {
-    login,
-    register,
-    forgotPassword,
-    updatePassword,
-    logout,
-    getAccessToken
+    login, register, forgotPassword, updatePassword, logout, getAccessToken,
+    fbLoginSuccess, fbLoginFailed
 }

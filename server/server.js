@@ -38,6 +38,9 @@ const {
     messagesRouter
 } = require('./routes')
 
+app.get('/', (req, res) => {
+    res.status(200).json("welcome")
+})
 app.use('/auth', authRouter)
 app.use('/users', usersRouter)
 app.use(requireAuth)
