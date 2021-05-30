@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const { User } = require('../schemas')
 const { verifyToken } = require('../middlewares/require_auth')
-const { throwError, ErrorStatus } = require('../utils/error')
+const { throwError, ErrorStatus } = require('../services/error')
 
 let refreshTokens = []
 const accessTokenOptions = { expiresIn: '12h' }

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const { throwError, ErrorStatus } = require('../utils/error')
+const { throwError, ErrorStatus } = require('../services/error')
 
 const verifyToken = (token, isAccessToken = true) => {
     const {ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET} = process.env

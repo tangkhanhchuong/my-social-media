@@ -1,6 +1,6 @@
 const socketIo = require('socket.io')
 
-const Messages = require('../schemas/message_schema')
+const { Messages } = require('../schemas')
 const { ObjectId } = require('mongodb')
 
 const corsOptions = {
