@@ -35,6 +35,7 @@ const Messages = (props) => {
             ref.current.scrollTop = (ref.current.scrollHeight - ref.current.offsetHeight)
         }
         scrollToBottomOfView()
+        console.log("Hello")
     }, [messages])
 
     return (

@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.918.0",
     "bcrypt": "^5.0.1",
     "config": "^3.3.3",
     "cors": "^2.8.5",
@@ -29,7 +30,7 @@
     "mongoose": "^5.12.9",
     "mongoose-findorcreate": "^3.0.0",
     "morgan": "^1.10.0",
-    "multer": "^1.4.0",
+    "multer": "^1.4.2",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "passport-jwt": "^4.0.0",

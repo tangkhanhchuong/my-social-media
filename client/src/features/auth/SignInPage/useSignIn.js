@@ -8,9 +8,9 @@ const useSignIn = ({ onStartingLogin, onLoginSuccess, onTryAutoSignIn }) => {
     const { mutate, isLoading } = useMutation(authRequests.login, { mutationKey: 'login' })
 
     const onLoginSuccessfully = async (data) => {
+      toast.success(`You are logged in`)
       onLoginSuccess(data.data)
       localStorage.setItem('authInfo', JSON.stringify(data.data))
-      return toast.success(`You are logged in`)
     }
       
     const onError = (err) => {

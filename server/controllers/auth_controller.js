@@ -3,11 +3,11 @@ const jwt = require('jsonwebtoken')
 const { User } = require('../schemas')
 const { verifyToken } = require('../middlewares/require_auth')
 const { throwError, ErrorStatus } = require('../services/error')
+const { sendEmailSES } = require('../services/email')
+const { generateAccessToken, generateRefreshToken } = require('../services/jwt')
 
 let refreshTokens = []
-const accessTokenOptions = { expiresIn: '12h' }
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET
+const { AWS_SYSTEM_EMAIL } = process.env
 
 const login = async (req, res) => {
     const {email, password} = req.body
@@ -27,19 +27,26 @@ const login = async (req, res) => {
 
     //sign token
 
-    const accessToken = jwt.sign({
+    const accessToken = generateAccessToken({
         id: user._id,
         email: user.email,
         username: user.username
-    }, ACCESS_TOKEN_SECRET, accessTokenOptions)
+    })
 
-    const refreshToken = jwt.sign({
+    const refreshToken = generateRefreshToken({
         id: user._id,
         email: user.email,
         username: user.username
-    }, REFRESH_TOKEN_SECRET)
+    })
 
     refreshTokens.push(refreshToken)
+
+    await sendEmailSES({
+        to: AWS_SYSTEM_EMAIL,
+        from: email,
+        subject: "Login successfully",
+        text: "Congratulation! You are authenticated. You can access our services."
+    })
 
     const {_id, username} = user
     res.status(200).json({_id, username, email, accessToken, refreshToken})
@@ -79,11 +86,11 @@ const getAccessToken = (req, res) => {
 
     const user = verifyToken(refreshToken, false)
 
-    const accessToken = jwt.sign({
+    const accessToken = generateAccessToken({
         id: user._id,
         email: user.email,
         username: user.username
-    }, ACCESS_TOKEN_SECRET, accessTokenOptions)
+    })
 
     res.json({accessToken})
 }
@@ -109,7 +116,7 @@ const logout = (req, res) => {
 
 const fbLoginSuccess = (req, res) => {
     const { fbId, username } = req.user
-    const accessToken = jwt.sign({ fbId, username }, ACCESS_TOKEN_SECRET, accessTokenOptions)
+    const accessToken = generateAccessToken({ fbId, username })
     res.status(200).json({ accessToken })
 }
 

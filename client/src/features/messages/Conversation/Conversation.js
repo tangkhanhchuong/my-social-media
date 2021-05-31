@@ -5,8 +5,9 @@ import styled from 'styled-components'
 import Header from 'components/Header'
 
 import ConversationContainer from './ConversationContainer'
+import ChatBar from './ChatBar'
 
-const StyledConversationContainer = styled.div`
+const S_ConversationContainer = styled.div`
     border: 1px solid lightgray; 
     height: 100vh;
     display: flex;
@@ -19,18 +20,19 @@ const Conversation = () => {
 
     if(!chatId)  {
         return (
-            <StyledConversationContainer>
+            <S_ConversationContainer>
                 <Header>Conversation</Header>
                 Select Conversation
-            </StyledConversationContainer>
+            </S_ConversationContainer>
         )
     }
 
     return (
-        <StyledConversationContainer>
+        <S_ConversationContainer>
             <Header>{ chatId }</Header>
-            <ConversationContainer chatId={chatId}/>
-        </StyledConversationContainer>  
+            <ConversationContainer/>
+            <ChatBar />
+        </S_ConversationContainer>  
     )
 
 }

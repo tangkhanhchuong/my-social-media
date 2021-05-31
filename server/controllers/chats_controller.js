@@ -8,7 +8,7 @@ const getChats = async (req, res, next) => {
         const chats = await Chat.find({ users: { $elemMatch: { $eq: req.user.id } }})
                                 .populate("users")
                                 .populate("latestMessage")
-                                .sort({ updatedAt: 1 })
+                                .sort({ updatedAt: -1 })
 
         res.status(200).json(chats)
     }
@@ -99,7 +99,7 @@ const getMessages = async (req, res, next) => {
             }
         }
 
-        res.status(201).json(messages)
+        res.status(200).json(messages)
     }
     catch(err) {
         err.statusCode = 400

@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useMutation } from 'react-query'
 import { connect } from 'react-redux'
-import { Spinner } from 'react-bootstrap'
+import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
 
 import chatRequests from 'http/chat_requests'
 import { setAllMessages } from 'store/messages/messages_actions'
 
-import ConversationBody from './ConversationBody'
+import Messages from './Messages'
 
+const S_MessagesContainer = styled.div`
+    flex: 1
+`
 
 const mapStateToProps = state => {
     return {
@@ -22,19 +26,31 @@ const mapDispatchToProps = dispatch => {
 }
 
 const ConversationContainer = (props) => {
-    const { chatId, initializeConversation, allMessages } = props
+    const startMessage = {
+        _id: 1,
+        content: "Begin to chat with him",
+        sender: { _id: 1 }
+    }
 
-    const { data } = useQuery('get_messages_in_chat', chatRequests.getMessages.bind(this, chatId))
+    const chatId = useParams().id
+    const { initializeConversation, allMessages } = props
+
+    const { data, mutate } = useMutation(chatRequests.getMessages)
 
     useEffect(() => {
-        if(data){
+        mutate(chatId)
+    }, [chatId])
+
+    useEffect(() => {
+        if(data) {
             initializeConversation(data.data)
+            
         }
     }, [data])
 
-    if(!data || allMessages.length===0)   return <Spinner />
+    if(!data)   return <S_MessagesContainer>Loading</S_MessagesContainer>
 
-    return <ConversationBody initMessages={allMessages} />
+    return  <Messages messages={allMessages.length !== 0 ? allMessages : [startMessage]}/> 
 }
 
 

@@ -8,13 +8,13 @@ import Header from 'components/Header'
 import chatRequests from 'http/chat_requests'
 import NewConversation from './NewConversation'
 
-const StyledChatListContainer = styled.div`
+const S_ChatListContainer = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column
 `
 
-const StyledChatContainer = styled.div`
+const S_ChatContainer = styled.div`
     border-bottom: 1px solid #CA2055;
     padding: 10px 20px;
     cursor: pointer;
@@ -23,7 +23,7 @@ const StyledChatContainer = styled.div`
     }
 `
 
-const StyledAvatarContainer = styled.div`
+const S_AvatarContainer = styled.div`
 	display: flex;
     flex-direction: row;
 	justify-content: flex-start;
@@ -36,7 +36,7 @@ const StyledAvatarContainer = styled.div`
 	}
 `
 
-const StyledNameAndLatedMsg = styled.div`
+const S_NameAndLatedMsg = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: -10px;
@@ -44,45 +44,49 @@ const StyledNameAndLatedMsg = styled.div`
     flex: 1
 `
 
-const StyledLastMsg = styled.p`
+const S_LastMsg = styled.p`
     font-size: 14px;
-    color: gray
+    color: gray;
+    margin-bottom: 0
 `
 
-const ChatLink = styled(Link)`
+const S_ChatLink = styled(Link)`
     text-decoration: none !important;
     color: black !important
 `
 
 
 const Chat = ({ chat }) => {
-    const { chatName, _id } = chat
+    const { chatName, _id, latestMessage } = chat
 
     const MAX_LEN_LAST_MSG = 30
 
-    const generateLastMsg = (msg) => {
-        return msg.length < MAX_LEN_LAST_MSG ? msg : msg.slice(0, MAX_LEN_LAST_MSG) + " ..."
+    const generateFitContent = (msg) => {
+        if(!msg)    return ""
+
+        const msgContent = msg.content
+        return msgContent.length < MAX_LEN_LAST_MSG ? msgContent : msgContent.slice(0, MAX_LEN_LAST_MSG) + " ..."
     }
 
     return (
-        <StyledChatContainer>
-            <ChatLink to={`/messages/${_id}`}>        
-                <StyledAvatarContainer>
+        <S_ChatContainer>
+            <S_ChatLink to={`/messages/${_id}`}>        
+                <S_AvatarContainer>
                     <Avatar size="50px" src={`https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`} alt="avatar" />
-                    <StyledNameAndLatedMsg>
+                    <S_NameAndLatedMsg>
                         <b>{chatName}</b>
-                        {/* <StyledLastMsg>{generateLastMsg(isGroupChat.toString())}</StyledLastMsg> */}
-                    </StyledNameAndLatedMsg>
-                </StyledAvatarContainer>
-            </ChatLink>
-        </StyledChatContainer>
+                        <S_LastMsg>{generateFitContent(latestMessage)}</S_LastMsg>
+                    </S_NameAndLatedMsg>
+                </S_AvatarContainer>
+            </S_ChatLink>
+        </S_ChatContainer>
     )   
 }
 
 const ChatList = () => {
     const { data, isLoading } = useQuery('get_chats', chatRequests.list)
 
-    if(isLoading)   return <></>
+    if(isLoading)   return <>Loading</>
 
     const chatList = data.data
 
@@ -91,13 +95,13 @@ const ChatList = () => {
 
 const SideBar = () => {
     return (
-        <StyledChatListContainer>
+        <S_ChatListContainer>
             <Header justify="space-between">
                 <b>Messages</b>
                 <NewConversation buttonLabel="Hello" />
             </Header>
             <ChatList />
-        </StyledChatListContainer>
+        </S_ChatListContainer>
     )
 }
 
