@@ -4,6 +4,7 @@ const { User } = require('../schemas')
 const { verifyToken } = require('../middlewares/require_auth')
 const { throwError, ErrorStatus } = require('../services/error')
 const { sendEmailSES } = require('../services/email')
+const { sendSMS } = require('../services/sms')
 const { generateAccessToken, generateRefreshToken } = require('../services/jwt')
 
 let refreshTokens = []
@@ -47,6 +48,11 @@ const login = async (req, res) => {
         subject: "Login successfully",
         text: "Congratulation! You are authenticated. You can access our services."
     })
+
+    // await sendSMS({
+    //     phoneNumber: '+447700900123',
+    //     message: 'Hello Khanh Chuong'
+    // })
 
     const {_id, username} = user
     res.status(200).json({_id, username, email, accessToken, refreshToken})
@@ -92,7 +98,7 @@ const getAccessToken = (req, res) => {
         username: user.username
     })
 
-    res.json({accessToken})
+    res.status(200).json({accessToken})
 }
 
 const forgotPassword = (req, res) => {
