@@ -19,8 +19,8 @@ const connectSocket = async (server) => {
     
     socket.on('send_msg', async (payload) => {
       const { content, sender, chat } = payload
-
-      //create new message
+      console.log(payload)
+      // create new message
       const msg = { 
         content,
         chat: ObjectId(chat),
@@ -37,7 +37,7 @@ const connectSocket = async (server) => {
         console.log(err)
       }
 
-      io.sockets.emit("receive_msg", payload)
+      socket.broadcast.emit("receive_msg", payload)
     })
   })
 

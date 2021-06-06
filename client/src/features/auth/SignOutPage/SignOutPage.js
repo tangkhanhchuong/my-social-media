@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { FaTwitter } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom'
 
 import Button from "styles/Button"
-import { logout } from "store/auth/auth_actions"
+import { logout } from '../auth_slice'
 
-const CenterContainer = styled.div`
+const SCenterContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,7 +15,7 @@ const CenterContainer = styled.div`
     background-color: lightgray
 `
 
-const PopUp = styled.div`
+const SPopUp = styled.div`
     border-radius: 10px;
     box-shadow: 1px 2px 10px black;
     
@@ -30,17 +30,18 @@ const PopUp = styled.div`
     max-width: 360px
 `
 
-const SignOutTitle = styled.b`
+const SSignOutTitle = styled.b`
     font-size: 22px
 `
 
-const SignOutContent = styled.p`
+const SSignOutContent = styled.p`
     font-size: 16px;
     text-align: center;
 `
 
-const SignOutPage = (props) => {
+const SignOutPage = () => {
     const history = useHistory()
+    const dispatch = useDispatch()
 
     const onCancel = () => {
         history.push('/')
@@ -48,34 +49,23 @@ const SignOutPage = (props) => {
 
     const onSignOut = () => {
         localStorage.removeItem('authInfo')
-        props.onLogout()
+        dispatch(logout())
         history.push('/')
     }
 
     return (
-        <CenterContainer>
-            <PopUp>
+        <SCenterContainer>
+            <SPopUp>
                 <FaTwitter size={35} color="#CA2055" />
-                <SignOutTitle>Log out of Twitter?</SignOutTitle>
-                <SignOutContent>You can always log back in at any time. If you just want to switch accounts, you can do that by adding an existing account. </SignOutContent>
+                <SSignOutTitle>Log out of Twitter?</SSignOutTitle>
+                <SSignOutContent>You can always log back in at any time. If you just want to switch accounts, you can do that by adding an existing account. </SSignOutContent>
                 <div>
                     <Button outline onClick={onCancel}>Cancel</Button>
                     <Button outline onClick={onSignOut}>Logout</Button>
                 </div>
-            </PopUp>
-        </CenterContainer>
+            </SPopUp>
+        </SCenterContainer>
     )
 }
 
-const mapStateToProps = state => {
-    return {
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onLogout: async () => await dispatch(logout())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignOutPage)
+export default SignOutPage

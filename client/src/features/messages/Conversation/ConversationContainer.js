@@ -1,57 +1,45 @@
 import React, { useEffect } from 'react'
 import { useQuery, useMutation } from 'react-query'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import chatRequests from 'http/chat_requests'
-import { setAllMessages } from 'store/messages/messages_actions'
 
 import Messages from './Messages'
+import { addConversation } from '../messageSlice'
 
-const S_MessagesContainer = styled.div`
+const SMessagesContainer = styled.div`
     flex: 1
 `
 
-const mapStateToProps = state => {
-    return {
-        allMessages: state.socket.allMessages
-    }
-}
+const ConversationContainer = () => {
+    const dispatch = useDispatch()
 
-const mapDispatchToProps = dispatch => {
-    return {
-        initializeConversation: async (messages) => await dispatch(setAllMessages(messages))
-    }
-}
-
-const ConversationContainer = (props) => {
-    const startMessage = {
-        _id: 1,
-        content: "Begin to chat with him",
-        sender: { _id: 1 }
-    }
-
+    const messagesReducer = useSelector(state => state.messages)
     const chatId = useParams().id
-    const { initializeConversation, allMessages } = props
+    const { mutate } = useMutation(chatRequests.getMessages)
 
-    const { data, mutate } = useMutation(chatRequests.getMessages)
+    const onMessagesFetched = (data) => {
+        const conv = { messages: data.data, id: chatId}
+        dispatch(addConversation(conv))
+    }
+    
+    const currentConversation = messagesReducer.allConversations[chatId]
+    const isConversationInitialized = currentConversation.isInitialized
 
     useEffect(() => {
-        mutate(chatId)
+        if(!isConversationInitialized) {
+            console.log("Hello");
+            mutate(chatId, {
+                onSuccess: onMessagesFetched
+            })
+        }
     }, [chatId])
 
-    useEffect(() => {
-        if(data) {
-            initializeConversation(data.data)
-            
-        }
-    }, [data])
-
-    if(!data)   return <S_MessagesContainer>Loading</S_MessagesContainer>
-
-    return  <Messages messages={allMessages.length !== 0 ? allMessages : [startMessage]}/> 
+    if(!isConversationInitialized)   return <SMessagesContainer>Loading</SMessagesContainer>
+    return  <Messages conversation={currentConversation} /> 
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConversationContainer)
+export default ConversationContainer

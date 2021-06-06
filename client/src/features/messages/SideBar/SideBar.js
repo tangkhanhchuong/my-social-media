@@ -2,19 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Avatar from "styles/Avatar"
 import Header from 'components/Header'
 import chatRequests from 'http/chat_requests'
 import NewConversation from './NewConversation'
+import { initializeAllConversations } from '../messageSlice'
 
-const S_ChatListContainer = styled.div`
+const SChatListContainer = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column
 `
 
-const S_ChatContainer = styled.div`
+const SChatContainer = styled.div`
     border-bottom: 1px solid #CA2055;
     padding: 10px 20px;
     cursor: pointer;
@@ -23,7 +25,7 @@ const S_ChatContainer = styled.div`
     }
 `
 
-const S_AvatarContainer = styled.div`
+const SAvatarContainer = styled.div`
 	display: flex;
     flex-direction: row;
 	justify-content: flex-start;
@@ -36,7 +38,7 @@ const S_AvatarContainer = styled.div`
 	}
 `
 
-const S_NameAndLatedMsg = styled.div`
+const SNameAndLatedMsg = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: -10px;
@@ -44,13 +46,13 @@ const S_NameAndLatedMsg = styled.div`
     flex: 1
 `
 
-const S_LastMsg = styled.p`
+const SLastMsg = styled.p`
     font-size: 14px;
     color: gray;
     margin-bottom: 0
 `
 
-const S_ChatLink = styled(Link)`
+const SChatLink = styled(Link)`
     text-decoration: none !important;
     color: black !important
 `
@@ -69,39 +71,45 @@ const Chat = ({ chat }) => {
     }
 
     return (
-        <S_ChatContainer>
-            <S_ChatLink to={`/messages/${_id}`}>        
-                <S_AvatarContainer>
+        <SChatContainer>
+            <SChatLink to={`/messages/${_id}`}>        
+                <SAvatarContainer>
                     <Avatar size="50px" src={`https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`} alt="avatar" />
-                    <S_NameAndLatedMsg>
+                    <SNameAndLatedMsg>
                         <b>{chatName}</b>
-                        <S_LastMsg>{generateFitContent(latestMessage)}</S_LastMsg>
-                    </S_NameAndLatedMsg>
-                </S_AvatarContainer>
-            </S_ChatLink>
-        </S_ChatContainer>
+                        <SLastMsg>{generateFitContent(latestMessage)}</SLastMsg>
+                    </SNameAndLatedMsg>
+                </SAvatarContainer>
+            </SChatLink>
+        </SChatContainer>
     )   
 }
 
 const ChatList = () => {
-    const { data, isLoading } = useQuery('get_chats', chatRequests.list)
+    const dispatch = useDispatch()
+    const messages = useSelector(state => state.messages)
+
+    const onChatListFetched = (data) => {
+        const allConversations = data.data
+        dispatch(initializeAllConversations(allConversations))
+    }
+
+    const { isLoading } = useQuery('get_chats', chatRequests.list, { onSuccess: onChatListFetched })
 
     if(isLoading)   return <>Loading</>
 
-    const chatList = data.data
-
-    return chatList.map(chat => <Chat chat={chat} key={chat._id}/>  )    
+    return Object.values(messages.allConversations).map(chat => <Chat chat={chat} key={chat._id}/>  )    
 }
 
 const SideBar = () => {
     return (
-        <S_ChatListContainer>
+        <SChatListContainer>
             <Header justify="space-between">
                 <b>Messages</b>
                 <NewConversation buttonLabel="Hello" />
             </Header>
             <ChatList />
-        </S_ChatListContainer>
+        </SChatListContainer>
     )
 }
 

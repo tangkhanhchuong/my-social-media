@@ -2,3 +2,4 @@
 [ ]  Update conversations list when add chat success
 [X]  Change Conversation when click another tab on sidebar
 [X]  Style for messages page
+[ ]  Set up redux toolkit

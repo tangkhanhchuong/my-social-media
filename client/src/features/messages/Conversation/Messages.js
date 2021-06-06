@@ -1,21 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import styled from 'styled-components'
 
-const MessagesContainer = styled.div`
+const SMessagesContainer = styled.div`
     background-color: white;
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
 ` 
 
-const Message = styled.div`
+const SMessage = styled.div`
     display: flex;
     justify-content: ${props => props.fromMe ? "flex-end": "flex-start"};
 `
 
-const Bubble = styled.div`
+const SBubble = styled.div`
     margin: 10px 25px;
     padding: 8px 12px;
     word-wrap: break-word;
@@ -26,41 +26,44 @@ const Bubble = styled.div`
     border-radius: 40px
 `
 
-const Messages = (props) => {
-    const { messages, authInfo } = props
-    const ref = useRef()
+const Messages = ({ conversation }) => {
+    const authReducer = useSelector(state => state.auth)
 
+    const { messages } = conversation
+    const ref = useRef()
     useEffect(()=>{
         const scrollToBottomOfView = () => {
             ref.current.scrollTop = (ref.current.scrollHeight - ref.current.offsetHeight)
         }
         scrollToBottomOfView()
-        console.log("Hello")
     }, [messages])
 
+    
+    const startMessage = {
+        _id: 1,
+        content: "Begin to chat with him",
+        sender: { _id: 1 }
+    }
+
+    const showMessages = messages.length !== 0 ? messages : [startMessage]
+
     return (
-        <MessagesContainer ref={ref}> 
+        <SMessagesContainer ref={ref}> 
             {
-                messages.map((msg) => {
+                showMessages.map((msg) => {
                     const senderId = msg.sender._id
-                    const fromMe = senderId === authInfo.userId
+                    const fromMe = senderId === authReducer.userId
 
                     return (
-                        <Message key={msg._id} fromMe={fromMe}>
-                            <Bubble fromMe={fromMe}>{msg.content}
-                            </Bubble>
-                        </Message>  
+                        <SMessage key={msg._id} fromMe={fromMe}>
+                            <SBubble fromMe={fromMe}>{msg.content}
+                            </SBubble>
+                        </SMessage>  
                     )
                 })
             }
-        </MessagesContainer>
+        </SMessagesContainer>
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        authInfo: state.auth
-    }
-}
-
-export default connect(mapStateToProps)(Messages)
+export default Messages

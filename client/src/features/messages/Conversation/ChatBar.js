@@ -1,15 +1,16 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
 
 import { CustomInput } from 'components/Input'
-import { socket } from 'store/messages/messages_actions'
-import { v4 as uuidv4 } from 'uuid'
+import { sendMessage } from '../messageSlice'
 
 const ChatBar = (props) => {
     const { id: chatId } = useParams()
 
-    const { authInfo } = props
+    const authReducer = useSelector(state => state.auth)
+    const dispatch = useDispatch()
 
     const onSendMsg = (e) => {
         e.preventDefault()
@@ -21,15 +22,12 @@ const ChatBar = (props) => {
             content: val, 
             chat: chatId,
             sender: {
-                _id: authInfo.userId,
-                username: authInfo.username
+                _id: authReducer.userId,
+                username: authReducer.username
             }
         }      
-        // setMessages((messages => ([ ...messages, newMsg ])))
+        dispatch(sendMessage({ convId: chatId, message: newMsg }))
 
-        const { _id, username} = JSON.parse(localStorage.getItem('authInfo'))
-
-        if(socket) socket.emit("send_msg", newMsg)
         e.target.elements[0].value = ""
     }
 
@@ -40,10 +38,4 @@ const ChatBar = (props) => {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        authInfo: state.auth
-    }
-}
-
-export default connect(mapStateToProps)(ChatBar)
+export default ChatBar

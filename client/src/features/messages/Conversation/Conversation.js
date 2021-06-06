@@ -7,7 +7,7 @@ import Header from 'components/Header'
 import ConversationContainer from './ConversationContainer'
 import ChatBar from './ChatBar'
 
-const S_ConversationContainer = styled.div`
+const SConversationContainer = styled.div`
     border: 1px solid lightgray; 
     height: 100vh;
     display: flex;
@@ -20,19 +20,19 @@ const Conversation = () => {
 
     if(!chatId)  {
         return (
-            <S_ConversationContainer>
+            <SConversationContainer>
                 <Header>Conversation</Header>
                 Select Conversation
-            </S_ConversationContainer>
+            </SConversationContainer>
         )
     }
 
     return (
-        <S_ConversationContainer>
+        <SConversationContainer>
             <Header>{ chatId }</Header>
             <ConversationContainer/>
             <ChatBar />
-        </S_ConversationContainer>  
+        </SConversationContainer>  
     )
 
 }

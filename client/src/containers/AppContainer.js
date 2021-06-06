@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css"
 
 import App from './App'
 import GlobalStyle from "styles/GlobalStyle"
-import store from "store"
+// import store from "store"
+import store from 'app/store'
 import { ThemeContext } from "context/ThemeContext"
 
 const queryClient = new QueryClient({

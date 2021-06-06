@@ -42,12 +42,12 @@ const login = async (req, res) => {
 
     refreshTokens.push(refreshToken)
 
-    await sendEmailSES({
-        to: AWS_SYSTEM_EMAIL,
-        from: email,
-        subject: "Login successfully",
-        text: "Congratulation! You are authenticated. You can access our services."
-    })
+    // await sendEmailSES({
+    //     to: AWS_SYSTEM_EMAIL,
+    //     from: email,
+    //     subject: "Login successfully",
+    //     text: "Congratulation! You are authenticated. You can access our services."
+    // })
 
     // await sendSMS({
     //     phoneNumber: '+447700900123',

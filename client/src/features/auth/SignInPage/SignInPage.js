@@ -46,7 +46,7 @@ const SignInPage = (props) => {
                     {isLoading ? "Logging in" : "Login"}
                 </Button>
                 <span>or</span>
-                <LinkButton xl type="button" to='/signup'>
+                <LinkButton type="button" to='/signup'>
                     Signup
                 </LinkButton>
                 </Form>
@@ -59,10 +59,6 @@ const SignInPage = (props) => {
 
 const mapStateToProps = state => {
     return {
-        // loading: state.auth.loading,
-        // error: state.auth.error,
-        // isAuthenticated: state.auth.accessToken !== null,
-        // authRedirectPath: state.auth.authRedirectPath
     }
 }
 

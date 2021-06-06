@@ -1,49 +1,42 @@
-import React, {useEffect} from 'react'
-import { connect } from 'react-redux'
-
-import { authCheckState } from 'store/auth/auth_actions'
-import { connectSocket } from 'store/messages/messages_actions'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import AuthContainer from "./AuthContainer"
 import RouterContainer from "./RouterContainer"
+import { loginSuccess, logout } from 'features/auth/auth_slice'
+import useSocket from 'features/messages/useSocket'
 
-const App = (props) => {
-    const { isAuthenticated, authInfo } = props
-    const accessToken = authInfo.token
+const App = () => {
+
+    const authInfo = useSelector(state => state.auth)
+    const { accessToken } = authInfo
+
+    const dispatch = useDispatch()
+    useSocket({accessToken})
 
     useEffect(() => {
-        if(!accessToken){
-            props.onTryAutoSignIn()
-        } 
-    }, [accessToken])
-
-    useEffect(() => {
-        if(accessToken){
-            props.onTryToConnectSocket(accessToken)
+        const tryToLogIn = () => {
+            const infoInLocalStorage = JSON.parse(localStorage.getItem('authInfo'))
+            if(!infoInLocalStorage){
+                console.log("Sign In")
+                dispatch(logout())
+                return
+            }
+            dispatch(loginSuccess(infoInLocalStorage))
         }
-            
+        setTimeout(tryToLogIn, 100)
+        tryToLogIn()
+
     }, [accessToken])
+
+    if(authInfo.isLoading)  return <>Loading</>
 
     return (
         <>
-          {isAuthenticated ? <RouterContainer /> : <AuthContainer />}
+          { accessToken ? <RouterContainer /> : <AuthContainer /> }
         </>
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        authInfo: state.auth,
-        isAuthenticated: !!state.auth.token
-    }
-}
+export default App
 
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onTryAutoSignIn: async () => await dispatch(authCheckState()),
-        onTryToConnectSocket: async (token) => await dispatch(connectSocket(token))
-    }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(App)
