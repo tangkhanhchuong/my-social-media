@@ -1,9 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 // import { useMutation } from "@apollo/react-hooks";
-import { toast } from "react-toastify";
-import { TWEET } from "../../queries/tweet";
-import { DELETE_COMMENT } from "../../queries/comment";
+// import { toast } from "react-toastify";
+// import { TWEET } from "../../queries/tweet";
+// import { DELETE_COMMENT } from "../../queries/comment";
 import { TrashIcon } from "../Icons";
 
 const DeleteComment = ({ id }) => {

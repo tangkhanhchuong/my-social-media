@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import chatRequests from 'http/chat_requests'
 
 import Messages from './Messages'
-import { addConversation } from '../messageSlice'
+import { addConversation } from '../message_slice'
 
 const SMessagesContainer = styled.div`
     flex: 1
@@ -21,7 +21,7 @@ const ConversationContainer = () => {
     const { mutate } = useMutation(chatRequests.getMessages)
 
     const onMessagesFetched = (data) => {
-        const conv = { messages: data.data, id: chatId}
+        const conv = { messages: data.data, _id: chatId}
         dispatch(addConversation(conv))
     }
     
@@ -30,7 +30,6 @@ const ConversationContainer = () => {
 
     useEffect(() => {
         if(!isConversationInitialized) {
-            console.log("Hello");
             mutate(chatId, {
                 onSuccess: onMessagesFetched
             })

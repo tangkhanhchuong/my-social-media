@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 
 import { displayError } from "utils"
 import authRequests from 'http/auth_requests'
-import { loginSuccess, startLogin } from "../auth_slice"
+import { loginSuccess, startLogin, loginFail } from "../auth_slice"
 
 
 const useSignIn = () => {
@@ -29,6 +29,7 @@ const useSignIn = () => {
         default: 
           break
     }
+    dispatch(loginFail(err))
   }
 
   const onLogin = (values) => {

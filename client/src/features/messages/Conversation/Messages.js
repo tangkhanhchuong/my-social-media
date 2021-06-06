@@ -53,7 +53,7 @@ const Messages = ({ conversation }) => {
                 showMessages.map((msg) => {
                     const senderId = msg.sender._id
                     const fromMe = senderId === authReducer.userId
-
+                    
                     return (
                         <SMessage key={msg._id} fromMe={fromMe}>
                             <SBubble fromMe={fromMe}>{msg.content}

@@ -19,7 +19,6 @@ const connectSocket = async (server) => {
     
     socket.on('send_msg', async (payload) => {
       const { content, sender, chat } = payload
-      console.log(payload)
       // create new message
       const msg = { 
         content,
@@ -28,16 +27,16 @@ const connectSocket = async (server) => {
       }
       try {
         const newMessage = await Message.create(msg)
+
         //assign to latest message of chat
-        await Chat.findOneAndUpdate({_id: ObjectId(chat)}, {latestMessage: newMessage._id})
+        const updatedChat = await Chat.findOneAndUpdate({_id: ObjectId(chat)}, {latestMessage: newMessage._id, updatedAt: newMessage.updatedAt })
+        
+        io.sockets.emit("receive_msg", { newMessage: { ...payload, sender: { _id: sender._id } }, chat: updatedChat })
       }
-
-
       catch(err){
         console.log(err)
       }
 
-      socket.broadcast.emit("receive_msg", payload)
     })
   })
 

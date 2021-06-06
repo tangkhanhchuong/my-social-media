@@ -27,21 +27,31 @@ const messages = createSlice({
 
         addConversation: (state, action) => {
             const conv = action.payload
-            state.allConversations[conv.id].messages = [...conv.messages]
-            state.allConversations[conv.id].isInitialized = true
+
+            if(!state.allConversations[conv._id])   {
+                state.allConversations[conv._id] = { ...conv, messages: [], isInitialized: false }
+                return
+            }
+            
+            state.allConversations[conv._id].messages = [...conv.messages]
+            state.allConversations[conv._id].isInitialized = true
         },
         
         receiveMessage: (state, action) => {
-            const message = action.payload  
-            state.allConversations[message.chat].messages.push(message)          
+            const { newMessage, chat } = action.payload 
+
+            if(!state.allConversations[chat._id])
+                state.allConversations[chat._id] = { ...chat, messages: [], isInitialized: false }
+
+            state.allConversations[newMessage.chat].messages.push(newMessage)  
+            state.allConversations[newMessage.chat].latestMessage = newMessage
+            state.allConversations[newMessage.chat].updatedAt = chat.updatedAt 
         },
         
         sendMessage: (state, action) => {
-            const { convId, message } = action.payload  
-            state.allConversations[convId].messages.push(message)  
+            const message = action.payload  
 
             if(state.socket) {
-                console.log(message)
                 state.socket.emit("send_msg", message)
             }
         }

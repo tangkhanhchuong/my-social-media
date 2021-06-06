@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { toast } from "react-toastify";
 import TextareaAutosize from "react-textarea-autosize";
 import useInput from "../../hooks/useInput";
-import Button from "../../styles/Button"
-import { displayError } from "../../utils"
-import Avatar from "../../styles/Avatar"
-import { TWEET } from "../../queries/tweet"
-import { ADD_COMMENT } from "../../queries/comment"
-import { USER } from "../../queries/client";
+// import Button from "../../styles/Button"
+// import { displayError } from "../../utils"
+// import Avatar from "../../styles/Avatar"
+// import { TWEET } from "../../queries/tweet"
+// import { ADD_COMMENT } from "../../queries/comment"
+// import { USER } from "../../queries/client";
 
 const Wrapper = styled.div`
 	display: flex;

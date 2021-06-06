@@ -10,10 +10,12 @@ import Avatar from "styles/Avatar"
 import chatRequests from 'http/chat_requests'
 
 import SearchBar from './SearchBar'
+import { useDispatch } from 'react-redux'
+import { addConversation } from '../message_slice'
 
 const avatarSrc = `https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`
 
-const StyledNewConvBtn = styled.button`
+const SNewConversationBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,7 +32,7 @@ const StyledNewConvBtn = styled.button`
   }
 `
 
-const RecommendUserItem = styled.li`
+const SRecommendUserItem = styled.li`
   cursor: pointer;
   padding: 10px 20px;
   border-bottom: 1px solid lightgray;
@@ -40,11 +42,11 @@ const RecommendUserItem = styled.li`
   }
 `
 
-const SelectedUserItem = styled.li`
+const SSelectedUserItem = styled.li`
 
 `
 
-const ModalFooter = styled.div`
+const SModalFooter = styled.div`
   display: flex;
   justify-content: flex-end;
 `
@@ -67,10 +69,10 @@ const RecommendedUsers = ({ recommendedUsers, setSelectedUsers, selectedUsers, s
     <ul>
       {
         recommendedUsers.map(user => (
-          <RecommendUserItem key={user._id} onClick={onAddUser.bind(this, user)}>
+          <SRecommendUserItem key={user._id} onClick={onAddUser.bind(this, user)}>
             <Avatar size="50px" src={avatarSrc} alt="avatar" />
             { user.username }
-          </RecommendUserItem>
+          </SRecommendUserItem>
         ))
       }
     </ul>
@@ -82,10 +84,9 @@ const SelectedUsers = ({ selectedUsers }) => {
     <ul>
       {
         selectedUsers.map(user => (
-          <SelectedUserItem key={user._id}>
+          <SSelectedUserItem key={user._id}>
             {user.username}
-          </SelectedUserItem>
-          
+          </SSelectedUserItem>
         ))
       }
     </ul>
@@ -93,6 +94,7 @@ const SelectedUsers = ({ selectedUsers }) => {
 }
 
 const NewConversation = (props) => {
+  const dispatch = useDispatch()
   const [modal, setModal] = useState(false)
   const [recommendedUsers, setRecommendedUsers] = useState([])
   const [selectedUsers, setSelectedUsers] = useState([])
@@ -100,6 +102,10 @@ const NewConversation = (props) => {
 
   const onAddSuccess = (data) => {
     toast.success(`Conversation was created`)
+
+    const newConversation = data.data
+    dispatch(addConversation(newConversation))
+
     onCloseModal()
   }
 
@@ -123,7 +129,7 @@ const NewConversation = (props) => {
   }
 
   return (
-    <StyledNewConvBtn onClick={toggle}>
+    <SNewConversationBtn onClick={toggle}>
         <FaPlus />  
         <Modal onClose={onCloseModal} isOpen={modal} toggle={onCloseModal} style={{height: "300px !important"}}>
             <ModalHeader toggle={onCloseModal}>New Conversation</ModalHeader>
@@ -140,12 +146,12 @@ const NewConversation = (props) => {
                 setSelectedUsers={setSelectedUsers} 
                 setAddFinish={setAddFinish}
               />
-              <ModalFooter>
+              <SModalFooter>
                 <Button onClick={onCreateConversation}>Next</Button>{' '}
-              </ModalFooter> 
+              </SModalFooter> 
             </ModalBody>
         </Modal>
-    </StyledNewConvBtn>
+    </SNewConversationBtn>
   )
 }
 

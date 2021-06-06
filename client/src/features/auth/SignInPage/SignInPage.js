@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import LinkButton from "styles/LinkButton"
 import Button from "styles/Button"
 import FormContainer from "styles/Form"
-import { authStart, authSuccess } from 'store/auth/auth_actions'
 import Input from "components/Input"
 
 import useSignIn from './useSignIn'
@@ -20,7 +19,7 @@ const SignInPage = (props) => {
         password: ''
     }
 
-    const { isLoading, onLogin } = useSignIn({ onStartingLogin, onLoginSuccess })
+    const { isLoading, onLogin } = useSignIn()
 
     return (
         <FormContainer center>
@@ -57,15 +56,4 @@ const SignInPage = (props) => {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onStartingLogin: () => dispatch(authStart()),
-        onLoginSuccess:  (user) => dispatch(authSuccess(user))
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SignInPage)
+export default SignInPage

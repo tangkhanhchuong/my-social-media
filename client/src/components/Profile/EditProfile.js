@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../Header";
-import Loader from "../Loader";
-import EditProfileForm from "./EditProfileForm";
+// import Loader from "../Loader";
+// import EditProfileForm from "./EditProfileForm";
 // import { USER } from "../../queries/client";
 // import { PROFILE } from "../../queries/profile";
 

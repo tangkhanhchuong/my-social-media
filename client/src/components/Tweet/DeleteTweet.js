@@ -1,8 +1,8 @@
 import React from "react"
-import { useMutation } from "@apollo/react-hooks"
-import { toast } from "react-toastify"
-import { FEED } from "../../queries/others"
-import { DELETE_TWEET } from "../../queries/tweet"
+// import { useMutation } from "@apollo/react-hooks"
+// import { toast } from "react-toastify"
+// import { FEED } from "../../queries/others"
+// import { DELETE_TWEET } from "../../queries/tweet"
 import { TrashIcon } from "../Icons"
 
 const DeleteTweet = ({ id }) => {

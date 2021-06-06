@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 import { CustomInput } from 'components/Input'
-import { sendMessage } from '../messageSlice'
+import { sendMessage } from '../message_slice'
 
 const ChatBar = (props) => {
     const { id: chatId } = useParams()
@@ -26,7 +26,7 @@ const ChatBar = (props) => {
                 username: authReducer.username
             }
         }      
-        dispatch(sendMessage({ convId: chatId, message: newMsg }))
+        dispatch(sendMessage(newMsg))
 
         e.target.elements[0].value = ""
     }

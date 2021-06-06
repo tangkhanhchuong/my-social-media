@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
-import { receiveMessage, connectSocket, disconnectSocket } from './messageSlice'
+import { receiveMessage, connectSocket, disconnectSocket } from './message_slice'
 
 const useSocket = ({accessToken}) => {
     const dispatch = useDispatch()

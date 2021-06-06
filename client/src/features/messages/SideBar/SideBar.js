@@ -8,7 +8,7 @@ import Avatar from "styles/Avatar"
 import Header from 'components/Header'
 import chatRequests from 'http/chat_requests'
 import NewConversation from './NewConversation'
-import { initializeAllConversations } from '../messageSlice'
+import { initializeAllConversations } from '../message_slice'
 
 const SChatListContainer = styled.div`
     height: 100vh;
@@ -98,7 +98,12 @@ const ChatList = () => {
 
     if(isLoading)   return <>Loading</>
 
-    return Object.values(messages.allConversations).map(chat => <Chat chat={chat} key={chat._id}/>  )    
+    const sortedChatList = Object.fromEntries(Object.entries(messages.allConversations)
+                                .sort((a, b) => {
+                                    return (a[1].updatedAt > b[1].updatedAt) ? -1 : 1
+                                }))
+                                
+    return Object.values(sortedChatList).map(chat => <Chat chat={chat} key={chat._id}/>  )    
 }
 
 const SideBar = () => {

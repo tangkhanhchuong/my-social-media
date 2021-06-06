@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { FEED } from "../queries/others";
-import Loader from "./Loader";
-import Tweet from "./Tweet/Tweet";
-import CustomResponse from "./CustomResponse";
+// import { FEED } from "../queries/others";
+// import Loader from "./Loader";
+// import Tweet from "./Tweet/Tweet";
+// import CustomResponse from "./CustomResponse";
 
 const Wrapper = styled.div`
   margin-bottom: 7rem;
