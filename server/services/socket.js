@@ -14,7 +14,6 @@ const corsOptions = {
 const connectSocket = async (server) => {
   const io = await socketIo(server, corsOptions)
   io.on('connection', (socket) => {
-    console.log("user connect")
     socket.emit("user_connected")
     
     socket.on('send_msg', async (payload) => {
@@ -31,12 +30,25 @@ const connectSocket = async (server) => {
         //assign to latest message of chat
         const updatedChat = await Chat.findOneAndUpdate({_id: ObjectId(chat)}, {latestMessage: newMessage._id, updatedAt: newMessage.updatedAt })
         
-        io.sockets.emit("receive_msg", { newMessage: { ...payload, sender: { _id: sender._id } }, chat: updatedChat })
+        io.to(chat).emit("receive_msg", { newMessage: { ...payload, sender: { _id: sender._id } }, chat: updatedChat })
       }
       catch(err){
         console.log(err)
+        throw(err)
       }
 
+    })
+
+    socket.on('join_conversation', (payload) => {
+      const conversationId = payload
+      socket.join(conversationId)
+    })
+
+    socket.on('add_conversation', (payload) => {
+      const conversation = payload
+      socket.join(conversation._id)
+      console.log(conversation._id)
+      socket.broadcast.emit('is_invited_to_conversation', conversation)
     })
   })
 

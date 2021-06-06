@@ -22,6 +22,7 @@ const messages = createSlice({
             const conversations = action.payload
             for(let conv of conversations) {
                 state.allConversations[conv._id] = { ...conv, messages: [], isInitialized: false }
+                state.socket.emit('join_conversation', conv._id)
             }
         },
 
@@ -30,6 +31,7 @@ const messages = createSlice({
 
             if(!state.allConversations[conv._id])   {
                 state.allConversations[conv._id] = { ...conv, messages: [], isInitialized: false }
+                state.socket.emit('add_conversation', conv)
                 return
             }
             
