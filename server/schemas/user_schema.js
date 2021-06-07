@@ -8,7 +8,7 @@ const UserSchema = new Schema({
     email: { type: String, trim: true, unique: true },
     password: { type: String },
     avatar: {type: String, default: ''},
-    profilePicture: { type: String, default: '' },
+    coverPicture: { type: String, default: '' },
     authMethod: { type: String, default: 'JWT' },
     fbId: { type: String }
 }, { timestamps: true })
@@ -32,7 +32,7 @@ UserSchema.methods.isValidPassword = async function(password) {
     if(user.authMethod !== 'JWT')   return true
     const compare = await bcrypt.compare(password, user.password)
     return compare
-  }
+}
 
 const User = mongoose.model('User', UserSchema)
 module.exports = User

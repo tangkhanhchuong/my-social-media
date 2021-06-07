@@ -10,11 +10,10 @@ import { SignInPage } from "features/auth/SignInPage"
 import { SignUpPage } from "features/auth/SignUpPage"
 
 const AuthContainer = () => {
-
-  
   const SignIn = () => <SignInPage />
   const SignUp = () => <SignUpPage />
 
+  console.log("Auth");
   return (
     <Router>
         <Switch>

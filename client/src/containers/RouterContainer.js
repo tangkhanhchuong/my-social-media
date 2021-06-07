@@ -8,9 +8,6 @@ import {
 import styled from 'styled-components'
 
 import Nav from "components/layout/Nav"
-import MasterTweet from "components/Tweet/MasterTweet"
-import EditProfile from "components/Profile/EditProfile"
-import Profile from "components/Profile/Profile"
 import Home from "pages/Home"
 import Bookmarks from "pages/Bookmarks"
 import Notifications from "pages/Notifications"
@@ -18,6 +15,7 @@ import Explore from "pages/Explore"
 
 import Messages from "features/messages"
 import { SignOut } from "features/auth/SignOutPage"
+import Profile from "features/profile/Profile"
 
 const MainPageContainer = styled.div`
   margin-left: 26%;
@@ -37,9 +35,6 @@ const RouterContainer = () => {
           <Route exact path="/notifications" component={Notifications} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/bookmarks" component={Bookmarks} />
-          <Route path="/">
-            <Redirect to="/" />
-          </Route>
         </Switch>
       </MainPageContainer>
     </Router>

@@ -18,7 +18,6 @@ const App = () => {
         const tryToLogIn = () => {
             const infoInLocalStorage = JSON.parse(localStorage.getItem('authInfo'))
             if(!infoInLocalStorage){
-                console.log("Sign In")
                 dispatch(logout())
                 return
             }
