@@ -7,6 +7,7 @@ import { toast } from "react-toastify"
 
 import Button from 'styles/Button'
 import Avatar from "styles/Avatar"
+import { SIconButton } from 'styles/IconButton'
 import chatRequests from 'http/chat_requests'
 
 import SearchBar from './SearchBar'
@@ -14,23 +15,6 @@ import { useDispatch } from 'react-redux'
 import { addConversation } from '../message_slice'
 
 const avatarSrc = `https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`
-
-const SNewConversationBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  color: ${(props) => props.theme.accentColor};
-  background-color: #fff;
-
-
-  &: hover {
-    background-color: ${(props) => props.theme.hover};
-  }
-`
 
 const SRecommendUserItem = styled.li`
   cursor: pointer;
@@ -129,7 +113,7 @@ const NewConversation = (props) => {
   }
 
   return (
-    <SNewConversationBtn onClick={toggle}>
+    <SIconButton onClick={toggle}>
         <FaPlus />  
         <Modal onClose={onCloseModal} isOpen={modal} toggle={onCloseModal} style={{height: "300px !important"}}>
             <ModalHeader toggle={onCloseModal}>New Conversation</ModalHeader>
@@ -151,7 +135,7 @@ const NewConversation = (props) => {
               </SModalFooter> 
             </ModalBody>
         </Modal>
-    </SNewConversationBtn>
+    </SIconButton>
   )
 }
 

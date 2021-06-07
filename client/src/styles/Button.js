@@ -46,4 +46,5 @@ export default styled.button`
     background-color: ${props => props.theme.accentColor};
     color: #FFF;
   }
-`;
+`
+

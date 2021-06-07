@@ -55,18 +55,21 @@ const createChat = async (req, res) => {
     }
 }
 
-const updateChat = async (req, res) => {
+const updateChat = async (req, res, next) => {
     try{
-        const messageId = req.params.id
-        const { newMembers } = req.body
-        const updatedMessage = await Message.findOneAndUpdate(
-            { _id: ObjectId(messageId) },
-            { $set: { users : [ ...users, ...new Set(newMembers).map(m => ObjectId(m))] } }
+        const chatId = req.params.id
+        const { updatedChat } = req.body
+
+        const updatedMessage = await Chat.findOneAndUpdate(
+            { _id: ObjectId(chatId) },
+            updatedChat, 
+            { new: true }
         )
 
         res.status(200).json(updatedMessage)
     }
     catch(err){
+        console.log(err.message);
         err.statusCode = 400
         next(err)
     }

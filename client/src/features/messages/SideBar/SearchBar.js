@@ -5,7 +5,7 @@ import { useMutation } from 'react-query'
 
 import userRequest from 'http/user_requests'
 
-const SearchBarContainer = styled.div`
+const SSearchBarContainer = styled.div`
     border: none;
     width: 100%;
     padding: 4px 20px;
@@ -14,7 +14,7 @@ const SearchBarContainer = styled.div`
     align-items: center;
 `
 
-const UserSearchInput = styled.input`
+const SUserSearchInput = styled.input`
     width: 100%;
     border: none;
     margin-left: 16px;
@@ -55,10 +55,10 @@ const SearchBar = ({ setRecommendedUsers, addFinish, setAddFinish }) => {
     }
 
     return (
-        <SearchBarContainer>
+        <SSearchBarContainer>
             <FaSearch size={20} />
-            <UserSearchInput value={searchedWord} placeholder="Search people" onChange={onKeyDown}/>
-        </SearchBarContainer>
+            <SUserSearchInput value={searchedWord} placeholder="Search people" onChange={onKeyDown}/>
+        </SSearchBarContainer>
     )
 }
 

@@ -28,8 +28,8 @@ const connectSocket = async (server) => {
         const newMessage = await Message.create(msg)
 
         //assign to latest message of chat
-        const updatedChat = await Chat.findOneAndUpdate({
-          _id: ObjectId(chat)}, 
+        const updatedChat = await Chat.findOneAndUpdate(
+          {_id: ObjectId(chat)}, 
           {latestMessage: newMessage._id, updatedAt: newMessage.updatedAt },
           {new: true}
         )

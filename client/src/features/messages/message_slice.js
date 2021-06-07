@@ -70,10 +70,18 @@ const messages = createSlice({
             if(state.socket) {
                 state.socket.emit("send_msg", message)
             }
+        },
+
+        changeChatName: (state, action) => {
+            const { chatId, chatName } = action.payload
+            state.allConversations[chatId].chatName = chatName
         }
     },
 })
 
 const { reducer, actions } = messages
-export const { connectSocket, disconnectSocket, initializeAllConversations, addConversation, receiveMessage, sendMessage } = actions
+export const { 
+    connectSocket, disconnectSocket, initializeAllConversations, 
+    addConversation, receiveMessage, sendMessage, changeChatName 
+} = actions
 export default reducer
