@@ -1,5 +1,12 @@
 import { createSlice, current } from "@reduxjs/toolkit"
 
+const sortObjectKeysByTimestamp = (obj) => {
+    return Object.fromEntries(Object.entries({...obj})
+                .sort((a, b) => {
+                    return (a[1].updatedAt > b[1].updatedAt) ? -1 : 1
+                }))
+}
+
 const messages = createSlice({
     name: 'messages',
     initialState: {
@@ -32,11 +39,15 @@ const messages = createSlice({
             if(!state.allConversations[conv._id])   {
                 state.allConversations[conv._id] = { ...conv, messages: [], isInitialized: false }
                 state.socket.emit('add_conversation', conv)
-                return
+            }
+            else {
+                state.allConversations[conv._id].messages = [...conv.messages]
+                state.allConversations[conv._id].isInitialized = true
             }
             
-            state.allConversations[conv._id].messages = [...conv.messages]
-            state.allConversations[conv._id].isInitialized = true
+            
+            state.allConversations = sortObjectKeysByTimestamp(state.allConversations)
+            // return state
         },
         
         receiveMessage: (state, action) => {
@@ -48,6 +59,9 @@ const messages = createSlice({
             state.allConversations[newMessage.chat].messages.push(newMessage)  
             state.allConversations[newMessage.chat].latestMessage = newMessage
             state.allConversations[newMessage.chat].updatedAt = chat.updatedAt 
+
+            state.allConversations = sortObjectKeysByTimestamp(state.allConversations)
+            // return state
         },
         
         sendMessage: (state, action) => {

@@ -33,17 +33,18 @@ const getChat = async (req, res, next) => {
 const createChat = async (req, res) => {
     try{
         const { users } = req.body
+        const { id, username } = req.user
     
         if(users.length < 1) {
             throw new Error('Chat must have at least 2 members')
         }
 
-        const userIdsInChat = [req.user.id]
+        const userIdsInChat = [ id ] 
         for(let user of users){
             userIdsInChat.push(user._id)
         }
 
-        const chatName = users.map(user => user.username).join(', ')
+        const chatName = users.map(user => user.username).join(', ') + ", " + username
         
         const newChat = await Chat.create({ users: [...new Set(userIdsInChat)].map(id => ObjectId(id)), chatName })
         res.status(201).json(newChat)

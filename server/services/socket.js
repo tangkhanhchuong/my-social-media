@@ -28,7 +28,11 @@ const connectSocket = async (server) => {
         const newMessage = await Message.create(msg)
 
         //assign to latest message of chat
-        const updatedChat = await Chat.findOneAndUpdate({_id: ObjectId(chat)}, {latestMessage: newMessage._id, updatedAt: newMessage.updatedAt })
+        const updatedChat = await Chat.findOneAndUpdate({
+          _id: ObjectId(chat)}, 
+          {latestMessage: newMessage._id, updatedAt: newMessage.updatedAt },
+          {new: true}
+        )
         
         io.to(chat).emit("receive_msg", { newMessage: { ...payload, sender: { _id: sender._id } }, chat: updatedChat })
       }
@@ -47,7 +51,6 @@ const connectSocket = async (server) => {
     socket.on('add_conversation', (payload) => {
       const conversation = payload
       socket.join(conversation._id)
-      console.log(conversation._id)
       socket.broadcast.emit('is_invited_to_conversation', conversation)
     })
   })

@@ -6,6 +6,7 @@ import Header from 'components/Header'
 
 import ConversationContainer from './ConversationContainer'
 import ChatBar from './ChatBar'
+import { useSelector } from 'react-redux'
 
 const SConversationContainer = styled.div`
     border: 1px solid lightgray; 
@@ -17,6 +18,7 @@ const SConversationContainer = styled.div`
 
 const Conversation = () => {
     const chatId = useParams().id
+    const messagesReducer = useSelector(state => state.messages)
 
     if(!chatId)  {
         return (
@@ -29,7 +31,7 @@ const Conversation = () => {
 
     return (
         <SConversationContainer>
-            <Header>{ chatId }</Header>
+            <Header>{ messagesReducer.allConversations[chatId].chatName }</Header>
             <ConversationContainer/>
             <ChatBar />
         </SConversationContainer>  

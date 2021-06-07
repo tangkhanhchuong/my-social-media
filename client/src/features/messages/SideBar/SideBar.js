@@ -63,11 +63,10 @@ const Chat = ({ chat }) => {
 
     const MAX_LEN_LAST_MSG = 30
 
-    const generateFitContent = (msg) => {
-        if(!msg)    return ""
+    const generateFitContent = (content) => {
+        if(!content)    return ""
 
-        const msgContent = msg.content
-        return msgContent.length < MAX_LEN_LAST_MSG ? msgContent : msgContent.slice(0, MAX_LEN_LAST_MSG) + " ..."
+        return content.length < MAX_LEN_LAST_MSG ? content : content.slice(0, MAX_LEN_LAST_MSG) + " ..."
     }
 
     return (
@@ -76,8 +75,8 @@ const Chat = ({ chat }) => {
                 <SAvatarContainer>
                     <Avatar size="50px" src={`https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`} alt="avatar" />
                     <SNameAndLatedMsg>
-                        <b>{chatName}</b>
-                        <SLastMsg>{generateFitContent(latestMessage)}</SLastMsg>
+                        <b>{generateFitContent(chatName)}</b>
+                        <SLastMsg>{generateFitContent(latestMessage?.content)}</SLastMsg>
                     </SNameAndLatedMsg>
                 </SAvatarContainer>
             </SChatLink>
@@ -87,7 +86,7 @@ const Chat = ({ chat }) => {
 
 const ChatList = () => {
     const dispatch = useDispatch()
-    const messages = useSelector(state => state.messages)
+    const messagesReducer = useSelector(state => state.messages)
 
     const onChatListFetched = (data) => {
         const allConversations = data.data
@@ -98,12 +97,7 @@ const ChatList = () => {
 
     if(isLoading)   return <>Loading</>
 
-    const sortedChatList = Object.fromEntries(Object.entries(messages.allConversations)
-                                .sort((a, b) => {
-                                    return (a[1].updatedAt > b[1].updatedAt) ? -1 : 1
-                                }))
-                                
-    return Object.values(sortedChatList).map(chat => <Chat chat={chat} key={chat._id}/>  )    
+    return Object.values(messagesReducer.allConversations).map(chat => <Chat chat={chat} key={chat._id}/>  )    
 }
 
 const SideBar = () => {

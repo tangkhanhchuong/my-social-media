@@ -20,7 +20,7 @@ const ConversationContainer = () => {
     const chatId = useParams().id
     const { mutate } = useMutation(chatRequests.getMessages)
 
-    const onMessagesFetched = (data) => {
+    const onMessagesFetched = async (data) => {
         const conv = { messages: data.data, _id: chatId}
         dispatch(addConversation(conv))
     }
