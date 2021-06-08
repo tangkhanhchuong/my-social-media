@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export default styled.button`
+export const StButton = styled.button`
   padding: ${(props) => (props.sm ? "0.4rem 1rem" : "0.4rem 1.8rem")};
   color: ${(props) => (props.outline ? props.theme.accentColor : "#FFF")};
   background: ${(props) =>
@@ -47,3 +47,19 @@ export default styled.button`
   }
 `
 
+export const StIconButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: ${(props) => props.theme.accentColor};
+  background-color: #fff;
+
+
+  &: hover {
+    background-color: ${(props) => props.theme.hover};
+  }
+`

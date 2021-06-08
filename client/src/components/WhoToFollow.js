@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
-import Header from "./Header";
+import Header from "./layout/Header";
 import Follow from "./Profile/Follow";
 import Avatar from "styles/Avatar";
 import Button from "styles/Button";

@@ -57,7 +57,7 @@ const SearchBar = ({ setRecommendedUsers, addFinish, setAddFinish }) => {
     return (
         <SSearchBarContainer>
             <FaSearch size={20} />
-            <SUserSearchInput value={searchedWord} placeholder="Search people" onChange={onKeyDown}/>
+            <SUserSearchInput value={searchedWord} placeholder="Search people" onChange={onKeyDown} />
         </SSearchBarContainer>
     )
 }

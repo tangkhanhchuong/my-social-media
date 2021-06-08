@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Header from "../Header";
+import Header from "../layout/Header";
 // import { TWEET } from "../../queries/tweet";
 import Loader from "../Loader";
 import Tweet from "./Tweet";

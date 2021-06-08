@@ -7,12 +7,12 @@ import {
 } from "react-router-dom"
 import styled from 'styled-components'
 
-import Nav from "components/layout/Nav"
-import Home from "pages/Home"
+import Nav from "components/layout/NavBar"
 import Bookmarks from "pages/Bookmarks"
 import Notifications from "pages/Notifications"
 import Explore from "pages/Explore"
 
+import Home from "features/posts/Home"
 import Messages from "features/messages"
 import { SignOut } from "features/auth/SignOutPage"
 import Profile from "features/profile/Profile"

@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 
 import Button from 'styles/Button'
 import Avatar from "styles/Avatar"
-import { SIconButton } from 'styles/IconButton'
+import { StIconButton } from 'styled/Buttons'
 import chatRequests from 'http/chat_requests'
 
 import SearchBar from './SearchBar'
@@ -113,7 +113,7 @@ const NewConversation = (props) => {
   }
 
   return (
-    <SIconButton onClick={toggle}>
+    <StIconButton onClick={toggle}>
         <FaPlus />  
         <Modal onClose={onCloseModal} isOpen={modal} toggle={onCloseModal} style={{height: "300px !important"}}>
             <ModalHeader toggle={onCloseModal}>New Conversation</ModalHeader>
@@ -135,7 +135,7 @@ const NewConversation = (props) => {
               </SModalFooter> 
             </ModalBody>
         </Modal>
-    </SIconButton>
+    </StIconButton>
   )
 }
 

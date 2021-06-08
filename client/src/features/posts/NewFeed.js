@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { toast } from "react-toastify";
-import TextareaAutosize from "react-textarea-autosize";
+import React, { useState } from "react"
+import styled from "styled-components"
+import { toast } from "react-toastify"
+import TextareaAutosize from "react-textarea-autosize"
 
-import useInput from "hooks/useInput";
-import Button from "styles/Button";
-import TweetFile from "styles/TweetFile";
-import { displayError, uploadImage } from "utils";
-import Avatar from "styles/Avatar";
-import { FaUpload } from "react-icons/fa";
+import useInput from "hooks/useInput"
+import Button from "styles/Button"
+import TweetFile from "styles/TweetFile"
+import { displayError, uploadImage } from "utils"
+import Avatar from "styles/Avatar"
+import { FaPhotoVideo } from "react-icons/fa"
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,47 +48,8 @@ const Wrapper = styled.div`
   }
 `;
 
-const NewTweet = () => {
-  const [tweetFiles, setTweetFiles] = useState([]);
-  const tweet = useInput("");
-
-  // const [newTweetMutation, { loading }] = useMutation(NEW_TWEET, {
-  //   refetchQueries: [{ query: FEED }],
-  // });
-
-  // const handleNewTweet = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!tweet.value) return toast("Write something");
-
-  //   const tags = tweet.value.split(" ").filter((str) => str.startsWith("#"));
-
-  //   try {
-  //     await newTweetMutation({
-  //       variables: {
-  //         text: tweet.value,
-  //         tags,
-  //         files: tweetFiles,
-  //       },
-  //     });
-
-  //     toast.success("Your tweet has been posted");
-  //   } catch (err) {
-  //     return displayError(err);
-  //   }
-
-  //   tweet.setValue("");
-  //   setTweetFiles([]);
-  // };
-
-  // const handleTweetFiles = async (e) => {
-  //   const imageUrl = await uploadImage(e.target.files[0]);
-  //   setTweetFiles([...tweetFiles, imageUrl]);
-  // };
-
-  // const {
-  //   data: { user },
-  // } = useQuery(USER);
+const NewFeed = () => {
+  const [tweetFiles, setTweetFiles] = useState([])
 
   return (
     <Wrapper>
@@ -99,8 +60,6 @@ const NewTweet = () => {
             cols="48"
             placeholder="What's happening?"
             type="text"
-            // value={tweet.value}
-            // onChange={tweet.onChange}
             value="What's happening?"
           />
 
@@ -111,7 +70,7 @@ const NewTweet = () => {
           <div className="new-tweet-action">
             <div className="svg-input">
               <label htmlFor="file-input">
-                <UploadFileIcon />
+                <FaPhotoVideo />
               </label>
               <input id="file-input" accept="image/*" type="file" onChange={()=>{}} />
             </div>
@@ -122,7 +81,7 @@ const NewTweet = () => {
         </div>
       </form>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default NewTweet;
+export default NewFeed

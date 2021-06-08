@@ -7,9 +7,9 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 import { useMutation } from 'react-query'
 import { toast } from "react-toastify"
 
-import { SIconButton } from 'styles/IconButton'
+import { StIconButton } from 'styled/Buttons'
 import Button from 'styles/Button'
-import Header from 'components/Header'
+import Header from 'components/layout/Header'
 import chatRequests from 'http/chat_requests'
 
 import ConversationContainer from './ConversationContainer'
@@ -91,7 +91,7 @@ const Conversation = () => {
         <SConversationContainer>
             <SConversationHeader>
                 <>{ chatName }</>
-                <SIconButton>
+                <StIconButton>
                     <FaEdit size={30} onClick={toggle}/>
                     <Modal isOpen={modal} toggle={toggle} style={{height: "300px !important"}}>
                         <ModalHeader toggle={toggle}>Change Conversation Name</ModalHeader>
@@ -102,7 +102,7 @@ const Conversation = () => {
                             </SModalFooter> 
                         </ModalBody>
                     </Modal>
-                </SIconButton>   
+                </StIconButton>   
             </SConversationHeader>
             <ConversationContainer/>
             <ChatBar />

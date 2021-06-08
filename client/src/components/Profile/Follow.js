@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import Button from "../../styles/Button"
-import { displayError } from "../../utils"
+import Button from "styles/Button"
 
 const Follow = ({ isFollowing, id, sm = false, relative = false }) => {
   const [followState, setFollowState] = useState(isFollowing)

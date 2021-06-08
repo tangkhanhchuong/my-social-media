@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Link, NavLink } from "react-router-dom"
-import { connect } from 'react-redux'
+import { NavLink } from "react-router-dom"
 import { FaHome, FaEnvelope, FaBell, FaUser, FaBookmark, FaAsterisk, FaTwitter , FaSignOutAlt } from 'react-icons/fa'
 import { v4 } from 'uuid'
 
@@ -218,10 +217,4 @@ const NavBar = () => {
   )
 }
 
-const mapStateToProps = state => {
-    return {
-        authInfo: state.auth
-    }
-}
-
-export default connect(mapStateToProps)(NavBar)
+export default NavBar

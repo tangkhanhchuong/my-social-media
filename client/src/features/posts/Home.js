@@ -1,8 +1,10 @@
 import React from "react"
 import styled from "styled-components"
-import FeedList from "components/FeedList"
-import NewTweet from "components/Tweet/NewTweet"
+
 import Header from "components/layout/Header"
+
+import FeedList from "./FeedList"
+import NewFeed from "./NewFeed"
 import Suggestion from "pages/Suggestion"
 
 const HomeContainer = styled.div`
@@ -16,7 +18,7 @@ const Home = () => {
 				<Header>
 					<span>Home</span>
 				</Header>
-				<NewTweet />
+				<NewFeed />
 				<FeedList />
 			</div>
         	<Suggestion />

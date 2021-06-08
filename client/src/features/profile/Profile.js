@@ -1,13 +1,9 @@
 import React from "react"
-import { useParams } from "react-router-dom"
 import styled from "styled-components"
 
-import Header from "components/Header"
+import Header from "components/layout/Header"
 
 import ProfileInfo from "./ProfileInfo"
-// import Tweet from "../Tweet/Tweet";
-// import Loader from "../Loader";
-// import { PROFILE } from "../../queries/profile";
 
 const Wrapper = styled.div`
 	padding-bottom: 5rem;

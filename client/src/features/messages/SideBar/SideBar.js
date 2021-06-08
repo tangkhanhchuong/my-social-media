@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Avatar from "styles/Avatar"
-import Header from 'components/Header'
+import Header from 'components/layout/Header'
 import chatRequests from 'http/chat_requests'
 import NewConversation from './NewConversation'
 import { initializeAllConversations } from '../message_slice'
