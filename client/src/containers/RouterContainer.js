@@ -35,6 +35,9 @@ const RouterContainer = () => {
           <Route exact path="/notifications" component={Notifications} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/bookmarks" component={Bookmarks} />
+          <Route path="/">
+            <Redirect to="/" />
+          </Route>
         </Switch>
       </MainPageContainer>
     </Router>

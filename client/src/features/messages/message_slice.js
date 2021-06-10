@@ -74,6 +74,7 @@ const messages = createSlice({
 
         changeChatName: (state, action) => {
             const { chatId, chatName } = action.payload
+            console.log({chatId, chatName});
             state.allConversations[chatId].chatName = chatName
         }
     },

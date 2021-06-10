@@ -66,6 +66,11 @@ const Conversation = () => {
 
     const toggle = () => setModal(!modal)
 
+    const onOpenModal = () => {
+        setChatName(messagesReducer.allConversations[chatId].chatName || "")
+        toggle()
+    }
+
     const changeNameSuccess = (data) => {
         const { _id, chatName } = data.data
         dispatch(changeChatName({ chatId: _id, chatName}))
@@ -73,7 +78,6 @@ const Conversation = () => {
         toast.success(`Conversation's name was changed`)
     }
     const onChangeName = async () => {
-        console.log("update");
         mutate({ chatId, chatName }, { onSuccess: changeNameSuccess })
         toggle()  
     }
@@ -90,9 +94,9 @@ const Conversation = () => {
     return (
         <SConversationContainer>
             <SConversationHeader>
-                <>{ chatName }</>
+                <>{ messagesReducer.allConversations[chatId].chatName }</>
                 <StIconButton>
-                    <FaEdit size={30} onClick={toggle}/>
+                    <FaEdit size={30} onClick={onOpenModal}/>
                     <Modal isOpen={modal} toggle={toggle} style={{height: "300px !important"}}>
                         <ModalHeader toggle={toggle}>Change Conversation Name</ModalHeader>
                         <ModalBody>

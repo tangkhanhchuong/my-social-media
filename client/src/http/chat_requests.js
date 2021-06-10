@@ -17,11 +17,11 @@ export default {
         },
         requireToken: true
     }), 
-    update: ({chatId, name}) => httpRequest({
+    update: ({chatId, chatName}) => httpRequest({
         endpoint: `/chats/${chatId}`,
         method: 'patch',
         bodyParameters: {
-            updatedChat: { chatName: name }
+            updatedChat: { chatName }
         },
         requireToken: true
     }), 

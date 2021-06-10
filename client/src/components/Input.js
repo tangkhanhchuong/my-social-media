@@ -81,8 +81,10 @@ export default InputField
 export const CustomInput = (props) => {
   const { lg } = props
 
-  return (
-    <Wrapper lg={lg} mb={props.mb} width={props.width} padding={props.padding} color={props.color} textcolor={props.textcolor}>
+  const { mb, width, padding, color, textcolor } = props
+
+  return (  
+    <Wrapper lg={lg} mb={mb} width={width} padding={padding} color={color} textcolor={textcolor}>
       <input
         type='text'
         { ...props }

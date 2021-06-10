@@ -7,7 +7,9 @@ import ProfileInfo from "./ProfileInfo"
 
 const Wrapper = styled.div`
 	padding-bottom: 5rem;
-
+  display: flex;
+  flex-direction: column;
+  
   .profile-top {
     display: flex;
     flex-direction: column;

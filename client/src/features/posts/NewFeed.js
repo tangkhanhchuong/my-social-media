@@ -1,14 +1,11 @@
 import React, { useState } from "react"
-import styled from "styled-components"
-import { toast } from "react-toastify"
+import { FaPhotoVideo } from "react-icons/fa"
 import TextareaAutosize from "react-textarea-autosize"
-
-import useInput from "hooks/useInput"
+import styled from "styled-components"
+import { StIconButton } from "styled/Buttons"
+import Avatar from "styles/Avatar"
 import Button from "styles/Button"
 import TweetFile from "styles/TweetFile"
-import { displayError, uploadImage } from "utils"
-import Avatar from "styles/Avatar"
-import { FaPhotoVideo } from "react-icons/fa"
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,12 +29,11 @@ const Wrapper = styled.div`
 
   .new-tweet-action {
     display: flex;
+    justify-content: space-between;
     align-items: center;
   }
 
   svg {
-    width: 24px;
-    height: 24px;
     fill: ${(props) => props.theme.accentColor};
     margin-right: 2rem;
     cursor: pointer;
@@ -69,9 +65,9 @@ const NewFeed = () => {
 
           <div className="new-tweet-action">
             <div className="svg-input">
-              <label htmlFor="file-input">
-                <FaPhotoVideo />
-              </label>
+              <StIconButton> 
+                <FaPhotoVideo size={30} />
+              </StIconButton>
               <input id="file-input" accept="image/*" type="file" onChange={()=>{}} />
             </div>
             <Button sm disabled={false}>

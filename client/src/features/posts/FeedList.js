@@ -26,7 +26,7 @@ const FeedList = () => {
       createdAt: "6 August",
     },
     {
-      id: 1,
+      id: 2,
       text: "Somebody lost a dog",
       tags: ["#Kirito"],
       user: {
@@ -42,7 +42,7 @@ const FeedList = () => {
       createdAt: "6 August",
     },
     {
-      id: 1,
+      id: 3,
       text: "Somebody lost a dog",
       tags: ["#Kirito"],
       user: {
@@ -58,7 +58,7 @@ const FeedList = () => {
       createdAt: "6 August",
     },
     {
-      id: 1,
+      id: 4,
       text: "Somebody lost a dog",
       tags: ["#Kirito"],
       user: {

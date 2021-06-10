@@ -115,7 +115,7 @@ const NewConversation = (props) => {
   return (
     <StIconButton onClick={toggle}>
         <FaPlus />  
-        <Modal onClose={onCloseModal} isOpen={modal} toggle={onCloseModal} style={{height: "300px !important"}}>
+        <Modal onClose={onCloseModal} isOpen={modal} toggle={onCloseModal} >
             <ModalHeader toggle={onCloseModal}>New Conversation</ModalHeader>
             <ModalBody>
               <SearchBar 
