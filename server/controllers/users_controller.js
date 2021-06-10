@@ -34,14 +34,16 @@ const getCoverPicture = async (req, res, next) => {
 }
 
 const uploadCoverPicture = async (req, res) => {
-    const file = req.file
-    console.log(file)
+    console.log(req.body);
+    console.log(req.files);
+    // const file = req.file
+    // console.log(file)
 
-    const result = await uploadFileToS3(file)
-    await unlinkFile(file.path)
-    console.log(result)
-    const description = req.body.description
-    res.status(200).json({imagePath: `/images/${result.Key}`})
+    // const result = await uploadFileToS3(file)
+    // await unlinkFile(file.path)
+    // console.log(result)
+    // const description = req.body.description
+    // res.status(200).json({imagePath: `/images/${result.Key}`})
 }
 
 module.exports = {

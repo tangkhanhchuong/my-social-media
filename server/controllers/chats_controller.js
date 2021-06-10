@@ -60,6 +60,8 @@ const updateChat = async (req, res, next) => {
         const chatId = req.params.id
         const { updatedChat } = req.body
 
+        console.log(updatedChat);
+
         const updatedMessage = await Chat.findOneAndUpdate(
             { _id: ObjectId(chatId) },
             updatedChat, 

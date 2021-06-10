@@ -14,7 +14,7 @@ const server = http.createServer(app)
 const { connectSocket } = require('./services/socket') 
 const { connectToMongoDb } = require('./services/database')
 
-//handle middlewares
+//handle middlewares        
 app.use(morgan('dev'))
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
