@@ -16,9 +16,11 @@ const { connectToMongoDb } = require('./services/database')
 
 //handle middlewares        
 app.use(morgan('dev'))
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
+app.use('/storage', express.static(__dirname + '/storage'));
+
 const initServer = async () => {
     await connectToMongoDb()
     
@@ -42,8 +44,8 @@ app.get('/', (req, res) => {
     res.status(200).json("welcome")
 })
 app.use('/auth', authRouter)
-app.use('/users', usersRouter)
 app.use(requireAuth)
+app.use('/users', usersRouter)
 app.use('/chats', chatsRouter)
 app.use('/posts', postsRouter)
 app.use('/messages', messagesRouter)

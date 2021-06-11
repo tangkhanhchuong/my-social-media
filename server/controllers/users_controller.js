@@ -1,3 +1,4 @@
+const { ObjectId } = require('bson')
 const fs = require('fs')
 const util = require('util')
 const unlinkFile = util.promisify(fs.unlink)
@@ -8,12 +9,18 @@ const { uploadFileToS3, getFileStreamFromS3 } = require('../services/upload')
 const getAllUsers = async (req, res) => {
     const users = await User.find()
 
-    res.status(200).json({
-        data: users
-    })
+    res.status(200).json(users)
 }
 
-const getUserByUsername = async (req, res) => {
+const getUser = async (req, res) => {
+    const userId = req.params.id
+
+    const user = await User.find({ _id: userId })
+
+    res.status(200).json(user?.[0])
+}
+
+const searchUserByUsername = async (req, res) => {
     const { username } = req.query
 
     if(username.length < 3) return res.sendStatus(200)
@@ -33,12 +40,27 @@ const getCoverPicture = async (req, res, next) => {
     }
 }
 
-const uploadCoverPicture = async (req, res) => {
-    console.log(req.body);
-    console.log(req.files);
-    // const file = req.file
-    // console.log(file)
+const updateUser = async (req, res, next) => {
+    try {
+        const userId = req.user.id
+        const { avatar, coverPicture} = req.files
+        const user = { ...req.body }
 
+        if(avatar && avatar !== "") user['avatar'] = avatar[0].path
+        if(coverPicture && coverPicture !== "") user['coverPicture'] = coverPicture[0].path
+        
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: ObjectId(userId) },
+            user, 
+            { new: true }
+        )
+    
+        res.status(200).json(updatedUser)
+    }
+    catch(err){
+        console.log(err)
+        next(err)
+    }
     // const result = await uploadFileToS3(file)
     // await unlinkFile(file.path)
     // console.log(result)
@@ -48,7 +70,8 @@ const uploadCoverPicture = async (req, res) => {
 
 module.exports = {
     getAllUsers,
-    getUserByUsername,
-    uploadCoverPicture,
+    getUser,
+    searchUserByUsername,
+    updateUser,
     getCoverPicture
 }

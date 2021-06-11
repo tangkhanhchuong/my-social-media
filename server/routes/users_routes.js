@@ -7,10 +7,12 @@ const router = express.Router()
 
 router.route('/').get(usersController.getAllUsers)
 
-router.route('/search').get(usersController.getUserByUsername)
+router.route('/:id').get(usersController.getUser)
+
+router.route('/search').get(usersController.searchUserByUsername)
 
 router.route('/profile')
-    .patch(uploadMultipleFiles(["avatar", "coverPicture"]), usersController.uploadCoverPicture)
+    .patch(uploadMultipleFiles(["avatar", "coverPicture"]), usersController.updateUser)
 
 router.route('/profile/:key')
     .get(usersController.getCoverPicture)

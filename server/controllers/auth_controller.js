@@ -28,17 +28,15 @@ const login = async (req, res) => {
 
     //sign token
 
-    const accessToken = generateAccessToken({
+    const payload = {
         id: user._id,
         email: user.email,
         username: user.username
-    })
+    }
 
-    const refreshToken = generateRefreshToken({
-        id: user._id,
-        email: user.email,
-        username: user.username
-    })
+    const accessToken = generateAccessToken(payload)
+
+    const refreshToken = generateRefreshToken(payload)
 
     refreshTokens.push(refreshToken)
 
@@ -54,8 +52,16 @@ const login = async (req, res) => {
     //     message: 'Hello Khanh Chuong'
     // })
 
-    const {_id, username} = user
-    res.status(200).json({_id, username, email, accessToken, refreshToken})
+    const {_id, username, bio, location, website, joinedDate, avatar, coverPicture } = user
+
+    res.status(200).json({
+        _id, 
+        username, 
+        email, 
+        profile: { bio, location, website, joinedDate, avatar, coverPicture },
+        accessToken, 
+        refreshToken
+    })
 }
 
 const register = async (req, res) => {
@@ -76,7 +82,8 @@ const register = async (req, res) => {
         username: createdUser.username,
         email: createdUser.email,
         profilePicture: createdUser.profilePicture,
-        avatar: createdUser.avatar
+        avatar: createdUser.avatar, 
+        joinedDate: Date.now()
     })
 }
 
