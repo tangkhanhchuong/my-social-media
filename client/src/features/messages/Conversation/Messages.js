@@ -9,6 +9,7 @@ const SMessagesContainer = styled.div`
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
+    padding: 0 10px;
 
     &::-webkit-scrollbar {
         -webkit-appearance: none

@@ -8,7 +8,9 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { StIconButton } from "styled/Buttons"
 import { StCenterWrapper } from "styled/Wrappers"
-import { sendMessage } from 'app/slices/message_slice'
+import { addStickersSuits, changeStickersSuit, sendMessage } from 'app/slices/message_slice'
+import stickerRequests from "http/sticker_request"
+import { useMutation } from 'react-query'
 
 const {REACT_APP_SYSTEM_URL} = process.env
 
@@ -23,35 +25,78 @@ const getImagesFromServer = () => {
     return images
 }
 
+const StStickerPopover = styled(Popover)`
+    overflow-y: hidden
+`
+
 const StStickersContainer = styled.div`
     width: 300px;
-    height: 350px;
+    height: 380px;
+    overflow-y: scroll;
 
     display: grid;
     grid-template-columns: 150px 150px
+`
+
+const StStickerSuits = styled.div`
+    position: absolute; 
+    bottom: 0px;
+    height: 90px;
+    width: 100%; 
+    background-color: white;
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+
+    .img {
+
+    }
 `
 
 const StSticker = styled.img`
     cursor: pointer;
     padding: 3px;
     border-radius: 10px;
-
+    width: ${p => p.sm ? "60px" : "120px"};
+    height: ${p => p.sm ? "60px" : "120px"};
     &:hover {
         background-color: ${p => p.theme.hover}
     }
 `
 
-const StickerItem = ({ imageSrc, onClosed }) => {
+const StickerSuitItem = ({sticker}) => {
+    const src = `${REACT_APP_SYSTEM_URL}/storage/stickers${sticker.stickers[0]}`
+    
+    const dispatch = useDispatch()
+    
+    const onChangeStickersSuit = () => {
+        dispatch(changeStickersSuit(sticker._id))
+    }
+
+    return (
+        <StSticker
+            sm
+            onClick={onChangeStickersSuit}
+            src={src}
+            width={130}
+            height={130}
+            className="stickers"
+        />
+    )
+}
+
+const StickerItem = ({ sticker, onClosed }) => {
     const dispatch = useDispatch()
     const authReducer = useSelector(state => state.auth)
     const { id: chatId } = useParams()
 
-    const src = `${REACT_APP_SYSTEM_URL}/storage/stickers${imageSrc}`
+    const src = `${REACT_APP_SYSTEM_URL}/storage/stickers${sticker}`
 
     const onSendSticker = () => {
         const newMsg = {
             _id: uuidv4(),
-            content: imageSrc, 
+            content: sticker, 
             type: "STICKER",
             chat: chatId,
             sender: {
@@ -76,22 +121,36 @@ const StickerItem = ({ imageSrc, onClosed }) => {
 }
 
 const StickerButton = () => {
-    const [anchorEl, setAnchorEl] = useState(null);
+    const dispatch = useDispatch()
+    const messageReducer = useSelector(state => state.message)
+    const [anchorEl, setAnchorEl] = useState(null)
+    const { mutate } = useMutation(stickerRequests.get, {
+        mutationKey: "get_sticker_collections"
+    })
+
+    const onAddStickerCollections = (data) => {
+        dispatch(addStickersSuits(data.data))
+    }
 
     const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+        mutate({}, {
+            onSuccess: onAddStickerCollections
+        })
+        setAnchorEl(event.currentTarget)
     }
   
     const handleClose = () => {
-      setAnchorEl(null);
+        setAnchorEl(null)
     }
+
+    const { current, collection } = messageReducer.stickers
     
     return (
         <div>
             <StIconButton type="button" variant="success" onClick={handleClick}>
                 <FaGithubAlt size="25px" />
             </StIconButton>
-            <Popover
+            <StStickerPopover
                 open={!!anchorEl}
                 anchorEl={anchorEl}
                 onClose={handleClose}
@@ -104,16 +163,27 @@ const StickerButton = () => {
                     horizontal: "left"
                 }}
             >
-                <StStickersContainer>
-                    {
-                        getImagesFromServer().map((imageSrc) => (
-                            <StCenterWrapper key={imageSrc}>
-                                <StickerItem imageSrc={imageSrc} onClosed={handleClose} />
-                            </StCenterWrapper>
-                        ))
-                    }
-                </StStickersContainer>
-            </Popover>
+                {
+                    !collection ? <>Loading</> : (
+                        <>
+                            <StStickerSuits>
+                                {
+                                    collection.map(st => <StickerSuitItem sm key={st._id} sm sticker={st} onClosed={handleClose} />)
+                                }
+                            </StStickerSuits>
+                            <StStickersContainer>
+                                {
+                                    current.stickers.map((st) => (
+                                        <StCenterWrapper key={st}>
+                                            <StickerItem sticker={st} onClosed={handleClose} />
+                                        </StCenterWrapper>
+                                    ))
+                                }
+                            </StStickersContainer>    
+                        </> 
+                    )
+                }
+            </StStickerPopover>
         </div>
     )
 };

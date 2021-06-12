@@ -5,7 +5,7 @@ export default styled.img`
   height: ${(props) => (props.size ? props.size : "40px")};
   object-fit: cover;
   border-radius: 50%;
-  border: 5px solid white;
+  border: 2px solid white;
   cursor: pointer;
   background-color: white;
 
