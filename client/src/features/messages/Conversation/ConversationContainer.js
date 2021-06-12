@@ -26,7 +26,7 @@ const ConversationContainer = () => {
     }
     
     const currentConversation = messagesReducer.allConversations[chatId]
-    const isConversationInitialized = currentConversation.isInitialized
+    const isConversationInitialized = currentConversation?.isInitialized
 
     useEffect(() => {
         if(!isConversationInitialized) {

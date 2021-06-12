@@ -81,7 +81,7 @@ const Conversation = () => {
         mutate({ chatId, chatName }, { onSuccess: changeNameSuccess })
         toggle()  
     }
-
+    
     if(!chatId)  {
         return (
             <SConversationContainer>
@@ -91,12 +91,10 @@ const Conversation = () => {
         )
     }
 
-    if(Object.keys(messagesReducer.allConversations).length === 0)   return <Redirect to="/messages" />
-
     return (
         <SConversationContainer>
             <SConversationHeader>
-                <>{ messagesReducer.allConversations[chatId].chatName }</>
+                <>{ messagesReducer.allConversations[chatId]?.chatName }</>
                 <StIconButton>
                     <FaEdit size={30} onClick={onOpenModal}/>
                     <Modal isOpen={modal} toggle={toggle} style={{height: "300px !important"}}>
@@ -110,7 +108,7 @@ const Conversation = () => {
                     </Modal>
                 </StIconButton>   
             </SConversationHeader>
-            <ConversationContainer/>
+            <ConversationContainer />
             <ChatBar />
         </SConversationContainer>  
     )
