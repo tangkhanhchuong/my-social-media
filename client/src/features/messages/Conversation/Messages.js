@@ -2,26 +2,17 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components' 
 
+import { StVerticalScrollWrapper } from "styled/Wrappers"
+
 const {REACT_APP_SYSTEM_URL} = process.env
 
-const SMessagesContainer = styled.div`
+const SMessagesContainer = styled(StVerticalScrollWrapper)`
     background-color: white;
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
     padding: 0 10px;
-
-    &::-webkit-scrollbar {
-        -webkit-appearance: none
-    }
-    &::-webkit-scrollbar:vertical {
-        width: 11px;
-        b
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: ${p => p.theme.accentColor};
-        border-right: 3px solid white
-    }
+    
 ` 
 
 const SMessage = styled.div`
@@ -39,6 +30,18 @@ const SBubble = styled.div`
     color: ${props => props.fromMe ? "white": "black"};
     border-radius: 40px
 `
+
+const StSticker = styled.img`
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 10px;
+    width: ${p => p.sm ? "60px" : "120px"};
+    height: ${p => p.sm ? "60px" : "120px"};
+    &:hover {
+        background-color: ${p => p.theme.hover}
+    }
+`
+
 
 const Messages = ({ conversation }) => {
     const authReducer = useSelector(state => state.auth)
@@ -77,7 +80,7 @@ const Messages = ({ conversation }) => {
                                         {msg.content}
                                     </SBubble>
                                 ) : (
-                                    <img src={`${REACT_APP_SYSTEM_URL}/storage/stickers/${msg.content}`} alt="" />
+                                    <StSticker src={`${REACT_APP_SYSTEM_URL}/storage/stickers/${msg.content}`} alt="" />
                                 )
                             }
                         </SMessage>  

@@ -25,3 +25,31 @@ export const StKingWrapper = styled.div`
     margin: ${props => props.m};
     padding: ${props => props.p};
 `
+
+export const StVerticalScrollWrapper = styled.div`
+    &::-webkit-scrollbar {
+        -webkit-appearance: none
+    }
+    &::-webkit-scrollbar:vertical {
+        width: 11px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: ${p => p.theme.accentColor};
+        border-radius: 10px;
+        border-right: 3px solid white
+    }
+`
+
+export const StHorizontalScrollWrapper = styled.div`
+    &::-webkit-scrollbar {
+        -webkit-appearance: none
+    }
+    &::-webkit-scrollbar:horizontal {
+        height: 11px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: ${p => p.theme.accentColor};
+        border-radius: 10px;
+        border-bottom: 3px solid white
+    }
+`

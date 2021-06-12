@@ -5,40 +5,30 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Popover } from '@material-ui/core'
 import { v4 as uuidv4 } from 'uuid'
-
-import { StIconButton } from "styled/Buttons"
-import { StCenterWrapper } from "styled/Wrappers"
-import { addStickersSuits, changeStickersSuit, sendMessage } from 'app/slices/message_slice'
-import stickerRequests from "http/sticker_request"
 import { useMutation } from 'react-query'
 
+import { StIconButton } from "styled/Buttons"
+import { StCenterWrapper, StVerticalScrollWrapper, StHorizontalScrollWrapper } from "styled/Wrappers"
+import { addStickersSuits, changeStickersSuit, sendMessage } from 'app/slices/message_slice'
+import stickerRequests from "http/sticker_request"
+
 const {REACT_APP_SYSTEM_URL} = process.env
-
-const getImagesFromServer = () => {
-    const fromId = 19036
-    const toId = 19060
-
-    const images = []
-    for (let i = fromId; i < toId; i++) {
-        images.push(`/sticker-${i}.png`)
-    }
-    return images
-}
 
 const StStickerPopover = styled(Popover)`
     overflow-y: hidden
 `
 
-const StStickersContainer = styled.div`
+const StStickersContainer = styled(StVerticalScrollWrapper)`
     width: 300px;
     height: 380px;
     overflow-y: scroll;
+    margin-bottom: 90px;
 
     display: grid;
-    grid-template-columns: 150px 150px
+    grid-template-columns: 140px 140px
 `
 
-const StStickerSuits = styled.div`
+const StStickerSuits = styled(StHorizontalScrollWrapper)`
     position: absolute; 
     bottom: 0px;
     height: 90px;
@@ -48,10 +38,7 @@ const StStickerSuits = styled.div`
     display: flex;
     align-items: center;
     padding: 5px 10px;
-
-    .img {
-
-    }
+    border-top: 1px solid lightgray
 `
 
 const StSticker = styled.img`

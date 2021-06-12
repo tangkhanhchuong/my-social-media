@@ -17,7 +17,7 @@ const SChatListContainer = styled.div`
 `
 
 const SChatContainer = styled.div`
-    border-bottom: 1px solid #CA2055;
+    border-bottom: 1px solid ${p => p.theme.accentColor};
     padding: 10px 20px;
     cursor: pointer;
     background-color: ${(props) => props.selected ? props.theme.hover : 'white'};
