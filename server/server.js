@@ -15,11 +15,11 @@ const { connectSocket } = require('./services/socket')
 const { connectToMongoDb } = require('./services/database')
 
 //handle middlewares        
+app.use('/storage', express.static(__dirname + '/storage'));
 app.use(morgan('dev'))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
-app.use('/storage', express.static(__dirname + '/storage'));
 
 const initServer = async () => {
     await connectToMongoDb()
@@ -37,13 +37,15 @@ const {
     authRouter,
     postsRouter,
     usersRouter,
-    messagesRouter
+    messagesRouter,
+    stickersRouter
 } = require('./routes')
 
 app.get('/', (req, res) => {
     res.status(200).json("welcome")
 })
 app.use('/auth', authRouter)
+app.use('/stickers', stickersRouter)
 app.use(requireAuth)
 app.use('/users', usersRouter)
 app.use('/chats', chatsRouter)

@@ -3,5 +3,6 @@ module.exports = {
     chatsRouter: require('./chats_routes'),
     usersRouter: require('./users_routes'),
     postsRouter: require('./posts_routes'),
-    messagesRouter: require('./messages_routes')
+    messagesRouter: require('./messages_routes'),
+    stickersRouter: require('./stickers_routes')
 }

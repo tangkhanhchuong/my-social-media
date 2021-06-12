@@ -21,12 +21,12 @@ const ConversationContainer = () => {
     const { mutate } = useMutation(chatRequests.getMessages)
 
     const onMessagesFetched = async (data) => {
-        const conv = { messages: data.data, _id: chatId}
+        const conv = { messages: data.data, _id: chatId }
         dispatch(addConversation(conv))
     }
     
     const currentConversation = messagesReducer.allConversations[chatId]
-    const isConversationInitialized = currentConversation.isInitialized
+    const isConversationInitialized = currentConversation?.isInitialized
 
     useEffect(() => {
         if(!isConversationInitialized) {

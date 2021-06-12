@@ -3,7 +3,6 @@ import { ToastContainer } from "react-toastify"
 import { ThemeProvider as StyledThemeProvider } from "styled-components"
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import "react-toastify/dist/ReactToastify.css"
 
@@ -34,11 +33,9 @@ const AppContainer = () => {
             closeButton={false}
             draggable={false}
             />
-        <MuiThemeProvider>
           <Provider store={store}>
             <App />
           </Provider>  
-        </MuiThemeProvider>  
       </StyledThemeProvider>
     </QueryClientProvider>
   )

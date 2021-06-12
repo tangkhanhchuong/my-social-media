@@ -12,7 +12,8 @@ const messageSlice = createSlice({
     initialState: {
         isInitialized: false,
         socket: null,
-        allConversations: {}
+        allConversations: {},
+        stickers: {}
     },
     reducers: {
         connectSocket: (state, action) => {
@@ -28,6 +29,12 @@ const messageSlice = createSlice({
 
             const conversations = action.payload
             for(let conv of conversations) {
+                const { latestMessage, users } = conv
+                const latestMessageSenderName = users.filter(u => u._id === latestMessage.sender)[0].username
+                conv.latestMessage.sender = {
+                    _id: latestMessage.sender,
+                    username: latestMessageSenderName
+                }
                 state.allConversations[conv._id] = { ...conv, messages: [], isInitialized: false }
                 state.socket.emit('join_conversation', conv._id)
             }
@@ -66,7 +73,7 @@ const messageSlice = createSlice({
         
         sendMessage: (state, action) => {
             const message = action.payload  
-
+            
             if(state.socket) {
                 state.socket.emit("send_msg", message)
             }
@@ -76,6 +83,20 @@ const messageSlice = createSlice({
             const { chatId, chatName } = action.payload
             console.log({chatId, chatName});
             state.allConversations[chatId].chatName = chatName
+        },
+
+        addStickersSuits: (state, action) => {
+            if(!state.stickers.collection) {
+                const stickersCollection = action.payload
+                state.stickers.collection = stickersCollection
+                state.stickers.current = stickersCollection[0]
+            }
+        },
+
+        changeStickersSuit: (state, action) => {
+            const desStickerSuitId = action.payload
+            const desStickerSuit = state.stickers.collection.filter(c => c._id === desStickerSuitId)[0]
+            state.stickers.current = desStickerSuit
         }
     },
 })
@@ -83,6 +104,7 @@ const messageSlice = createSlice({
 const { reducer, actions } = messageSlice
 export const { 
     connectSocket, disconnectSocket, initializeAllConversations, 
-    addConversation, receiveMessage, sendMessage, changeChatName 
+    addConversation, receiveMessage, sendMessage, changeChatName, 
+    addStickersSuits, changeStickersSuit
 } = actions
 export default reducer
