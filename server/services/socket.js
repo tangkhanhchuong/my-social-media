@@ -17,12 +17,13 @@ const connectSocket = async (server) => {
     socket.emit("user_connected")
     
     socket.on('send_msg', async (payload) => {
-      const { content, sender, chat } = payload
+      const { content, sender, chat, type } = payload
       // create new message
       const msg = { 
         content,
         chat: ObjectId(chat),
-        sender: ObjectId(sender._id)
+        sender: ObjectId(sender._id),
+        type
       }
       try {
         const newMessage = await Message.create(msg)
@@ -34,7 +35,7 @@ const connectSocket = async (server) => {
           {new: true}
         )
         
-        io.to(chat).emit("receive_msg", { newMessage: { ...payload, sender: { _id: sender._id } }, chat: updatedChat })
+        io.to(chat).emit("receive_msg", { newMessage: { ...payload, sender }, chat: updatedChat })
       }
       catch(err){
         console.log(err)

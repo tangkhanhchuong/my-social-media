@@ -60,14 +60,22 @@ const SChatLink = styled(Link)`
 
 
 const Chat = ({ chat }) => {
-    const { chatName, _id, latestMessage } = chat
+    const authReducer = useSelector(state => state.auth)
+
+    const { chatName, _id, latestMessage, type } = chat
+
     const MAX_LEN_LAST_MSG = 30
 
     const currentChatId = useParams().id
 
-    const generateFitContent = (content) => {
-        if(!content)    return ""
+    const generateLatestMessage = () => {
+        if(!latestMessage)  return ""
+        if(type === "TEXT") return latestMessage
+        const sender = latestMessage.sender._id === authReducer.userId ? "You" : latestMessage.sender.username
+        return sender + " sent a sticker !"
+    }
 
+    const generateFitContent = (content) => {
         return content.length < MAX_LEN_LAST_MSG ? content : content.slice(0, MAX_LEN_LAST_MSG) + " ..."
     }
 
@@ -78,7 +86,7 @@ const Chat = ({ chat }) => {
                     <Avatar size="50px" src={`https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`} alt="avatar" />
                     <SNameAndLatedMsg>
                         <b>{generateFitContent(chatName)}</b>
-                        <SLastMsg>{generateFitContent(latestMessage?.content)}</SLastMsg>
+                        <SLastMsg>{generateFitContent(generateLatestMessage())}</SLastMsg>
                     </SNameAndLatedMsg>
                 </SAvatarContainer>
             </SChatLink>

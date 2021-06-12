@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components' 
 
-import styled from 'styled-components'
+const {REACT_APP_SYSTEM_URL} = process.env
 
 const SMessagesContainer = styled.div`
     background-color: white;
@@ -54,7 +55,8 @@ const Messages = ({ conversation }) => {
     const startMessage = {
         _id: 1,
         content: "Begin to chat with him",
-        sender: { _id: 1 }
+        sender: { _id: 1 },
+        type: 'TEXT'
     }
 
     const showMessages = messages.length !== 0 ? messages : [startMessage]
@@ -68,8 +70,15 @@ const Messages = ({ conversation }) => {
                     
                     return (
                         <SMessage key={msg._id} fromMe={fromMe}>
-                            <SBubble fromMe={fromMe}>{msg.content}
-                            </SBubble>
+                            {
+                                msg.type === 'TEXT' ? (
+                                    <SBubble fromMe={fromMe}>
+                                        {msg.content}
+                                    </SBubble>
+                                ) : (
+                                    <img src={`${REACT_APP_SYSTEM_URL}/storage/stickers/${msg.content}`} alt="" />
+                                )
+                            }
                         </SMessage>  
                     )
                 })

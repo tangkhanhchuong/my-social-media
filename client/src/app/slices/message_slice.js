@@ -28,6 +28,12 @@ const messageSlice = createSlice({
 
             const conversations = action.payload
             for(let conv of conversations) {
+                const { latestMessage, users } = conv
+                const latestMessageSenderName = users.filter(u => u._id === latestMessage.sender)[0].username
+                conv.latestMessage.sender = {
+                    _id: latestMessage.sender,
+                    username: latestMessageSenderName
+                }
                 state.allConversations[conv._id] = { ...conv, messages: [], isInitialized: false }
                 state.socket.emit('join_conversation', conv._id)
             }
@@ -66,7 +72,7 @@ const messageSlice = createSlice({
         
         sendMessage: (state, action) => {
             const message = action.payload  
-
+            
             if(state.socket) {
                 state.socket.emit("send_msg", message)
             }

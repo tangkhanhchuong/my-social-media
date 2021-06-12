@@ -4,10 +4,11 @@ const { Message } = require('../schemas')
 const createMessage = async (req, res, next) => {
     try{
         const sender = req.user
-        const { content, chatId } = req.body
+        const { content, chatId, type } = req.body
 
-        const newMessage = await Message.create({ sender: ObjectId(sender.id), content, chat: ObjectId(chatId) })
+        const newMessage = await Message.create({ sender: ObjectId(sender.id), content, chat: ObjectId(chatId), type })
 
+        console.log(newMessage)
         res.status(201).json(newMessage)
     }
     catch(err) {

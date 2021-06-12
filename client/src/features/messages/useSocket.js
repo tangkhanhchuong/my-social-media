@@ -26,8 +26,8 @@ const useSocket = ({accessToken}) => {
             })
 
             socket.on("is_invited_to_conversation", (payload) => {
-                const usersInRoom = payload.users
-                if(usersInRoom.includes(authReducer.userId))   socket.emit('join_conversation', payload._id)
+                const usersInRoom = payload.users.map(u => u._id)
+                if(usersInRoom?.includes(authReducer.userId))   socket.emit('join_conversation', payload._id)
             })
         }
     }, [accessToken])

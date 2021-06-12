@@ -5,8 +5,9 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { CustomInput } from 'components/Input'
 import { sendMessage } from 'app/slices/message_slice'
+import StickerButton from './StickerButton'
 
-const ChatBar = (props) => {
+const ChatBar = () => {
     const { id: chatId } = useParams()
 
     const authReducer = useSelector(state => state.auth)
@@ -21,6 +22,7 @@ const ChatBar = (props) => {
             _id: uuidv4(),
             content: val, 
             chat: chatId,
+            type: "TEXT",
             sender: {
                 _id: authReducer.userId,
                 username: authReducer.username
@@ -34,6 +36,7 @@ const ChatBar = (props) => {
     return (
         <form onSubmit={onSendMsg}>
             <CustomInput mb="1rem" width="100%" padding="0.4rem 1.0rem" color="#e5e5e5" textcolor="#5d5d5d"/>
+            <StickerButton />  
         </form>
     )
 }
