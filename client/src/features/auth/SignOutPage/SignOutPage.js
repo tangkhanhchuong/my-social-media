@@ -5,7 +5,7 @@ import { FaTwitter } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom'
 
 import Button from "styles/Button"
-import { logout } from '../auth_slice'
+import { logout } from 'app/slices/auth_slice'
 
 const SCenterContainer = styled.div`
     display: flex;

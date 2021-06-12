@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 import { CustomInput } from 'components/Input'
-import { sendMessage } from '../message_slice'
+import { sendMessage } from 'app/slices/message_slice'
 
 const ChatBar = (props) => {
     const { id: chatId } = useParams()

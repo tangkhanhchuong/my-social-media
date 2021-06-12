@@ -1,14 +1,14 @@
-import { createSlice, current } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 const sortObjectKeysByTimestamp = (obj) => {
     return Object.fromEntries(Object.entries({...obj})
-                .sort((a, b) => {
-                    return (a[1].updatedAt > b[1].updatedAt) ? -1 : 1
-                }))
+        .sort((a, b) => {
+            return (a[1].updatedAt > b[1].updatedAt) ? -1 : 1
+    }))
 }
 
-const messages = createSlice({
-    name: 'messages',
+const messageSlice = createSlice({
+    name: 'message',
     initialState: {
         isInitialized: false,
         socket: null,
@@ -80,7 +80,7 @@ const messages = createSlice({
     },
 })
 
-const { reducer, actions } = messages
+const { reducer, actions } = messageSlice
 export const { 
     connectSocket, disconnectSocket, initializeAllConversations, 
     addConversation, receiveMessage, sendMessage, changeChatName 

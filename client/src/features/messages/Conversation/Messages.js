@@ -8,6 +8,18 @@ const SMessagesContainer = styled.div`
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        -webkit-appearance: none
+    }
+    &::-webkit-scrollbar:vertical {
+        width: 11px;
+        b
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: ${p => p.theme.accentColor};
+        border-right: 3px solid white
+    }
 ` 
 
 const SMessage = styled.div`

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import AuthContainer from "./AuthContainer"
 import RouterContainer from "./RouterContainer"
-import { loginSuccess, logout } from 'features/auth/auth_slice'
+import { loginSuccess, logout } from 'app/slices/auth_slice'
 import useSocket from 'features/messages/useSocket'
 
 const App = () => {

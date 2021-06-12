@@ -5,13 +5,12 @@ import { useHistory } from "react-router-dom"
 
 import { displayError } from "utils"
 import authRequests from 'http/auth_requests'
-import { loginSuccess, startLogin, loginFail } from "../auth_slice"
+import { loginSuccess, startLogin, loginFail } from "app/slices/auth_slice"
 
 
 const useSignIn = () => {
   const { mutate, isLoading } = useMutation(authRequests.login, { mutationKey: 'login' })
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const onLoginSuccessfully = async (data) => {
     toast.success(`You are logged in`)

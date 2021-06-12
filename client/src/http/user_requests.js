@@ -5,6 +5,11 @@ export default {
         endpoint: `/users/search?username=${username}`
     }),
 
+    getUser: (id) => http_request({
+        endpoint: `/users/${id}`,
+        requireToken: true
+    }),
+
     changeProfile: (profile) => http_request({
         endpoint: `/users/profile`,
         method: 'patch',

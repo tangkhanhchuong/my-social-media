@@ -8,7 +8,7 @@ import Avatar from "styles/Avatar"
 import Header from 'components/layout/Header'
 import chatRequests from 'http/chat_requests'
 import NewConversation from './NewConversation'
-import { initializeAllConversations } from '../message_slice'
+import { initializeAllConversations } from 'app/slices/message_slice'
 
 const SChatListContainer = styled.div`
     height: 100vh;
@@ -88,7 +88,7 @@ const Chat = ({ chat }) => {
 
 const ChatList = () => {
     const dispatch = useDispatch()
-    const messagesReducer = useSelector(state => state.messages)
+    const messagesReducer = useSelector(state => state.message)
 
     const onChatListFetched = (data) => {
         const allConversations = data.data

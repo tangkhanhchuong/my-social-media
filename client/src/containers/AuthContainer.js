@@ -13,7 +13,6 @@ const AuthContainer = () => {
   const SignIn = () => <SignInPage />
   const SignUp = () => <SignUpPage />
 
-  console.log("Auth");
   return (
     <Router>
         <Switch>

@@ -56,7 +56,7 @@ function InputField(props) {
   const {
     field, form,
     type, label, placeholder, disabled,
-    lg, value
+    lg, value, defaultValue
   } = props
   const { name, onChange } = field
   const { errors, touched } = form
@@ -71,6 +71,7 @@ function InputField(props) {
         value={value}
         onChange={onChange}
         disabled={disabled}
+        defaultValue={defaultValue}
       />
     </Wrapper>
   )

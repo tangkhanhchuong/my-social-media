@@ -12,7 +12,7 @@ import chatRequests from 'http/chat_requests'
 
 import SearchBar from './SearchBar'
 import { useDispatch } from 'react-redux'
-import { addConversation } from '../message_slice'
+import { addConversation } from 'app/slices/message_slice'
 
 const avatarSrc = `https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`
 

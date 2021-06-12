@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import chatRequests from 'http/chat_requests'
 
 import Messages from './Messages'
-import { addConversation } from '../message_slice'
+import { addConversation } from 'app/slices/message_slice'
 
 const SMessagesContainer = styled.div`
     flex: 1
@@ -16,7 +16,7 @@ const SMessagesContainer = styled.div`
 const ConversationContainer = () => {
     const dispatch = useDispatch()
 
-    const messagesReducer = useSelector(state => state.messages)
+    const messagesReducer = useSelector(state => state.message)
     const chatId = useParams().id
     const { mutate } = useMutation(chatRequests.getMessages)
 

@@ -1,19 +1,20 @@
 import React, { useState } from "react"
-import { FaCalendar, FaCamera } from "react-icons/fa"
+import { FaCalendar, FaCamera, FaGithub, FaHome } from "react-icons/fa"
 import styled from "styled-components"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Modal, ModalBody, ModalHeader } from "reactstrap"
 import { useMutation } from "react-query"
 import { FastField, Formik, Form } from 'formik'
+import moment from 'moment'
 
 import CoverPhoto from "styles/CoverPhoto"
 import { StButton } from "styled/Buttons"
 import Avatar from "styles/Avatar"
-import OverlayImagePicker from 'components/inputs/OverlayImagePicker'
 import { StKingWrapper } from 'styled/Wrappers'
+import OverlayImagePicker from 'components/inputs/OverlayImagePicker'
 import Input from "components/Input"
 import userRequest from "http/user_requests"
-
+import { changeProfile } from 'app/slices/auth_slice'
 
 const Wrapper = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.tertiaryColor};
@@ -59,25 +60,42 @@ const SModalFooter = styled.div`
   justify-content: flex-end;
 `
 
+const generateFilePath = (file) => {
+  const { REACT_APP_SYSTEM_URL } = process.env
+
+  if(!file) return ""
+
+  if(typeof file === 'string')  return `${ REACT_APP_SYSTEM_URL }/${file}`
+  return URL.createObjectURL(file)
+}
+
 const ProfileInfo = () => {
   const [modal, setModal] = useState(false)
   const toggle = () => setModal(!modal)
 
+  const dispatch = useDispatch()
+  
+  const authReducer = useSelector(state => state.auth)  
+  const { username, profile } = authReducer
+  const { bio, location, website, joinedDate, avatar: initAvatar, coverPicture: initCoverPicture } = profile
   const coverPicUrl = `https://cdn.tgdd.vn/2020/05/content/12-800x440.jpg`
   const avatarUrl = `https://zalo-api.zadn.vn/3/7/3/f/3/10177/icon_pre/heoxanh_thumb.png`
-  const [avatar, setAvatar] = useState()
-  const [coverPicture, setCoverPicture] = useState()
-
-  const authReducer = useSelector(state => state.auth)
-  const { username } = authReducer
-
+  const [avatar, setAvatar] = useState(initAvatar)
+  const [coverPicture, setCoverPicture] = useState(initCoverPicture)
+  
   const { mutate } = useMutation(userRequest.changeProfile, { mutationKey: 'change_profile' })
 
   const initialValues = {
-    bio: "",
-    location: "",
-    website: "",
-    joined_date: ""
+    username,
+    bio,
+    location,
+    website,
+    joinedDate
+  }
+
+  const onEditProfileSuccess = (data) => {
+    const updatedProfile = data.data
+    dispatch(changeProfile(updatedProfile))
   }
 
   const onEditProfile = (values) =>{
@@ -85,16 +103,17 @@ const ProfileInfo = () => {
     formData.append("avatar", avatar)
     formData.append("coverPicture", coverPicture)
     for(let val in values) {
-      formData.append(val.toString(), val)
+      formData.append(val, values[val])
     }
-    mutate(formData)
+    mutate(formData, {
+      onSuccess: onEditProfileSuccess
+    })
   }
-
   return (
     <Wrapper>
-      <CoverPhoto src={coverPicUrl} alt="cover" />
+      <CoverPhoto src={generateFilePath(initCoverPicture)} alt="cover" />
       <SInfoContainer>
-        <StAvatar top={70} size="150px" src={avatarUrl} alt="profile" />
+        <StAvatar top={70} size="150px" src={generateFilePath(initAvatar)} alt="profile" />
 
         <StButton sm outline relative onClick={toggle}>
           Edit Profile
@@ -109,36 +128,48 @@ const ProfileInfo = () => {
                     return ( 
                       <Form>
                         <OverlayImagePicker onChange={(e)=>setCoverPicture(e.target.files[0])}>
-                          <CoverPhoto src={coverPicUrl} alt="cover" />
+                          <CoverPhoto src={generateFilePath(coverPicture)} alt="cover" />
                         </OverlayImagePicker>  
 
                         <OverlayImagePicker circle onChange={(e)=>setAvatar(e.target.files[0])}>
-                          <StAvatar top={50} left={10} size="120px" src={avatarUrl} alt="profile" />
+                          <StAvatar top={50} left={10} size="120px" src={generateFilePath(avatar)} alt="profile" />
                         </OverlayImagePicker>  
 
                         <StKingWrapper>
                           <FastField
+                            name="username"
+                            component={Input}
+                            placeholder="Username"
+                            defaultValue={username}
+                          />
+
+                          <FastField
                               name="bio"
                               component={Input}
                               placeholder="Bio"
+                              defaultValue={bio}
                           />
 
                           <FastField
                               name="location"
                               component={Input}
                               placeholder="Location"
+                              defaultValue={location}
                           />
 
                           <FastField
                               name="website"
                               component={Input}
                               placeholder="Website"
+                              defaultValue={website}
                           />
 
                           <FastField
-                              name="joined_date"
+                              name="joinedDate"
                               component={Input}       
                               placeholder="Joined Date"
+                              defaultValue={new Date(joinedDate).toISOString().substring(0, 10)}
+                              type="date"
                           />
                         </StKingWrapper>
                         <SModalFooter>
@@ -153,14 +184,22 @@ const ProfileInfo = () => {
         </StButton>
 
         <SInfoRow>
-          <STitle>{username}</STitle>
+          <STitle>{ username }</STitle>
+        </SInfoRow> 
+        <SInfoRow>
+          { bio }
         </SInfoRow>
         <SInfoRow>
-          Somebody lost a dog
+          <FaHome size={20} />
+          <SInfoContent>{ location }</SInfoContent>
+        </SInfoRow>
+        <SInfoRow>
+          <FaGithub size={20} />
+          <SInfoContent>{ website }</SInfoContent>
         </SInfoRow>
         <SInfoRow>
           <FaCalendar size={20} />
-          <SInfoContent>Joined May 2021</SInfoContent>
+          <SInfoContent>Joined { moment(joinedDate).format('LL') }</SInfoContent>
         </SInfoRow>
 
         <SNumFollowers>

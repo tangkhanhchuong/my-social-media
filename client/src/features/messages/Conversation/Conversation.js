@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import { FaEdit } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +14,7 @@ import chatRequests from 'http/chat_requests'
 
 import ConversationContainer from './ConversationContainer'
 import ChatBar from './ChatBar'
-import { changeChatName } from '../message_slice'
+import { changeChatName } from 'app/slices/message_slice'
 
 const SModalFooter = styled.div`
   display: flex;
@@ -52,7 +52,7 @@ const SConversationHeader = styled(Header)`
 const Conversation = () => {
     const chatId = useParams().id
     const dispatch = useDispatch()
-    const messagesReducer = useSelector(state => state.messages)
+    const messagesReducer = useSelector(state => state.message)
     const { mutate } = useMutation(chatRequests.update, { mutationKey: 'update_chat' })
 
     const [modal, setModal] = useState(false)
@@ -90,6 +90,8 @@ const Conversation = () => {
             </SConversationContainer>
         )
     }
+
+    if(Object.keys(messagesReducer.allConversations).length === 0)   return <Redirect to="/messages" />
 
     return (
         <SConversationContainer>
