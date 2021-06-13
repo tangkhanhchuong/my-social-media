@@ -26,6 +26,7 @@ const messageSlice = createSlice({
 
         initializeAllConversations: (state, action) => {
             state.isInitialized = true
+            if(!state.socket)   return
 
             const conversations = action.payload
             for(let conv of conversations) {
@@ -73,10 +74,8 @@ const messageSlice = createSlice({
         
         sendMessage: (state, action) => {
             const message = action.payload  
-            
-            if(state.socket) {
-                state.socket.emit("send_msg", message)
-            }
+            if(!state.socket)   return
+            state.socket.emit("send_msg", message)
         },
 
         changeChatName: (state, action) => {

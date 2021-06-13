@@ -5,9 +5,8 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 import { FaPlus } from 'react-icons/fa'
 import { toast } from "react-toastify"
 
-import Button from 'styles/Button'
-import Avatar from "styles/Avatar"
-import { StIconButton } from 'styled/Buttons'
+import StAvatar from "shared/styles/Avatar"
+import { StIconButton, StButton } from 'shared/styles/Buttons'
 import chatRequests from 'http/chat_requests'
 
 import SearchBar from './SearchBar'
@@ -54,7 +53,7 @@ const RecommendedUsers = ({ recommendedUsers, setSelectedUsers, selectedUsers, s
       {
         recommendedUsers.map(user => (
           <SRecommendUserItem key={user._id} onClick={onAddUser.bind(this, user)}>
-            <Avatar size="50px" src={avatarSrc} alt="avatar" />
+            <StAvatar size="50px" src={avatarSrc} alt="avatar" />
             { user.username }
           </SRecommendUserItem>
         ))
@@ -131,7 +130,7 @@ const NewConversation = (props) => {
                 setAddFinish={setAddFinish}
               />
               <SModalFooter>
-                <Button onClick={onCreateConversation}>Next</Button>{' '}
+                <StButton onClick={onCreateConversation}>Next</StButton>{' '}
               </SModalFooter> 
             </ModalBody>
         </Modal>

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import moment from "moment";
 import { FaComment } from "react-icons/fa";
 
-import Avatar from "styles/Avatar";
-import TweetFile from "styles/TweetFile";
+import StAvatar from "shared/styles/Avatar"
+import TweetFile from "shared/styles/TweetFile";
 import DeletePost from "./DeletePost";
 import LikePost from "./LikePost";
 import SharePost from "./SharePost";
@@ -113,7 +113,7 @@ const Feed = ({ tweet }) => {
   return (
     <Wrapper>
       <Link to={`/${handle}`}>
-        <Avatar className="avatar" src={user && user.avatar} alt="avatar" />
+        <StAvatar className="avatar" src={user && user.avatar} alt="avatar" />
       </Link>
       <div className="tweet-info">
         <div className="tweet-info-user">

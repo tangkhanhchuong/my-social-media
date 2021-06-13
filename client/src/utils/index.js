@@ -7,8 +7,8 @@ export const displayError = (err) => {
 }
 
 export const sortFn = (a, b) => {
-  var dateA = new Date(a.createdAt).getTime()
-  var dateB = new Date(b.createdAt).getTime()
+  const dateA = new Date(a.createdAt).getTime()
+  const dateB = new Date(b.createdAt).getTime()
   return dateA < dateB ? 1 : -1
 }
 
@@ -17,7 +17,7 @@ export const uploadImage = async (file) => {
   formData.append("file", file)
   formData.append("upload_preset", "twitter-build")
 
-  let toastId = null
+  const toastId = null
   const { data } = await axios.request({
     method: "POST",
     url: process.env.REACT_APP_CLOUDINARY_URL,

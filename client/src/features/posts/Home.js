@@ -1,11 +1,11 @@
 import React from "react"
 import styled from "styled-components"
 
-import Header from "components/layout/Header"
+import Header from "shared/layout/Header"
 
+import Suggestions from "./Suggestions"
 import FeedList from "./FeedList"
 import NewFeed from "./NewFeed"
-import Suggestion from "pages/Suggestion"
 
 const HomeContainer = styled.div`
 	display: flex
@@ -21,7 +21,7 @@ const Home = () => {
 				<NewFeed />
 				<FeedList />
 			</div>
-        	<Suggestion />
+        	<Suggestions />
 		</HomeContainer>
 	)
 }

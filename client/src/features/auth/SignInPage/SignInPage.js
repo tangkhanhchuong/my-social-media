@@ -1,9 +1,8 @@
 import React from "react"
 import { FastField, Formik, Form } from 'formik'
 
-import LinkButton from "styles/LinkButton"
-import Button from "styles/Button"
-import FormContainer from "styles/Form"
+import { StButton, StLinkButton } from "shared/styles/Buttons"
+import FormContainer from "shared/styles/Form"
 import Input from "components/Input"
 
 import useSignIn from './useSignIn'
@@ -37,13 +36,13 @@ const SignInPage = (props) => {
                                 component={Input}
                                 placeholder="Password"
                             />
-                        <Button xl outline type="submit">
+                        <StButton xl outline type="submit">
                             {isLoading ? "Logging in" : "Login"}
-                        </Button>
+                        </StButton>
                         <span>or</span>
-                        <LinkButton type="button" to='/signup'>
+                        <StLinkButton type="button" to='/signup'>
                             Signup
-                        </LinkButton>
+                        </StLinkButton>
                         </Form>
                     )
                 }}
