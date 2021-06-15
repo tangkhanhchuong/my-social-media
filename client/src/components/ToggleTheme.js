@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
+
 import { ThemeContext } from "../context/ThemeContext";
-import { lightTheme, darkTheme } from "../styles/themes";
+import { lightTheme, darkTheme } from "constant/themes";
 import { ThemeIcon } from "./Icons";
 
 export const Wrapper = styled.div`

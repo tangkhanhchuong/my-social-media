@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components' 
 
-import { StVerticalScrollWrapper } from "styled/Wrappers"
+import { StVerticalScrollWrapper } from "shared/styles/Wrappers"
 
 const {REACT_APP_SYSTEM_URL} = process.env
 

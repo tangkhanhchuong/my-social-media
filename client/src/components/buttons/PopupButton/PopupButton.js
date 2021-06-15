@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 
 import Button from 'styles/Button'
-import { StIconButton } from 'styled/Buttons'
+import { StIconButton } from "shared/styles/Buttons"
 
 import usePopupButton from './usePopupButton'
 

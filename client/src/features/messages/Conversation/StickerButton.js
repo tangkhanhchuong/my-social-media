@@ -7,8 +7,8 @@ import { Popover } from '@material-ui/core'
 import { v4 as uuidv4 } from 'uuid'
 import { useMutation } from 'react-query'
 
-import { StIconButton } from "styled/Buttons"
-import { StCenterWrapper, StVerticalScrollWrapper, StHorizontalScrollWrapper } from "styled/Wrappers"
+import { StIconButton } from "shared/styles/Buttons"
+import { StCenterWrapper, StVerticalScrollWrapper, StHorizontalScrollWrapper } from "shared/styles/Wrappers"
 import { addStickersSuits, changeStickersSuit, sendMessage } from 'app/slices/message_slice'
 import stickerRequests from "http/sticker_request"
 
@@ -20,7 +20,7 @@ const StStickerPopover = styled(Popover)`
 
 const StStickersContainer = styled(StVerticalScrollWrapper)`
     width: 300px;
-    height: 380px;
+    height: 300px;
     overflow-y: scroll;
     margin-bottom: 90px;
 

@@ -7,9 +7,8 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap'
 import { useMutation } from 'react-query'
 import { toast } from "react-toastify"
 
-import { StIconButton } from 'styled/Buttons'
-import Button from 'styles/Button'
-import Header from 'components/layout/Header'
+import { StIconButton, StButton } from "shared/styles/Buttons"
+import Header from 'shared/layout/Header'
 import chatRequests from 'http/chat_requests'
 
 import ConversationContainer from './ConversationContainer'
@@ -102,7 +101,7 @@ const Conversation = () => {
                         <ModalBody>
                             <SInput value={chatName} onChange={(e) => setChatName(e.target.value)} /> 
                             <SModalFooter>
-                                <Button onClick={onChangeName}>Change</Button>{' '}
+                                <StButton onClick={onChangeName}>Change</StButton>{' '}
                             </SModalFooter> 
                         </ModalBody>
                     </Modal>

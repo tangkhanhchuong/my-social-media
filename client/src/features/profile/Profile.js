@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import Header from "components/layout/Header"
+import Header from "shared/layout/Header"
 
 import ProfileInfo from "./ProfileInfo"
 

@@ -2,10 +2,10 @@ import React, { useState } from "react"
 import { FaPhotoVideo } from "react-icons/fa"
 import TextareaAutosize from "react-textarea-autosize"
 import styled from "styled-components"
-import { StIconButton } from "styled/Buttons"
-import Avatar from "styles/Avatar"
-import Button from "styles/Button"
-import TweetFile from "styles/TweetFile"
+
+import { StIconButton, StButton } from "shared/styles/Buttons"
+import StAvatar from "shared/styles/Avatar"
+import TweetFile from "shared/styles/TweetFile";
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,7 +49,7 @@ const NewFeed = () => {
 
   return (
     <Wrapper>
-      <Avatar src={"https://th.bing.com/th/id/OIP.Z306v3XdxhOaxBFGfHku7wHaHw?pid=ImgDet&rs=1"} alt="avatar" />
+      <StAvatar src={"https://th.bing.com/th/id/OIP.Z306v3XdxhOaxBFGfHku7wHaHw?pid=ImgDet&rs=1"} alt="avatar" />
       <form onSubmit={()=>{}}>
         <div className="new-tweet">
           <TextareaAutosize
@@ -70,9 +70,9 @@ const NewFeed = () => {
               </StIconButton>
               <input id="file-input" accept="image/*" type="file" onChange={()=>{}} />
             </div>
-            <Button sm disabled={false}>
+            <StButton sm disabled={false}>
               Tweet
-            </Button>
+            </StButton>
           </div>
         </div>
       </form>

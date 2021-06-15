@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { FaTwitter } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom'
 
-import Button from "styles/Button"
+import { StButton } from "shared/styles/Buttons"
 import { logout } from 'app/slices/auth_slice'
 
 const SCenterContainer = styled.div`
@@ -60,8 +60,8 @@ const SignOutPage = () => {
                 <SSignOutTitle>Log out of Twitter?</SSignOutTitle>
                 <SSignOutContent>You can always log back in at any time. If you just want to switch accounts, you can do that by adding an existing account. </SSignOutContent>
                 <div>
-                    <Button outline onClick={onCancel}>Cancel</Button>
-                    <Button outline onClick={onSignOut}>Logout</Button>
+                    <StButton outline onClick={onCancel}>Cancel</StButton>
+                    <StButton outline onClick={onSignOut}>Logout</StButton>
                 </div>
             </SPopUp>
         </SCenterContainer>
