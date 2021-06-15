@@ -7,12 +7,14 @@ const { User } = require('../schemas')
 const { uploadFileToS3, getFileStreamFromS3 } = require('../services/upload')
 
 const getAllUsers = async (req, res) => {
+    console.log("users")
     const users = await User.find()
 
     res.status(200).json(users)
 }
 
 const getUser = async (req, res) => {
+    console.log("user")
     const userId = req.params.id
 
     const user = await User.find({ _id: userId })

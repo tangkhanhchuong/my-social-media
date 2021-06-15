@@ -8,7 +8,6 @@ const createMessage = async (req, res, next) => {
 
         const newMessage = await Message.create({ sender: ObjectId(sender.id), content, chat: ObjectId(chatId), type })
 
-        console.log(newMessage)
         res.status(201).json(newMessage)
     }
     catch(err) {

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const { ObjectId } = require('mongodb')
 
 const { Chat, Message } = require('../schemas')
+const { paginatedResults } = require('../middlewares/pagination')
 
 const getChats = async (req, res, next) => {
     try{
@@ -94,18 +95,21 @@ const deleteChat = async (req, res) => {
 }
 
 const getMessages = async (req, res, next) => {
+    const { page = 1, limit = 10} = req.params 
+
     try{
         const chatId = req.params.id
 
-        const messages = await Message.find({ chat: chatId })
-                            .populate("sender")
-        for(let m of messages){
+        const paginateOptions = { page, limit, populate: 'sender', sort: { updatedAt: -1 } }
+        const messages = await Message.paginate({ chat: chatId }, paginateOptions)
+
+        for(let m of messages.docs){
             if(m.isDeleted) {
                 m.content = 'This message is deleted'
             }
         }
 
-        res.status(200).json(messages)
+        res.status(200).json(messages.docs)
     }
     catch(err) {
         err.statusCode = 400

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate')
 
 const Schema = mongoose.Schema
 
@@ -15,5 +16,7 @@ const MessageSchema = new Schema({
     readBy: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
     isDeleted: { type: Boolean, default: false}
 }, { timestamps: true })
+
+MessageSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Message', MessageSchema)
