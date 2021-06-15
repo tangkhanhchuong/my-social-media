@@ -9,11 +9,11 @@ import { sendMessage } from 'app/slices/message_slice'
 import StickerButton from './StickerButton'
 
 const StChatBarContainer = styled.form`
-    border: 1px solid lightgray
+    border: 1px solid lightgray;
 `
 
 const StToolButtons = styled.div`
-    padding: 10px 20px
+    padding: 10px 20px;
 `
 
 const ChatBar = () => {
@@ -24,9 +24,9 @@ const ChatBar = () => {
 
     const onSendMsg = (e) => {
         e.preventDefault()
-        const val = e.target.elements[0].value
+        const val = e.target.elements[1].value
         if(!val || val === "")    return
-
+        
         const newMsg = {
             _id: uuidv4(),
             content: val, 
@@ -39,7 +39,7 @@ const ChatBar = () => {
         }      
         dispatch(sendMessage(newMsg))
 
-        e.target.elements[0].value = ""
+        e.target.elements[1].value = ""
     }
 
     return (

@@ -10,7 +10,7 @@ import Messages from './Messages'
 import { addConversation } from 'app/slices/message_slice'
 
 const SMessagesContainer = styled.div`
-    flex: 1
+    flex: 1;
 `
 
 const ConversationContainer = () => {
@@ -30,7 +30,7 @@ const ConversationContainer = () => {
 
     useEffect(() => {
         if(!isConversationInitialized) {
-            mutate(chatId, {
+            mutate({ chatId }, {
                 onSuccess: onMessagesFetched
             })
         }

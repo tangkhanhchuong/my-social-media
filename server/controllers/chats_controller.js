@@ -95,23 +95,28 @@ const deleteChat = async (req, res) => {
 }
 
 const getMessages = async (req, res, next) => {
-    const { page = 1, limit = 10} = req.params 
+    const { page = 1, limit = 10, skip = 0 } = req.query 
 
     try{
         const chatId = req.params.id
 
-        const paginateOptions = { page, limit, populate: 'sender', sort: { updatedAt: -1 } }
-        const messages = await Message.paginate({ chat: chatId }, paginateOptions)
+        const startIndex = (page - 1) * limit + +skip
 
-        for(let m of messages.docs){
+        const messages = await Message.find({ chat: chatId })
+                                    .limit(limit).skip(startIndex)
+                                    .sort({ updatedAt: -1 }).populate('sender')
+                                    .exec()
+
+        for(let m of messages){
             if(m.isDeleted) {
                 m.content = 'This message is deleted'
             }
         }
 
-        res.status(200).json(messages.docs)
+        res.status(200).json(messages)
     }
     catch(err) {
+        console.log(err.message)
         err.statusCode = 400
         next(err)
     }

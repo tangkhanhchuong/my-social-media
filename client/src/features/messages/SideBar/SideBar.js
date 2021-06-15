@@ -13,7 +13,7 @@ import { initializeAllConversations } from 'app/slices/message_slice'
 const SChatListContainer = styled.div`
     height: 100vh;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
 `
 
 const SChatContainer = styled.div`
@@ -44,25 +44,25 @@ const SNameAndLatedMsg = styled.div`
     flex-direction: column;
     margin-top: -10px;
     padding-top: -2px;
-    flex: 1
+    flex: 1;
 `
 
 const SLastMsg = styled.p`
     font-size: 14px;
     color: gray;
-    margin-bottom: 0
+    margin-bottom: 0;
 `
 
 const SChatLink = styled(Link)`
     text-decoration: none !important;
-    color: black !important
+    color: black !important;
 `
 
 
 const Chat = ({ chat }) => {
     const authReducer = useSelector(state => state.auth)
 
-    const { chatName, _id, latestMessage, type } = chat
+    const { chatName, _id, latestMessage } = chat
 
     const MAX_LEN_LAST_MSG = 30
 
@@ -70,7 +70,7 @@ const Chat = ({ chat }) => {
 
     const generateLatestMessage = () => {
         if(!latestMessage)  return ""
-        if(type === "TEXT") return latestMessage
+        if(latestMessage.type === "TEXT") return latestMessage.content
         const sender = latestMessage.sender._id === authReducer.userId ? "You" : latestMessage.sender.username
         return sender + " sent a sticker !"
     }
@@ -115,7 +115,7 @@ const SideBar = () => {
         <SChatListContainer>
             <Header justify="space-between">
                 <b>Messages</b>
-                <NewConversation buttonLabel="Hello" />
+                <NewConversation />
             </Header>
             <ChatList />
         </SChatListContainer>

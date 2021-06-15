@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   justify-content: ${props => props.justify || "flex-start"};
   align-items: center;
   font-weight: bold;
-  background-color: white
+  background-color: white;
 `
 
 const Header = (props) => <Wrapper {...props}>{props.children}</Wrapper>

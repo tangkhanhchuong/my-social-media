@@ -4,15 +4,14 @@ const axiosClient = axios.create({
     baseURL: process.env.REACT_APP_SYSTEM_URL
 })
 
-const httpRequest = ({ endpoint, method = "get", bodyParameters, requireToken = false }) => {
-
-    
+const httpRequest = ({ endpoint, method = "get", bodyParameters, query, requireToken = false }) => {
     let config 
-    
+
     if(requireToken) {
         const accessToken = JSON.parse(localStorage.getItem("authInfo"))["accessToken"]
         config = {
-            headers: { Authorization: `Bearer ${accessToken}` }
+            headers: { Authorization: `Bearer ${accessToken}` },
+            params: query
         }
     }
 

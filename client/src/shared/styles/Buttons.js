@@ -54,11 +54,15 @@ export const StIconButton = styled.button`
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
   color: ${(props) => props.theme.accentColor};
   background-color: ${(props) => props.bgColor};
 
 
-  &: hover {
+  &:hover {
     background-color: ${(props) => props.bgHoverColor || props.theme.hover};
   }
 `

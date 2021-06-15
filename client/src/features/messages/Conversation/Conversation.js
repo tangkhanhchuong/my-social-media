@@ -25,7 +25,7 @@ const SConversationContainer = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
-    margin-right: 10%
+    margin-right: 10%;
 `
 
 const SInput = styled.input`
@@ -44,7 +44,6 @@ const SConversationHeader = styled(Header)`
 
     &:hover {
         cursor: pointer,
-        
     }
 `
 

@@ -5,9 +5,10 @@ export default {
         endpoint: `/chats`,
         requireToken: true
     }),
-    getMessages: (chatId) => httpRequest({
+    getMessages: ({ chatId,  page, limit, skip }) => httpRequest({
         endpoint: `/chats/${chatId}/messages`,
-        requireToken: true
+        requireToken: true,
+        query: { page, limit, skip }
     }),
     add: (chat) => httpRequest({
         endpoint: `/chats`,

@@ -30,12 +30,12 @@ const connectSocket = async (server) => {
 
         //assign to latest message of chat
         const updatedChat = await Chat.findOneAndUpdate(
-          {_id: ObjectId(chat)}, 
-          {latestMessage: newMessage._id, updatedAt: newMessage.updatedAt },
-          {new: true}
+          { _id: ObjectId(chat) }, 
+          { latestMessage: newMessage._id, updatedAt: newMessage.updatedAt },
+          { new: true }
         )
-        
-        io.to(chat).emit("receive_msg", { newMessage: { ...payload, sender }, chat: updatedChat })
+
+        io.to(chat).emit("receive_msg", { newMessage: { ...payload, sender, updatedAt: newMessage.updatedAt }, chat: updatedChat })
       }
       catch(err){
         console.log(err)

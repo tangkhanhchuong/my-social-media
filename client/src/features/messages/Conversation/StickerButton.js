@@ -15,7 +15,7 @@ import stickerRequests from "http/sticker_request"
 const {REACT_APP_SYSTEM_URL} = process.env
 
 const StStickerPopover = styled(Popover)`
-    overflow-y: hidden
+    overflow-y: hidden;
 `
 
 const StStickersContainer = styled(StVerticalScrollWrapper)`
@@ -25,7 +25,7 @@ const StStickersContainer = styled(StVerticalScrollWrapper)`
     margin-bottom: 90px;
 
     display: grid;
-    grid-template-columns: 140px 140px
+    grid-template-columns: 140px 140px;
 `
 
 const StStickerSuits = styled(StHorizontalScrollWrapper)`
@@ -38,7 +38,7 @@ const StStickerSuits = styled(StHorizontalScrollWrapper)`
     display: flex;
     align-items: center;
     padding: 5px 10px;
-    border-top: 1px solid lightgray
+    border-top: 1px solid lightgray;
 `
 
 const StSticker = styled.img`

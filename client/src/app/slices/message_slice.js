@@ -36,40 +36,49 @@ const messageSlice = createSlice({
                     _id: latestMessage.sender,
                     username: latestMessageSenderName
                 }
-                state.allConversations[conv._id] = { ...conv, messages: [], isInitialized: false }
+                state.allConversations[conv._id] = { ...conv, messages: [], numOfNewMessages: 0, currentPage: 2, isInitialized: false }
                 state.socket.emit('join_conversation', conv._id)
             }
         },
 
         addConversation: (state, action) => {
-            const conv = action.payload
+            const chat = action.payload
+            const { _id: chatId, messages } = chat 
 
-            if(!state.allConversations[conv._id])   {
-                state.allConversations[conv._id] = { ...conv, messages: [], isInitialized: false }
-                state.socket.emit('add_conversation', conv)
+            if(!state.allConversations[chatId])   {
+                state.allConversations[chatId] = { ...chat, messages: [], isInitialized: false }
+                state.socket.emit('add_conversation', chat)
             }
             else {
-                state.allConversations[conv._id].messages = [...conv.messages]
-                state.allConversations[conv._id].isInitialized = true
+                state.allConversations[chatId].messages = [...messages]
+                state.allConversations[chatId].isInitialized = true
             }
-            
-            
             state.allConversations = sortObjectKeysByTimestamp(state.allConversations)
-            // return state
+            state.allConversations[chatId].messages = state.allConversations[chatId].messages.sort((a, b) => a.updatedAt > b.updatedAt ? 1 : -1 )
         },
         
         receiveMessage: (state, action) => {
             const { newMessage, chat } = action.payload 
 
-            if(!state.allConversations[chat._id])
-                state.allConversations[chat._id] = { ...chat, messages: [], isInitialized: false }
+            const chatId = chat._id
 
-            state.allConversations[newMessage.chat].messages.push(newMessage)  
-            state.allConversations[newMessage.chat].latestMessage = newMessage
-            state.allConversations[newMessage.chat].updatedAt = chat.updatedAt 
+            if(!state.allConversations[chatId])
+                state.allConversations[chatId] = { ...chat, messages: [], isInitialized: false }
 
+            state.allConversations[chatId].messages.unshift(newMessage)  
+            state.allConversations[chatId].latestMessage = newMessage
+            state.allConversations[chatId].updatedAt = chat.updatedAt 
+            state.allConversations[chatId].numOfNewMessages += 1
             state.allConversations = sortObjectKeysByTimestamp(state.allConversations)
-            // return state
+            state.allConversations[chatId].messages = state.allConversations[chatId].messages.sort((a, b) => a.updatedAt > b.updatedAt ? 1 : -1 )
+        },
+
+        loadMoreMessages: (state, action) => {
+            const { moreMessages, chatId } = action.payload
+            const messages = [...moreMessages, ...state.allConversations[chatId].messages].sort((a, b) => a.updatedAt > b.updatedAt ? 1 : -1 )
+            state.allConversations[chatId].currentPage += 1
+            state.allConversations[chatId].messages = messages
+            return state
         },
         
         sendMessage: (state, action) => {
@@ -80,7 +89,6 @@ const messageSlice = createSlice({
 
         changeChatName: (state, action) => {
             const { chatId, chatName } = action.payload
-            console.log({chatId, chatName});
             state.allConversations[chatId].chatName = chatName
         },
 
@@ -103,7 +111,7 @@ const messageSlice = createSlice({
 const { reducer, actions } = messageSlice
 export const { 
     connectSocket, disconnectSocket, initializeAllConversations, 
-    addConversation, receiveMessage, sendMessage, changeChatName, 
+    addConversation, receiveMessage, sendMessage, changeChatName, loadMoreMessages,
     addStickersSuits, changeStickersSuit
 } = actions
 export default reducer
