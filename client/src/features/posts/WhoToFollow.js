@@ -51,7 +51,7 @@ const AvatarContainer = styled.div`
 export const User = ({ user }) => (
 	<UserWrapper>
 		<AvatarContainer>
-			<StAvatar size="50px" src={`https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`} alt="avatar" />
+			<StAvatar size="40px" src={`https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`} alt="avatar" />
 			<b>{user && user.fullname}</b>
 		</AvatarContainer>
 

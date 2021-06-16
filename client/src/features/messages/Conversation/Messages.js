@@ -28,8 +28,9 @@ const StMessage = styled.div`
 `
 
 const StBubble = styled.div`
-    margin: 10px 0px;
+    margin: 10px 10px;
     padding: 8px 12px;
+    max-width: 350px;
     word-wrap: break-word;
 
     background-color: ${props => props.fromMe ? "#CA2055": "lightgray"};
@@ -120,7 +121,7 @@ const Messages = ({ conversation }) => {
 
                     return (
                         <StMessage key={msg._id} fromMe={fromMe}>
-                            <StAvatar conceal={!isNotFirstMsg} m="0px 10px" src={showAvatar} /> 
+                            <StAvatar conceal={!isNotFirstMsg} src={showAvatar} /> 
                             {
                                 msg.type === 'TEXT' ? (
                                     <StBubble fromMe={fromMe}>

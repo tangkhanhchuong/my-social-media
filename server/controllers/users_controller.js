@@ -14,7 +14,6 @@ const getAllUsers = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
-    console.log("user")
     const userId = req.params.id
 
     const user = await User.find({ _id: userId })

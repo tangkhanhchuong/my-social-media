@@ -11,7 +11,7 @@ import StCoverPhoto from "shared/styles/CoverPhoto"
 import { StButton } from "shared/styles/Buttons"
 import StAvatar from "shared/styles/Avatar"
 import { StKingWrapper } from "shared/styles/Wrappers"
-import { OverlayImagePicker } from 'shared/inputs/OverlayImagePicker'
+import OverlayImagePicker from 'shared/inputs/OverlayImagePicker'
 import Input from "components/Input"
 import userRequest from "http/user_requests"
 import { changeProfile } from 'app/slices/auth_slice'
@@ -19,35 +19,30 @@ import { changeProfile } from 'app/slices/auth_slice'
 const Wrapper = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.tertiaryColor};
   padding-bottom: 1rem;
-  width: 50%
+  width: 50%;
 `;
 
 const STitle = styled.h5`
-  font-weight: bold
+  font-weight: bold;
 `
 
 const SNumFollowers = styled.span`
-  margin-right: 30px
+  margin-right: 30px;
 `
 
 const SCountNumber = styled.span`
-  font-weight: bold
-`
-
-const Avatar = styled(StAvatar)`
-  margin-top: ${p => p.top ? -p.top + "px" : '0px'};
-  margin-left: ${p => p.left ? p.left + "px" : '0px'};
+  font-weight: bold;
 `
 
 const SInfoContainer = styled.div`
   padding-left: 20px;
-  position: relative
+  position: relative;
 `
 
 const SInfoRow = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 5px
+  margin-bottom: 5px;
 
 `
 
@@ -113,7 +108,7 @@ const ProfileInfo = () => {
     <Wrapper>
       <StCoverPhoto src={generateFilePath(initCoverPicture)} alt="cover" />
       <SInfoContainer>
-        <Avatar top={70} size="150px" src={generateFilePath(initAvatar)} alt="profile" />
+        <StAvatar top={70} lg src={generateFilePath(initAvatar)} alt="profile" />
 
         <StButton sm outline relative onClick={toggle}>
           Edit Profile
@@ -131,8 +126,8 @@ const ProfileInfo = () => {
                           <StCoverPhoto src={generateFilePath(coverPicture)} alt="cover" />
                         </OverlayImagePicker>  
 
-                        <OverlayImagePicker circle onChange={(e)=>setAvatar(e.target.files[0])}>
-                          <Avatar top={50} left={10} size="120px" src={generateFilePath(avatar)} alt="profile" />
+                        <OverlayImagePicker avatar circle onChange={(e)=>setAvatar(e.target.files[0])}>
+                          <StAvatar top={50} left={10} md src={generateFilePath(avatar)} alt="profile" />
                         </OverlayImagePicker>  
 
                         <StKingWrapper>
