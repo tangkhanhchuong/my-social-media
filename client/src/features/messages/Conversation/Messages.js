@@ -5,12 +5,14 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components' 
 
 import { StVerticalScrollWrapper, StKingWrapper } from "shared/styles/Wrappers"
+import StAvatar from "shared/styles/Avatar"
+import { StSpinner } from "shared/styles/Spinner"
 import chatRequests from 'http/chat_requests'
 import { loadMoreMessages } from 'app/slices/message_slice'
 
 const { REACT_APP_SYSTEM_URL } = process.env
 
-const SMessagesContainer = styled(StVerticalScrollWrapper)`
+const StMessagesContainer = styled(StVerticalScrollWrapper)`
     background-color: white;
     flex-direction: column;
     flex: 1;
@@ -18,19 +20,21 @@ const SMessagesContainer = styled(StVerticalScrollWrapper)`
     padding: 0 10px;
 ` 
 
-const SMessage = styled.div`
+const StMessage = styled.div`
     display: flex;
-    justify-content: ${props => props.fromMe ? "flex-end": "flex-start"};
+    flex-direction: ${p => p.fromMe ? "row-reverse" : "row"};
+    justify-content: flex-start;
+    align-items: center;
 `
 
-const SBubble = styled.div`
-    margin: 10px 25px;
+const StBubble = styled.div`
+    margin: 10px 0px;
     padding: 8px 12px;
     word-wrap: break-word;
 
     background-color: ${props => props.fromMe ? "#CA2055": "lightgray"};
     color: ${props => props.fromMe ? "white": "black"};
-    border-radius: 40px;
+    border-radius: 10px;
 `
 
 const StSticker = styled.img`
@@ -60,7 +64,6 @@ const Messages = ({ conversation }) => {
     useEffect(() => {
         const scrollToBottomOfView = () => {
             if(Math.abs(ref.current.scrollTop - ref.current.offsetHeight) > 1) {
-                console.log(Math.abs(ref.current.scrollTop - ref.current.offsetHeight))
                 ref.current.scrollTop = (ref.current.scrollHeight - ref.current.offsetHeight)
             }
         }
@@ -69,14 +72,16 @@ const Messages = ({ conversation }) => {
 
     const onLoadMoreSuccess = (data) => {
         const moreMessages = data.data
-        dispatch(loadMoreMessages({ moreMessages, chatId }))
+        setTimeout(() => {
+            dispatch(loadMoreMessages({ moreMessages, chatId }))
 
-        if(moreMessages.length > 0) ref.current.scrollTop = ref.current.offsetHeight
-        else {
-            setCanLoadMore(false)
-            ref.current.scrollTop = 0
-        }
-        setIsLoading(false)
+            if(moreMessages.length > 0) ref.current.scrollTop = ref.current.offsetHeight
+            else {
+                setCanLoadMore(false)
+                ref.current.scrollTop = 0
+            }
+            setIsLoading(false)
+        }, 1000)
     }
 
     const detectReachingTop = () => ref.current.scrollTop === 0
@@ -96,33 +101,40 @@ const Messages = ({ conversation }) => {
     const showMessages = messages.length !== 0 ? messages : [startMessage]
 
     return (
-        <SMessagesContainer ref={ref} onScroll={onLoadMore.bind(this, currentPage)}>
+        <StMessagesContainer ref={ref} onScroll={onLoadMore.bind(this, currentPage)}>
             <StKingWrapper justify="center" direction="row">
                 {
-                    isLoading ? "isLoading" : ""
+                    isLoading && <StSpinner />
                 }
             </StKingWrapper>
             {
-                showMessages.map((msg) => {
-                    const senderId = msg.sender._id
+                showMessages.map((msg, index) => {
+                    const { _id: senderId, avatar } = msg.sender
                     const fromMe = senderId === authReducer.userId
-                    
+
+                    const prevMessage = showMessages[index-1]
+                    const isNotFirstMsg = prevMessage ? prevMessage.sender._id !== senderId : true
+
+                    const tempAvatar = "https://img2.thuthuatphanmem.vn/uploads/2018/12/12/anh-naruto-be-bong-dep_104804081.jpg"
+                    const showAvatar = avatar ? process.env.REACT_APP_SYSTEM_URL + "/" + avatar : tempAvatar
+
                     return (
-                        <SMessage key={msg._id} fromMe={fromMe}>
+                        <StMessage key={msg._id} fromMe={fromMe}>
+                            <StAvatar conceal={!isNotFirstMsg} m="0px 10px" src={showAvatar} /> 
                             {
                                 msg.type === 'TEXT' ? (
-                                    <SBubble fromMe={fromMe}>
+                                    <StBubble fromMe={fromMe}>
                                         {msg.content}
-                                    </SBubble>
+                                    </StBubble>
                                 ) : (
                                     <StSticker src={`${REACT_APP_SYSTEM_URL}/storage/stickers/${msg.content}`} alt="" />
                                 )
                             }
-                        </SMessage>  
+                        </StMessage>  
                     )
                 })
             }
-        </SMessagesContainer>
+        </StMessagesContainer>
     )
 }
 

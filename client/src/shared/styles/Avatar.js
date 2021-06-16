@@ -8,6 +8,9 @@ const StAvatar = styled.img`
   border: 2px solid white;
   cursor: pointer;
   background-color: white;
+  box-shadow: 1px 2px 2px black;
+  margin: ${p => p.m || "0px"};
+  opacity: ${p => p.conceal ? 0 : 1};
 
   @media screen and (max-width: 530px) {
     height: ${(props) => (props.lg ? "110px" : "40px")};

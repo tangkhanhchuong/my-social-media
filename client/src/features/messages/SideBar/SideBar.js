@@ -83,7 +83,7 @@ const Chat = ({ chat }) => {
         <SChatContainer selected={currentChatId===_id}>
             <SChatLink to={`/messages/${_id}`}>        
                 <SAvatarContainer>
-                    <StAvatar size="50px" src={`https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`} alt="avatar" />
+                    <StAvatar m="0px 5px" size="50px" src={`https://th.bing.com/th/id/Rc7b5f6a007a193933d22f1b03bf2b43e?rik=O%2fB5mKeF2WBZyg&pid=ImgRaw`} alt="avatar" />
                     <SNameAndLatedMsg>
                         <b>{generateFitContent(chatName)}</b>
                         <SLastMsg>{generateFitContent(generateLatestMessage())}</SLastMsg>
