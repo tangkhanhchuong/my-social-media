@@ -46,6 +46,7 @@ const StSticker = styled.img`
 
 const Messages = ({ conversation }) => {
     const [isLoading, setIsLoading] = useState(false)
+    const [canLoadMore, setCanLoadMore] = useState(true)
     const chatId = useParams().id
     const dispatch = useDispatch()
     const authReducer = useSelector(state => state.auth)
@@ -59,6 +60,7 @@ const Messages = ({ conversation }) => {
     useEffect(() => {
         const scrollToBottomOfView = () => {
             if(Math.abs(ref.current.scrollTop - ref.current.offsetHeight) > 1) {
+                console.log(Math.abs(ref.current.scrollTop - ref.current.offsetHeight))
                 ref.current.scrollTop = (ref.current.scrollHeight - ref.current.offsetHeight)
             }
         }
@@ -68,16 +70,20 @@ const Messages = ({ conversation }) => {
     const onLoadMoreSuccess = (data) => {
         const moreMessages = data.data
         dispatch(loadMoreMessages({ moreMessages, chatId }))
-        ref.current.scrollTop = ref.current.offsetHeight
+
+        if(moreMessages.length > 0) ref.current.scrollTop = ref.current.offsetHeight
+        else {
+            setCanLoadMore(false)
+            ref.current.scrollTop = 0
+        }
         setIsLoading(false)
     }
 
     const detectReachingTop = () => ref.current.scrollTop === 0
     const onLoadMore = (currentPage) => {
-        if(detectReachingTop() && !isLoading) {   
-            setIsLoading(true)
-            mutate({ chatId, page: currentPage, skip: numOfNewMessages }, { onSuccess: onLoadMoreSuccess })
-        }
+        if(!detectReachingTop() || isLoading || !canLoadMore)   return 
+        setIsLoading(true)
+        mutate({ chatId, page: currentPage, skip: numOfNewMessages }, { onSuccess: onLoadMoreSuccess })
     }
     
     const startMessage = {
