@@ -11,10 +11,10 @@ import StickerButton from './StickerButton'
 import FileIconInput from 'shared/inputs/FileIconInput'
 
 const StChatBarContainer = styled.form`
-    border: 1px solid lightgray;
 `
 
 const StToolButtons = styled.div`
+    border: 1px solid lightgray;
     padding: 10px 20px;
     display: flex;
     flex-direction: row;
@@ -29,34 +29,50 @@ const ChatBar = () => {
     const authReducer = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
-    const onSendMsg = (e) => {
-        e.preventDefault()
-        const val = e.target.elements[1].value
-        if(!val || val === "")    return
-        
+    const onSendMessage = (type, val) => {
         const newMsg = {
             _id: uuidv4(),
             content: val, 
             chat: chatId,
-            type: "TEXT",
+            type,
             sender: {
                 _id: authReducer.userId,
                 username: authReducer.username
             }
         }      
         dispatch(sendMessage(newMsg))
+    }
 
-        e.target.elements[1].value = ""
+    const onSendTextMessage = (e) => {
+        e.preventDefault()
+
+        const textVal = e.target.elements[0].value
+        if(!textVal || textVal === "")    return
+        onSendMessage("TEXT", textVal)
+
+        e.target.elements[0].value = ""
+    }
+
+    const onImageTextMessage = (e) => {
+        e.preventDefault()
+
+        const imageVal = e.target.files[0]
+        console.log(imageVal)
+        // onSendMessage("IMAGE", textVal)
+
+        // e.target.elements[0].value = ""
     }
 
     return (
-        <StChatBarContainer onSubmit={onSendMsg}>
+        <>
             <StToolButtons>
                 <StickerButton />  
-                <FileIconInput Icon={FaPhotoVideo}/>
+                <FileIconInput Icon={FaPhotoVideo} type="image" onChange={onImageTextMessage}/>
             </StToolButtons>
-            <CustomInput mb="0" width="100%" padding="0.4rem 1.0rem" color="#e5e5e5" textcolor="#5d5d5d"/>
-        </StChatBarContainer>
+            <StChatBarContainer onSubmit={onSendTextMessage}>
+                <CustomInput mb="0" width="100%" padding="0.4rem 1.0rem" color="#e5e5e5" textcolor="#5d5d5d"/>
+            </StChatBarContainer>
+        </>
     )
 }
 

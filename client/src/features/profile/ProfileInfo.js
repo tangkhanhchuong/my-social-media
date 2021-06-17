@@ -65,9 +65,6 @@ const generateFilePath = (file) => {
 }
 
 const ProfileInfo = () => {
-  const [modal, setModal] = useState(false)
-  const toggle = () => setModal(!modal)
-
   const dispatch = useDispatch()
   
   const authReducer = useSelector(state => state.auth)  
@@ -78,6 +75,15 @@ const ProfileInfo = () => {
   const [avatar, setAvatar] = useState(initAvatar)
   const [coverPicture, setCoverPicture] = useState(initCoverPicture)
   
+  const [modal, setModal] = useState(false)
+  const toggle = () => {
+    setModal(!modal)
+    setTimeout(() => {
+      setAvatar(initAvatar)
+      setCoverPicture(initCoverPicture)
+    }, 500)
+  }
+
   const { mutate } = useMutation(userRequest.changeProfile, { mutationKey: 'change_profile' })
 
   const initialValues = {

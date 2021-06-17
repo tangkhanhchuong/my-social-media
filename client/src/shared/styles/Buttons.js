@@ -61,7 +61,6 @@ export const StIconButton = styled.button`
   color: ${(props) => props.theme.accentColor};
   background-color: ${(props) => props.bgColor};
 
-
   &:hover {
     background-color: ${(props) => props.bgHoverColor || props.theme.hover};
   }

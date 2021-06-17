@@ -28,25 +28,25 @@ const StMessage = styled.div`
 `
 
 const StBubble = styled.div`
-    margin: 10px 10px;
-    padding: 8px 12px;
+    margin: 5px 10px;
+    padding: 6px 12px;
     max-width: 350px;
+    min-width: 44px;
     word-wrap: break-word;
+    display: flex;
+    justify-content: center;
 
     background-color: ${props => props.fromMe ? "#CA2055": "lightgray"};
     color: ${props => props.fromMe ? "white": "black"};
-    border-radius: 10px;
+    border-radius: 25px;
 `
 
 const StSticker = styled.img`
     cursor: pointer;
     padding: 3px;
     border-radius: 10px;
-    width: ${p => p.sm ? "60px" : "120px"};
-    height: ${p => p.sm ? "60px" : "120px"};
-    &:hover {
-        background-color: ${p => p.theme.hover}
-    }
+    width: ${p => p.sm ? "120px" : "200px"};
+    height: ${p => p.sm ? "120px" : "200px"};
 `
 
 const Messages = ({ conversation }) => {

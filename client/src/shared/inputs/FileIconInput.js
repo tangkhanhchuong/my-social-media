@@ -21,13 +21,14 @@ const StInput = styled.input`
 `
 
 const FileIconInput = (props) => {
-    const { onChange, Icon } = props
-    
+    const { onChange, Icon, type } = props
+
     return (
-        <StOverlayButton {...props} >
+        <StOverlayButton {...props} type="button">
             <StInput 
-                type="file"
-                onChange={onChange}
+              type="file" 
+              onChange={onChange} 
+              accept={type==="image" ? "image/*" : "*"}
             />
             <Icon size={25} />
         </StOverlayButton>

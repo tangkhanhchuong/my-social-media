@@ -10,9 +10,6 @@ const StPickerContainer = styled.div`
   filter: brightness(50%);
   width: ${p => p.avatar ? '110px' : '100%'};
   height: ${p => p.avatar ? '110px' : '100%'};
-  input[type=file]::-webkit-file-upload-button { 
-    cursor: pointer;
-  }
 `
 
 const StPicker = styled(FileIconInput)`
@@ -24,10 +21,11 @@ const StPicker = styled(FileIconInput)`
 
 const OverlayImagePicker = ({children, onChange, avatar}) => {
   const { top, left } = children.props
+
   return (
       <StPickerContainer avatar={avatar}>
           {children}
-          <StPicker top={top} left={left} Icon={FaCamera} onChange={onChange} />
+          <StPicker type="image" top={top} left={left} Icon={FaCamera} onChange={onChange} />
       </StPickerContainer>
   )
 }
