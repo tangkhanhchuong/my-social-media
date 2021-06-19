@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
-import { receiveMessage, connectSocket, disconnectSocket } from 'app/slices/message_slice'
+import { receiveMessage, connectSocket, disconnectSocket, beCalled } from 'app/slices/message_slice'
 
 const useSocket = ({accessToken}) => {
     const dispatch = useDispatch()
     const authReducer = useSelector(state => state.auth)
+    const messageReducer = useSelector(state => state.message)
 
     useEffect(() => {
         if(accessToken) {
@@ -26,8 +27,12 @@ const useSocket = ({accessToken}) => {
             })
 
             socket.on("is_invited_to_conversation", (payload) => {
-                const usersInRoom = payload.users.map(u => u._id)
+                const usersInRoom = payload.users?.map(u => u._id)
                 if(usersInRoom?.includes(authReducer.userId))   socket.emit('join_conversation', payload._id)
+            })
+
+            socket.on("be_called", (payload) => {
+                dispatch(beCalled(payload))
             })
         }
     }, [accessToken])

@@ -13,7 +13,13 @@ const messageSlice = createSlice({
         isInitialized: false,
         socket: null,
         allConversations: {},
-        stickers: {}
+        stickers: {},
+        videoCall: {
+            callId: null,
+            caller: null,
+            joiner: [],
+        },
+        myPeerId: null
     },
     reducers: {
         connectSocket: (state, action) => {
@@ -104,6 +110,41 @@ const messageSlice = createSlice({
             const desStickerSuitId = action.payload
             const desStickerSuit = state.stickers.collection.filter(c => c._id === desStickerSuitId)[0]
             state.stickers.current = desStickerSuit
+        },
+
+        startCalling: (state, action) => {
+            if(!state.socket)   return
+
+            const { chatId, userPeerId } = action.payload
+            state.videoCall.caller = userPeerId
+            state.myPeerId = userPeerId
+            console.log("start calling")
+            state.socket.emit('start_calling', action.payload)
+        },
+
+        joinCall: (state, action) => {
+            console.log("join")
+            const { chatId } = action.payload
+            state.socket.emit('join_call', action.payload)
+        },
+
+        beCalled: (state, action) => {
+            console.log("be called action")
+
+            const { caller, chatId } = action.payload
+            state.videoCall.caller = caller
+            state.videoCall.callId = chatId
+        },
+
+        leaveCall: (state, action) => {
+            if(!state.socket)   return
+
+            const { chatId, userId } = action.payload
+            state.socket.emit('leave_call', { userId, chatId })
+        },
+
+        answerCall: (state, action) => {
+
         }
     },
 })
@@ -112,6 +153,7 @@ const { reducer, actions } = messageSlice
 export const { 
     connectSocket, disconnectSocket, initializeAllConversations, 
     addConversation, receiveMessage, sendMessage, changeChatName, loadMoreMessages,
-    addStickersSuits, changeStickersSuit
+    addStickersSuits, changeStickersSuit,
+    startCalling, joinCall, leaveCall, answerCall, beCalled
 } = actions
 export default reducer

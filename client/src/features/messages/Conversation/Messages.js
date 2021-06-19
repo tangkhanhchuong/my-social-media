@@ -33,8 +33,6 @@ const StBubble = styled.div`
     max-width: 350px;
     min-width: 44px;
     word-wrap: break-word;
-    display: flex;
-    justify-content: center;
 
     background-color: ${props => props.fromMe ? "#CA2055": "lightgray"};
     color: ${props => props.fromMe ? "white": "black"};
