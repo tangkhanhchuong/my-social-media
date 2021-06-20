@@ -5,10 +5,11 @@ import { v4 as uuidv4 } from 'uuid'
 import styled from 'styled-components'
 import { FaPhotoVideo } from "react-icons/fa"
 
-import { CustomInput } from 'components/Input'
 import { sendMessage } from 'app/slices/message_slice'
-import StickerButton from './StickerButton'
+import { CustomInput } from 'components/Input'
 import FileIconInput from 'shared/inputs/FileIconInput'
+import StickerButton from './StickerButton'
+import VideoCallButton from './VideoCallButton'
 
 const StChatBarContainer = styled.form`
 `
@@ -68,6 +69,7 @@ const ChatBar = () => {
             <StToolButtons>
                 <StickerButton />  
                 <FileIconInput Icon={FaPhotoVideo} type="image" onChange={onImageTextMessage}/>
+                <VideoCallButton chatId={chatId} />
             </StToolButtons>
             <StChatBarContainer onSubmit={onSendTextMessage}>
                 <CustomInput mb="0" width="100%" padding="0.4rem 1.0rem" color="#e5e5e5" textcolor="#5d5d5d"/>

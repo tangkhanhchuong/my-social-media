@@ -1,10 +1,5 @@
 import React from "react"
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
 import styled from 'styled-components'
 
 import UnderDeveloped from "shared/pages/UnderDeveloped"
@@ -13,6 +8,7 @@ import Home from "features/posts/Home"
 import Messages from "features/messages"
 import { SignOut } from "features/auth/SignOutPage"
 import Profile from "features/profile/Profile"
+// import VideoCallContainer from 'containers/VideoCallContainer'
 
 const MainPageContainer = styled.div`
   margin-left: 26%;
@@ -37,6 +33,7 @@ const RouterContainer = () => {
           </Route>
         </Switch>
       </MainPageContainer>
+      {/* <VideoCallContainer /> */}
     </Router>
   )
 }

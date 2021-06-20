@@ -54,6 +54,25 @@ const connectSocket = async (server) => {
       socket.join(conversation._id)
       socket.broadcast.emit('is_invited_to_conversation', conversation)
     })
+
+    socket.on('start_calling', (payload) => {
+      const { chatId, userPeerId } = payload
+
+      socket.join(chatId)
+
+      console.log('should be called ')
+      socket.to(chatId).broadcast.emit('be_called', { caller: userPeerId, chatId })
+      
+      socket.on('leave_call', () => {
+        socket.to(chatId).broadcast.emit('one_leave_call', userPeerId)
+      })
+    })
+
+    socket.on('join_call', (payload) => {
+      const { chatId, userPeerId } = payload
+      console.log(userPeerId)
+      socket.to(chatId).broadcast.emit('user_join_call', payload)
+    })
   })
 
 }
