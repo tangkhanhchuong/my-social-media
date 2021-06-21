@@ -1,16 +1,17 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
 const Wrapper = styled.div`
-  width: ${(props) => props.width || '315px'};
-  background: ${(props) => props.color ? props.color : props.theme.tertiaryColor2};
-  padding: ${props => props.padding || "0.2rem 0.4rem"};
+  width: ${(props) => props.width || "315px"};
+  background: ${(props) =>
+    props.color ? props.color : props.theme.tertiaryColor2};
+  padding: ${(props) => props.padding || "0.2rem 0.4rem"};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-bottom: 1px solid ${(props) => props.theme.accentColor};
-  margin-bottom: ${(props) => props.mb || '2rem'};
+  margin-bottom: ${(props) => props.mb || "2rem"};
 
   input {
     width: 100%;
@@ -19,7 +20,7 @@ const Wrapper = styled.div`
     border: none;
     font-size: 1rem;
     font-family: ${(props) => props.theme.font};
-    color: ${props => props.textColor ? props.textColor : "black"};
+    color: ${(props) => (props.textColor ? props.textColor : "black")};
   }
 
   label {
@@ -32,7 +33,7 @@ const Wrapper = styled.div`
     css`
       width: 100%;
     `}
-`;
+`
 
 InputField.propTypes = {
   field: PropTypes.object.isRequired,
@@ -41,22 +42,27 @@ InputField.propTypes = {
   type: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
-  disabled: PropTypes.bool
-};
-
-InputField.defaultProps = {
-  type: 'text',
-  label: '',
-  placeholder: '',
-  disabled: false
+  disabled: PropTypes.bool,
 }
 
+InputField.defaultProps = {
+  type: "text",
+  label: "",
+  placeholder: "",
+  disabled: false,
+}
 
 function InputField(props) {
   const {
-    field, form,
-    type, label, placeholder, disabled,
-    lg, value, defaultValue
+    field,
+    form,
+    type,
+    label,
+    placeholder,
+    disabled,
+    lg,
+    value,
+    defaultValue,
   } = props
   const { name, onChange } = field
   const { errors, touched } = form
@@ -84,12 +90,16 @@ export const CustomInput = (props) => {
 
   const { mb, width, padding, color, textcolor } = props
 
-  return (  
-    <Wrapper lg={lg} mb={mb} width={width} padding={padding} color={color} textcolor={textcolor}>
-      <input
-        type='text'
-        { ...props }
-      />
+  return (
+    <Wrapper
+      lg={lg}
+      mb={mb}
+      width={width}
+      padding={padding}
+      color={color}
+      textcolor={textcolor}
+    >
+      <input type="text" {...props} />
     </Wrapper>
   )
 }

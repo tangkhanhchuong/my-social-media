@@ -1,21 +1,21 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-import SideBar from './SideBar/SideBar'
-import Conversation from './Conversation/Conversation'
+import SideBar from "./SideBar/SideBar"
+import Conversation from "./Conversation/Conversation"
 
 const MessageContainer = styled.div`
-    display: grid;
-    grid-template-columns: 35% 1fr;
+  display: grid;
+  grid-template-columns: 35% 1fr;
 `
 
 const Messages = () => {
-    return (
-        <MessageContainer>
-            <SideBar />
-            <Conversation />     
-        </MessageContainer>
-    )
+  return (
+    <MessageContainer>
+      <SideBar />
+      <Conversation />
+    </MessageContainer>
+  )
 }
 
 export default Messages

@@ -1,6 +1,11 @@
 import React from "react"
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
-import styled from 'styled-components'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom"
+import styled from "styled-components"
 
 import UnderDeveloped from "shared/pages/UnderDeveloped"
 import { NavBar } from "shared/layout/NavBar"
@@ -18,7 +23,7 @@ const RouterContainer = () => {
   return (
     <Router>
       <NavBar />
-      <MainPageContainer>  
+      <MainPageContainer>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/logout" component={SignOut} />

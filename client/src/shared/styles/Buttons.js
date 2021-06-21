@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom"
 
 export const StButton = styled.button`
   padding: ${(props) => (props.sm ? "0.4rem 1rem" : "0.4rem 1.8rem")};
@@ -14,14 +14,14 @@ export const StButton = styled.button`
   cursor: pointer;
   margin: 0.5rem;
   width: ${(props) => (props.xl ? "100%" : "none")};
-  height: ${(props) => (props.sm ? "40px" : props.lg ? "60px" : "50px" )};
+  height: ${(props) => (props.sm ? "40px" : props.lg ? "60px" : "50px")};
 
   ${(props) =>
     props.relative &&
     css`
-			position: relative;
-			left: 52%;
-	  `}
+      position: relative;
+      left: 52%;
+    `}
 
   @media screen and (max-width: 530px) {
     font-size: 0.8rem;
@@ -43,9 +43,9 @@ export const StButton = styled.button`
       `}
   }
 
-  &:hover{ 
-    background-color: ${props => props.theme.hover};
-    color: ${props => props.theme.accentColor};
+  &:hover {
+    background-color: ${(props) => props.theme.hover};
+    color: ${(props) => props.theme.accentColor};
   }
 `
 
@@ -85,9 +85,9 @@ export const StLinkButton = styled(Link)`
   ${(props) =>
     props.relative &&
     css`
-			position: relative;
-			left: 52%;
-	  `}
+      position: relative;
+      left: 52%;
+    `}
 
   @media screen and (max-width: 530px) {
     font-size: 0.8rem;
@@ -109,8 +109,8 @@ export const StLinkButton = styled(Link)`
       `}
   }
 
-  &:hover{ 
-    background-color: ${props => props.theme.accentColor};
-    color: #FFF;
+  &:hover {
+    background-color: ${(props) => props.theme.accentColor};
+    color: #fff;
   }
-`;
+`

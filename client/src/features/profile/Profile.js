@@ -6,10 +6,10 @@ import Header from "shared/layout/Header"
 import ProfileInfo from "./ProfileInfo"
 
 const Wrapper = styled.div`
-	padding-bottom: 5rem;
+  padding-bottom: 5rem;
   display: flex;
   flex-direction: column;
-  
+
   .profile-top {
     display: flex;
     flex-direction: column;
@@ -21,16 +21,15 @@ const Wrapper = styled.div`
       font-size: 0.9rem;
     }
   }
-`;
+`
 
 const Profile = () => {
-
   return (
     <Wrapper>
       <Header>
         <div className="profile-top">
           <span>Profile</span>
-        </div>  
+        </div>
       </Header>
       <ProfileInfo />
       {/* {data && data.profile && data.profile.tweets && data.profile.tweets.length
@@ -39,7 +38,7 @@ const Profile = () => {
           ))
         : null} */}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

@@ -1,41 +1,36 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+
+import { loginSuccess, logout } from "app/slices/auth_slice"
+import useSocket from "features/messages/useSocket"
+import { CenterLoadingIndicator } from "shared/others/LoadingIndicator"
 
 import AuthContainer from "./AuthContainer"
 import RouterContainer from "./RouterContainer"
-import { loginSuccess, logout } from 'app/slices/auth_slice'
-import useSocket from 'features/messages/useSocket'
 
 const App = () => {
+  const authInfo = useSelector((state) => state.auth)
+  const { accessToken } = authInfo
 
-    const authInfo = useSelector(state => state.auth)
-    const { accessToken } = authInfo
+  const dispatch = useDispatch()
+  useSocket({ accessToken })
 
-    const dispatch = useDispatch()
-    useSocket({accessToken})
+  useEffect(() => {
+    const tryToLogIn = () => {
+      const infoInLocalStorage = JSON.parse(localStorage.getItem("authInfo"))
+      if (!infoInLocalStorage) {
+        dispatch(logout())
+        return
+      }
+      dispatch(loginSuccess(infoInLocalStorage))
+    }
+    setTimeout(tryToLogIn, 100)
+    tryToLogIn()
+  }, [accessToken])
 
-    useEffect(() => {
-        const tryToLogIn = () => {
-            const infoInLocalStorage = JSON.parse(localStorage.getItem('authInfo'))
-            if(!infoInLocalStorage){
-                dispatch(logout())
-                return
-            }
-            dispatch(loginSuccess(infoInLocalStorage))
-        }
-        setTimeout(tryToLogIn, 100)
-        tryToLogIn()
+  if (authInfo.isLoading) return <CenterLoadingIndicator fluid />
 
-    }, [accessToken])
-
-    if(authInfo.isLoading)  return <>Loading</>
-
-    return (
-        <>
-          { accessToken ? <RouterContainer /> : <AuthContainer /> }
-        </>
-    )
+  return <>{accessToken ? <RouterContainer /> : <AuthContainer />}</>
 }
 
 export default App
-

@@ -7,10 +7,10 @@ const StAvatar = styled.img`
   border-radius: 50%;
   cursor: pointer;
   background-color: white;
-  margin: ${p => p.m || "0px"};
-  opacity: ${p => p.conceal ? 0 : 1};
+  margin: ${(p) => p.m || "0px"};
+  opacity: ${(p) => (p.conceal ? 0 : 1)};
 
-  margin-top: ${p => p.top ? -p.top + "px" : '0px'};
-  margin-left: ${p => p.left ? p.left + "px" : '0px'};
+  margin-top: ${(p) => (p.top ? -p.top + "px" : "0px")};
+  margin-left: ${(p) => (p.left ? p.left + "px" : "0px")};
 `
 export default StAvatar
