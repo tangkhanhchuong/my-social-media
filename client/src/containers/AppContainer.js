@@ -1,21 +1,21 @@
 import React, { useContext } from "react"
 import { ToastContainer } from "react-toastify"
 import { ThemeProvider as StyledThemeProvider } from "styled-components"
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { Provider } from 'react-redux'
+import { QueryClient, QueryClientProvider } from "react-query"
+import { Provider } from "react-redux"
 
 import "react-toastify/dist/ReactToastify.css"
 
-import App from './App'
+import App from "./App"
 import GlobalStyle from "shared/styles/GlobalStyle"
-import store from 'app/store'
+import store from "app/store"
 import { ThemeContext } from "context/ThemeContext"
 
 const queryClient = new QueryClient({
   defaultOptions: {
-      queries: {
-          refetchOnWindowFocus: false,
-      },
+    queries: {
+      refetchOnWindowFocus: false,
+    },
   },
 })
 
@@ -26,15 +26,15 @@ const AppContainer = () => {
     <QueryClientProvider client={queryClient}>
       <StyledThemeProvider theme={theme}>
         <GlobalStyle />
-          <ToastContainer
-            toastClassName="toast-style"
-            autoClose={2000}
-            closeButton={false}
-            draggable={false}
-            />
-          <Provider store={store}>
-            <App />
-          </Provider>  
+        <ToastContainer
+          toastClassName="toast-style"
+          autoClose={2000}
+          closeButton={false}
+          draggable={false}
+        />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </StyledThemeProvider>
     </QueryClientProvider>
   )

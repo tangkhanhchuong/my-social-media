@@ -15,13 +15,13 @@ const AuthContainer = () => {
 
   return (
     <Router>
-        <Switch>
-          <Route exact path="/login" component={SignIn} />
-          <Route exact path="/signup" component={SignUp} />
-          <Route path="/">
-            <Redirect to="/login" />
-          </Route>
-        </Switch>
+      <Switch>
+        <Route exact path="/login" component={SignIn} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route path="/">
+          <Redirect to="/login" />
+        </Route>
+      </Switch>
     </Router>
   )
 }

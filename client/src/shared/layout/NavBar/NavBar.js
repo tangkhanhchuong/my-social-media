@@ -1,56 +1,70 @@
 import React from "react"
-import { FaTwitter } from 'react-icons/fa'
-import { FaHome, FaEnvelope, FaBell, FaUser, FaBookmark, FaAsterisk, FaSignOutAlt } from 'react-icons/fa'
-import { v4 } from 'uuid'
+import { FaTwitter } from "react-icons/fa"
+import {
+  FaHome,
+  FaEnvelope,
+  FaBell,
+  FaUser,
+  FaBookmark,
+  FaAsterisk,
+  FaSignOutAlt,
+} from "react-icons/fa"
+import { v4 } from "uuid"
 
-import NavItem from './NavItem'
-import { StWrapper, StNavContainer, StNavTabList, StNavLink, StLogo } from './NavBar.styled'
+import NavItem from "./NavItem"
+import {
+  StWrapper,
+  StNavContainer,
+  StNavTabList,
+  StNavLink,
+  StLogo,
+} from "./NavBar.styled"
 
 const iconSize = 30
 
 const navItems = [
-    {
-    label: 'Home',
+  {
+    label: "Home",
     exact: true,
     NavIcon: FaHome,
-    to: '/'
-    },
-    {
-    label: 'Explore',
+    to: "/",
+  },
+  {
+    label: "Explore",
     exact: false,
     NavIcon: FaAsterisk,
-    to: '/explore'
-    },
-    {
-    label: 'Messages',
+    to: "/explore",
+  },
+  {
+    label: "Messages",
     exact: false,
     NavIcon: FaEnvelope,
-    to: '/messages'
-    },
-    {
-    label: 'Notifications',
+    to: "/messages",
+  },
+  {
+    label: "Notifications",
     exact: false,
     NavIcon: FaBell,
-    to: '/notifications'
-    },
-    {
-    label: 'Bookmarks',
+    to: "/notifications",
+  },
+  {
+    label: "Bookmarks",
     exact: false,
     NavIcon: FaBookmark,
-    to: '/bookmarks'
-    },
-    {
-    label: 'Profile',
+    to: "/bookmarks",
+  },
+  {
+    label: "Profile",
     exact: false,
     NavIcon: FaUser,
-    to: '/profile'
-    },
-    {
-    label: 'Logout',
+    to: "/profile",
+  },
+  {
+    label: "Logout",
     exact: false,
     NavIcon: FaSignOutAlt,
-    to: '/logout'
-    }
+    to: "/logout",
+  },
 ]
 
 const NavBar = () => {
@@ -62,12 +76,12 @@ const NavBar = () => {
             <div className="logo selected">
               <StLogo>
                 <FaTwitter size={iconSize} />
-              </StLogo>  
+              </StLogo>
             </div>
           </StNavLink>
-            {
-              navItems.map(item => <NavItem key={v4()} item={item} /> )
-            }
+          {navItems.map((item) => (
+            <NavItem key={v4()} item={item} />
+          ))}
         </StNavTabList>
       </StNavContainer>
     </StWrapper>

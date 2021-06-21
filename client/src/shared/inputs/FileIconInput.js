@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react"
 import styled from "styled-components"
 
 import { StIconButton } from "shared/styles/Buttons"
 
 const StOverlayButton = styled(StIconButton)`
   position: relative;
-  input[type=file]::-webkit-file-upload-button { 
+  input[type="file"]::-webkit-file-upload-button {
     cursor: pointer;
   }
 `
@@ -21,18 +21,18 @@ const StInput = styled.input`
 `
 
 const FileIconInput = (props) => {
-    const { onChange, Icon, type } = props
+  const { onChange, Icon, type } = props
 
-    return (
-        <StOverlayButton {...props} type="button">
-            <StInput 
-              type="file" 
-              onChange={onChange} 
-              accept={type==="image" ? "image/*" : "*"}
-            />
-            <Icon size={25} />
-        </StOverlayButton>
-    )
+  return (
+    <StOverlayButton {...props} type="button">
+      <StInput
+        type="file"
+        onChange={onChange}
+        accept={type === "image" ? "image/*" : "*"}
+      />
+      <Icon size={25} />
+    </StOverlayButton>
+  )
 }
 
 export default FileIconInput

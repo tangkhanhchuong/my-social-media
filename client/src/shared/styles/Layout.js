@@ -3,7 +3,7 @@ import styled from "styled-components"
 const Layout = styled.div`
   margin-left: 26%;
   display: grid;
-	grid-template-columns: 58% 1fr;
+  grid-template-columns: 58% 1fr;
 
   @media screen and (max-width: 1110px) {
     grid-template-columns: 1fr;
