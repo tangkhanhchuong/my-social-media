@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
 import styled from "styled-components"
 import { useMutation } from "react-query"
 import { Modal, ModalHeader, ModalBody } from "reactstrap"
@@ -47,7 +47,6 @@ const RecommendedUsers = ({
       const filteredUsers = selectedUsers.filter((u) => u._id !== user._id)
       setSelectedUsers(filteredUsers)
     }
-
     setAddFinish(true)
   }
 
@@ -82,10 +81,8 @@ const NewConversation = (props) => {
 
   const onAddSuccess = (data) => {
     toast.success(`Conversation was created`)
-
     const newConversation = data.data
     dispatch(addConversation(newConversation))
-
     onCloseModal()
   }
 

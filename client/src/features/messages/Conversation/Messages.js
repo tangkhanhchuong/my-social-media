@@ -86,6 +86,7 @@ const Messages = ({ conversation }) => {
   }
 
   const detectReachingTop = () => ref.current.scrollTop === 0
+  
   const onLoadMore = (currentPage) => {
     if (!detectReachingTop() || isLoading || !canLoadMore) return
     setIsLoading(true)

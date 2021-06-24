@@ -5,6 +5,7 @@ export const StCenterWrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: ${(p) => (p.fluid ? "100vh" : "100%")};
+  width: ${(p) => (p.fluid ? "100vw" : "100%")};
 `
 
 export const StKingWrapper = styled.div`

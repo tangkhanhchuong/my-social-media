@@ -1,45 +1,46 @@
-const { ObjectId } = require('mongodb')
+const { ObjectId } = require("mongodb")
 
-const { Message } = require('../schemas')
+const { Message } = require("../schemas")
 
 const createMessage = async (req, res, next) => {
-    try{
-        const sender = req.user
-        const { content, chatId, type } = req.body
+  try {
+    const sender = req.user
+    const { content, chatId, type } = req.body
 
-        const newMessage = await Message.create({ sender: ObjectId(sender.id), content, chat: ObjectId(chatId), type })
+    const newMessage = await Message.create({
+      sender: ObjectId(sender.id),
+      content,
+      chat: ObjectId(chatId),
+      type,
+    })
 
-        res.status(201).json(newMessage)
-    }
-    catch(err) {
-        err.statusCode = 400
-        next(err)
-    }
+    res.status(201).json(newMessage)
+  } catch (err) {
+    err.statusCode = 400
+    next(err)
+  }
 }
 
 const deleteMessage = async (req, res) => {
-    try{
-        const messageId = req.params.id
+  try {
+    const messageId = req.params.id
 
-        await Message.findOneAndUpdate(
-            { _id: ObjectId(messageId) },
-            { $set: { isDeleted : true } }
-        )
+    await Message.findOneAndUpdate(
+      { _id: ObjectId(messageId) },
+      { $set: { isDeleted: true } }
+    )
 
-        res.sendStatus(204)
-    }
-    catch(err){
-        err.statusCode = 400
-        next(err)
-    }
+    res.sendStatus(204)
+  } catch (err) {
+    err.statusCode = 400
+    next(err)
+  }
 }
 
-const markAsRead = async (req, res) => {
-
-}
+const markAsRead = async (req, res) => {}
 
 module.exports = {
-    createMessage,
-    deleteMessage,
-    markAsRead
+  createMessage,
+  deleteMessage,
+  markAsRead,
 }

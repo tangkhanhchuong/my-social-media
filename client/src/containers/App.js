@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import { loginSuccess, logout } from "app/slices/auth_slice"
-import useSocket from "features/messages/useSocket"
+import useSocket from "app/hooks/useSocket"
 import { CenterLoadingIndicator } from "shared/others/LoadingIndicator"
 
 import AuthContainer from "./AuthContainer"

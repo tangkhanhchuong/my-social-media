@@ -16,7 +16,7 @@ const useSignIn = () => {
   const onLoginSuccessfully = async (data) => {
     const user = data.data
     const { username } = user
-    toast.success(`Welcomer, ${username}`)
+    toast.success(`Welcome, ${username}`)
     dispatch(loginSuccess(user))
   }
 

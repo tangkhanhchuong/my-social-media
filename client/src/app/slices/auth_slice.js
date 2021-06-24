@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit"
 
 const auth = createSlice({
   name: "auth",
@@ -12,7 +12,7 @@ const auth = createSlice({
   },
   reducers: {
     startLogin: (state, action) => {
-      state.isLoading = true;
+      state.isLoading = true
     },
 
     loginSuccess: (state, action) => {
@@ -23,7 +23,7 @@ const auth = createSlice({
         email,
         userId,
         profile,
-      } = action.payload;
+      } = action.payload
       state = {
         isLoading: false,
         error: null,
@@ -32,10 +32,10 @@ const auth = createSlice({
         username,
         email,
         profile,
-      };
+      }
 
-      localStorage.setItem("authInfo", JSON.stringify(state));
-      return state;
+      localStorage.setItem("authInfo", JSON.stringify(state))
+      return state
     },
 
     loginFail: (state, { error }) => {
@@ -45,8 +45,8 @@ const auth = createSlice({
         userId: null,
         accessToken: null,
         error,
-      };
-      return state;
+      }
+      return state
     },
 
     logout: (state) => {
@@ -56,24 +56,24 @@ const auth = createSlice({
         userId: null,
         accessToken: null,
         error: null,
-      };
-      return state;
+      }
+      return state
     },
 
     changeProfile: (state, action) => {
-      state.profile = { ...state.profile, ...action.payload };
-      state.username = action.payload.username;
-      localStorage.setItem("authInfo", JSON.stringify(state));
+      state.profile = { ...state.profile, ...action.payload }
+      state.username = action.payload.username
+      localStorage.setItem("authInfo", JSON.stringify(state))
     },
   },
-});
+})
 
-const { reducer, actions } = auth;
+const { reducer, actions } = auth
 export const {
   startLogin,
   loginSuccess,
   loginFail,
   logout,
   changeProfile,
-} = actions;
-export default reducer;
+} = actions
+export default reducer
