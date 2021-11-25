@@ -113,6 +113,7 @@ const Messages = ({ conversation }) => {
       <StKingWrapper justify="center" direction="row">
         {isLoading && <CenterLoadingIndicator />}
       </StKingWrapper>
+      <div style={{height: '10px'}}></div>
       {showMessages.map((msg, index) => {
         const { _id: senderId, avatar } = msg.sender
         const fromMe = senderId === authReducer.userId

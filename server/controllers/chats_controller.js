@@ -47,12 +47,9 @@ const createChat = async (req, res) => {
       userIdsInChat.push(user._id)
     }
 
-    const chatName =
-      users.map((user) => user.username).join(", ") + ", " + username
-
     const newChat = await Chat.create({
       users: [...new Set(userIdsInChat)].map((id) => ObjectId(id)),
-      chatName,
+      chatName: undefined,
     })
     res.status(201).json(newChat)
   } catch (err) {

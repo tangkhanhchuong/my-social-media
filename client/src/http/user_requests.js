@@ -4,6 +4,7 @@ export default {
   search: (username) =>
     http_request({
       endpoint: `/users/search?username=${username}`,
+      requireToken: true,
     }),
 
   getUser: (id) =>

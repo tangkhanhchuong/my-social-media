@@ -44,11 +44,18 @@ const SAvatarContainer = styled.div`
   }
 `
 
+const SChatName = styled.b`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
 const SNameAndLatedMsg = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: -10px;
   padding-top: -2px;
+  width: 50px;  
   flex: 1;
 `
 
@@ -56,6 +63,9 @@ const SLastMsg = styled.p`
   font-size: 14px;
   color: gray;
   margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const SChatLink = styled(Link)`
@@ -66,7 +76,7 @@ const SChatLink = styled(Link)`
 const Chat = ({ chat }) => {
   const authReducer = useSelector((state) => state.auth)
 
-  const { chatName, _id, latestMessage } = chat
+  const { chatName, _id, latestMessage, users } = chat
 
   const MAX_LEN_LAST_MSG = 30
 
@@ -82,10 +92,10 @@ const Chat = ({ chat }) => {
     return sender + " sent a sticker !"
   }
 
-  const generateFitContent = (content) => {
-    return content.length < MAX_LEN_LAST_MSG
-      ? content
-      : content.slice(0, MAX_LEN_LAST_MSG) + " ..."
+  const generateChatName = () => {
+    if(chatName)  return chatName
+    const otherUsersThanMe = users.filter(user => user._id !== authReducer.userId).map(user=>user.username)
+    return otherUsersThanMe.join(', ')
   }
 
   return (
@@ -99,8 +109,8 @@ const Chat = ({ chat }) => {
             alt="avatar"
           />
           <SNameAndLatedMsg>
-            <b>{generateFitContent(chatName)}</b>
-            <SLastMsg>{generateFitContent(generateLatestMessage())}</SLastMsg>
+            <SChatName>{generateChatName()}</SChatName>
+            <SLastMsg>{generateLatestMessage()}</SLastMsg>
           </SNameAndLatedMsg>
         </SAvatarContainer>
       </SChatLink>
