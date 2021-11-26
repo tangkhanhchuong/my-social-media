@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { useQuery } from "react-query"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
 import StAvatar from "shared/styles/Avatar"
@@ -74,11 +74,9 @@ const SChatLink = styled(Link)`
 `
 
 const Chat = ({ chat }) => {
+
   const authReducer = useSelector((state) => state.auth)
-
   const { chatName, _id, latestMessage, users } = chat
-
-  const MAX_LEN_LAST_MSG = 30
 
   const currentChatId = useParams().id
 

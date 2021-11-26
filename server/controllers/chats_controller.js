@@ -33,7 +33,7 @@ const getChat = async (req, res, next) => {
   }
 }
 
-const createChat = async (req, res) => {
+const createChat = async (req, res,  next) => {
   try {
     const { users } = req.body
     const { id, username } = req.user
@@ -47,10 +47,11 @@ const createChat = async (req, res) => {
       userIdsInChat.push(user._id)
     }
 
-    const newChat = await Chat.create({
+    let newChat = await Chat.create({
       users: [...new Set(userIdsInChat)].map((id) => ObjectId(id)),
       chatName: undefined,
     })
+    newChat = await newChat.populate('users').execPopulate()
     res.status(201).json(newChat)
   } catch (err) {
     err.statusCode = 400

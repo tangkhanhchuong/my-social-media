@@ -38,12 +38,14 @@ const messageSlice = createSlice({
       const conversations = action.payload
       for (let conv of conversations) {
         const { latestMessage, users } = conv
-        const latestMessageSenderName = users.filter(
-          (u) => u._id === latestMessage.sender
-        )[0].username
-        conv.latestMessage.sender = {
-          _id: latestMessage.sender,
-          username: latestMessageSenderName,
+        if (latestMessage) {
+          const latestMessageSenderName = users.filter(
+            (u) => u._id === latestMessage.sender
+          )[0].username
+          conv.latestMessage.sender = {
+            _id: latestMessage.sender,
+            username: latestMessageSenderName,
+          }
         }
         state.allConversations[conv._id] = {
           ...conv,
